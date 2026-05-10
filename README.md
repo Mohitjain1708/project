@@ -6,7 +6,11 @@
 
 ## 🔗 Live Demo
 
-**Deployed URL:** [https://mohitjain1708.github.io/project](https://mohitjain1708.github.io/project)
+**GitHub Repository:** [https://github.com/Mohitjain1708/project](https://github.com/Mohitjain1708/project)
+
+**GitHub Pages URL:** [https://mohitjain1708.github.io/project](https://mohitjain1708.github.io/project)
+
+> **To enable GitHub Pages:** Go to https://github.com/Mohitjain1708/project/settings/pages → Under "Source" select **"Deploy from a branch"** → Branch: **main** → Folder: **/ (root)** → Click **Save**. The site will be live at `https://mohitjain1708.github.io/project` within ~60 seconds.
 
 ---
 
