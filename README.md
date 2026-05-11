@@ -10,8 +10,6 @@
 
 **GitHub Pages URL:** [https://mohitjain1708.github.io/project](https://mohitjain1708.github.io/project)
 
-> **To enable GitHub Pages:** Go to https://github.com/Mohitjain1708/project/settings/pages → Under "Source" select **"Deploy from a branch"** → Branch: **main** → Folder: **/ (root)** → Click **Save**. The site will be live at `https://mohitjain1708.github.io/project` within ~60 seconds.
-
 ---
 
 ## 🏛️ Property: American Dream, East Rutherford NJ
@@ -229,5 +227,4 @@ with real photography at any time by replacing background styles.
 ## 📧 Submission
 
 **Live URL:** https://mohitjain1708.github.io/project  
-**GitHub:** https://github.com/Mohitjain1708/project  
-**Contact:** medi@liat.ai
+**GitHub:** https://github.com/Mohitjain1708/project
