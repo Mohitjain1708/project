@@ -3,944 +3,732 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>American Dream — The Pitch</title>
-<meta name="description" content="North America's most ambitious mixed-use destination. 3M sq ft. 40M visitors. 8 miles from Manhattan."/>
+<title>American Dream — The Pitch Deck</title>
+<meta name="description" content="North America's most ambitious mixed-use destination. 3M sq ft · 40M+ visitors · 8 miles from Manhattan."/>
 <link rel="icon" type="image/svg+xml" href="images/favicon.svg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Inter:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <link rel="stylesheet" href="css/main.css"/>
 </head>
 <body>
 
-<!-- PRELOADER -->
+<!-- ░░ PRELOADER ░░ -->
 <div id="preloader">
-  <div class="pre-inner">
-    <div class="pre-logo">
-      <span class="pre-star">✦</span>
-      <span class="pre-text">AMERICAN DREAM</span>
+  <div class="pre-wrap">
+    <svg class="pre-ring-svg" viewBox="0 0 100 100"><circle class="pre-ring-bg" cx="50" cy="50" r="42"/><circle class="pre-ring-fill" id="preRing" cx="50" cy="50" r="42"/></svg>
+    <div class="pre-center">
+      <div class="pre-star" id="preStar">✦</div>
+      <div class="pre-pct" id="preNum">0</div>
     </div>
-    <div class="pre-bar-wrap"><div class="pre-bar" id="preBar"></div></div>
-    <div class="pre-counter" id="preCounter">0</div>
   </div>
+  <div class="pre-wordmark">AMERICAN DREAM</div>
+  <div class="pre-sub">East Rutherford · New Jersey</div>
 </div>
 
-<!-- CURSOR -->
-<div id="cur" class="cur"></div>
-<div id="curRing" class="cur-ring"></div>
-<div id="curLabel" class="cur-label"></div>
+<!-- ░░ CURSOR ░░ -->
+<div id="curDot"></div>
+<div id="curCircle"></div>
+<div id="curText"></div>
 
-<!-- NAV -->
-<nav id="nav">
-  <a href="#hero" class="nav-logo">
-    <div class="nav-mark">✦</div>
-    <span>American Dream</span>
+<!-- ░░ PROGRESS ░░ -->
+<div id="scrollBar"></div>
+
+<!-- ░░ NAV ░░ -->
+<nav id="mainNav">
+  <a href="#hero" class="nl-logo">
+    <span class="nl-mark">✦</span>
+    <span class="nl-name">American Dream</span>
   </a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#why" data-s="why">Property</a></li>
-    <li><a href="#retail" data-s="retail">Retail</a></li>
-    <li><a href="#luxury" data-s="luxury">Luxury</a></li>
-    <li><a href="#entertainment" data-s="entertainment">Entertainment</a></li>
-    <li><a href="#events" data-s="events">Events</a></li>
-    <li><a href="#partners" data-s="partners">Partners</a></li>
+  <ul id="navList">
+    <li><a href="#property" class="nl">Property</a></li>
+    <li><a href="#retail"   class="nl">Retail</a></li>
+    <li><a href="#luxury"   class="nl">Luxury</a></li>
+    <li><a href="#ent"      class="nl">Experience</a></li>
+    <li><a href="#events"   class="nl">Events</a></li>
+    <li><a href="#partners" class="nl">Partners</a></li>
   </ul>
-  <a href="#contact" class="nav-btn">Inquire Now</a>
-  <button class="nav-ham" id="navHam" aria-label="menu">
-    <span></span><span></span><span></span>
+  <a href="#contact" class="nav-cta">Inquire Now <i class="fas fa-arrow-right"></i></a>
+  <button class="ham" id="ham" aria-label="Menu">
+    <span></span><span></span>
   </button>
 </nav>
 
-<!-- MOBILE MENU -->
-<div class="mob-menu" id="mobMenu">
-  <a href="#why"           onclick="closeMob()">Property</a>
-  <a href="#retail"        onclick="closeMob()">Retail</a>
-  <a href="#luxury"        onclick="closeMob()">Luxury</a>
-  <a href="#entertainment" onclick="closeMob()">Entertainment</a>
-  <a href="#events"        onclick="closeMob()">Events</a>
-  <a href="#partners"      onclick="closeMob()">Partners</a>
-  <a href="#contact"       onclick="closeMob()" class="mob-cta">Inquire Now</a>
+<!-- ░░ MOBILE DRAWER ░░ -->
+<div id="drawer">
+  <a href="#property" onclick="closeDrawer()">Property</a>
+  <a href="#retail"   onclick="closeDrawer()">Retail</a>
+  <a href="#luxury"   onclick="closeDrawer()">Luxury</a>
+  <a href="#ent"      onclick="closeDrawer()">Experience</a>
+  <a href="#events"   onclick="closeDrawer()">Events</a>
+  <a href="#partners" onclick="closeDrawer()">Partners</a>
+  <a href="#contact"  onclick="closeDrawer()" class="drawer-cta">Inquire Now</a>
 </div>
 
-<!-- PROGRESS LINE -->
-<div class="progress-line" id="progressLine"></div>
+<!-- ░░ SIDE DOTS ░░ -->
+<div id="sideDots">
+  <a href="#hero"     class="sd active" data-tip="Opening"></a>
+  <a href="#property" class="sd" data-tip="Property"></a>
+  <a href="#retail"   class="sd" data-tip="Retail"></a>
+  <a href="#luxury"   class="sd" data-tip="Luxury"></a>
+  <a href="#dining"   class="sd" data-tip="Dining"></a>
+  <a href="#ent"      class="sd" data-tip="Experience"></a>
+  <a href="#events"   class="sd" data-tip="Events"></a>
+  <a href="#partners" class="sd" data-tip="Partners"></a>
+  <a href="#contact"  class="sd" data-tip="Contact"></a>
+</div>
 
-<!-- SIDE DOTS -->
-<nav class="side-dots" id="sideDots">
-  <a href="#hero"          class="dot active" data-label="Opening"></a>
-  <a href="#why"           class="dot" data-label="The Property"></a>
-  <a href="#retail"        class="dot" data-label="Retail"></a>
-  <a href="#luxury"        class="dot" data-label="Luxury"></a>
-  <a href="#dining"        class="dot" data-label="Dining"></a>
-  <a href="#entertainment" class="dot" data-label="Entertainment"></a>
-  <a href="#events"        class="dot" data-label="Events"></a>
-  <a href="#partners"      class="dot" data-label="Partners"></a>
-  <a href="#contact"       class="dot" data-label="Contact"></a>
-</nav>
-
-<!-- ═══════════════════════════════════════════
-     HERO
-═══════════════════════════════════════════ -->
-<section id="hero" class="hero">
+<!-- ══════════════════════════════════════════════════
+     §1  HERO
+══════════════════════════════════════════════════ -->
+<section id="hero">
   <canvas id="heroCanvas"></canvas>
 
-  <!-- Video background -->
-  <div class="hero-vid-wrap">
-    <iframe id="heroVid"
-      src="https://www.youtube.com/embed/YEKsgfP5-s8?autoplay=1&mute=1&loop=1&playlist=YEKsgfP5-s8&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1"
+  <div class="hero-vid">
+    <iframe id="heroIframe"
+      src="https://www.youtube.com/embed/YEKsgfP5-s8?autoplay=1&mute=1&loop=1&playlist=YEKsgfP5-s8&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3"
       allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    <div class="hero-vid-overlay"></div>
+    <div class="hero-veil"></div>
   </div>
 
-  <div class="hero-content" id="heroContent">
-    <div class="hero-eyebrow" data-anime="fadeUp" data-delay="200">
-      <span class="eyebrow-line"></span>
-      North America's Most Ambitious Destination
-      <span class="eyebrow-line"></span>
+  <div class="hero-body">
+    <div class="hero-eyebrow" id="hEye">
+      <span class="heb-line"></span>North America's Most Ambitious Destination<span class="heb-line"></span>
     </div>
-    <h1 class="hero-h1" data-anime="fadeUp" data-delay="400">
-      <span class="h1-line">The</span>
-      <span class="h1-line h1-italic">American</span>
-      <span class="h1-line">Dream</span>
+    <h1 class="hero-h1" id="hH1">
+      <span class="h1w">The</span>
+      <span class="h1w h1i">American</span>
+      <span class="h1w">Dream</span>
     </h1>
-    <p class="hero-sub" data-anime="fadeUp" data-delay="700">
-      3 million sq ft · 40M+ visitors · 8 miles from Manhattan
-    </p>
-    <div class="hero-actions" data-anime="fadeUp" data-delay="900">
-      <a href="#why" class="btn-gold">
-        <span>Explore the Property</span>
-        <i class="fas fa-arrow-right"></i>
-      </a>
+    <p class="hero-desc" id="hDesc">3 Million sq ft &nbsp;·&nbsp; 40M+ Visitors &nbsp;·&nbsp; 8 Miles from Manhattan</p>
+    <div class="hero-btns" id="hBtns">
+      <a href="#property" class="btn-g">Explore the Property <i class="fas fa-arrow-right"></i></a>
       <button class="btn-ghost" onclick="openReel()">
-        <div class="play-ring"><i class="fas fa-play"></i></div>
-        <span>Watch the Reel</span>
+        <span class="play-dot"><i class="fas fa-play"></i></span>Watch the Reel
       </button>
     </div>
   </div>
 
-  <!-- Stat pills floating above fold -->
-  <div class="hero-pills" id="heroPills">
-    <div class="pill" data-anime="slideUp" data-delay="1100">
-      <div class="pill-num" data-count="3" data-suffix="M+">0</div>
-      <div class="pill-lbl">Square Feet</div>
+  <!-- Floating stat pills -->
+  <div class="hero-stats" id="hStats">
+    <div class="hstat" data-delay="0">
+      <div class="hstat-n" data-count="3" data-sfx="M+">0</div>
+      <div class="hstat-l">Square Feet</div>
     </div>
-    <div class="pill" data-anime="slideUp" data-delay="1200">
-      <div class="pill-num" data-count="40" data-suffix="M+">0</div>
-      <div class="pill-lbl">Annual Visitors</div>
+    <div class="hstat" data-delay="80">
+      <div class="hstat-n" data-count="40" data-sfx="M+">0</div>
+      <div class="hstat-l">Annual Visitors</div>
     </div>
-    <div class="pill" data-anime="slideUp" data-delay="1300">
-      <div class="pill-num" data-count="450" data-suffix="+">0</div>
-      <div class="pill-lbl">Retail Tenants</div>
+    <div class="hstat" data-delay="160">
+      <div class="hstat-n" data-count="450" data-sfx="+">0</div>
+      <div class="hstat-l">Retail Brands</div>
     </div>
-    <div class="pill" data-anime="slideUp" data-delay="1400">
-      <div class="pill-num" data-count="8" data-suffix=" mi">0</div>
-      <div class="pill-lbl">From Manhattan</div>
+    <div class="hstat" data-delay="240">
+      <div class="hstat-n" data-count="4.3" data-sfx="h" data-dec="1">0</div>
+      <div class="hstat-l">Avg Dwell Time</div>
     </div>
-    <div class="pill" data-anime="slideUp" data-delay="1500">
-      <div class="pill-num" data-count="92" data-suffix="%">0</div>
-      <div class="pill-lbl">Repeat Visitors</div>
+    <div class="hstat" data-delay="320">
+      <div class="hstat-n" data-count="8" data-sfx=" mi">0</div>
+      <div class="hstat-l">From Manhattan</div>
     </div>
   </div>
 
-  <div class="scroll-hint">
-    <div class="scroll-dot"></div>
-    <span>Scroll</span>
-  </div>
+  <div class="hero-scroll"><div class="hs-line"></div><span>Scroll</span></div>
 </section>
 
-<!-- TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker-track">
-    <span>Nickelodeon Universe</span><span class="sep">✦</span>
-    <span>DreamWorks Water Park</span><span class="sep">✦</span>
-    <span>Big SNOW Indoor Ski</span><span class="sep">✦</span>
-    <span>Dream Live PAC · 3,000 Seats</span><span class="sep">✦</span>
-    <span>The Avenue · Luxury Wing</span><span class="sep">✦</span>
-    <span>Hermès · Tiffany · Dolce&amp;Gabbana</span><span class="sep">✦</span>
-    <span>300-Ft Observation Wheel</span><span class="sep">✦</span>
-    <span>Indoor Ice Rink</span><span class="sep">✦</span>
-    <span>100+ Dining Concepts</span><span class="sep">✦</span>
-    <span>8 Miles from Manhattan</span><span class="sep">✦</span>
-    <!-- dup for loop -->
-    <span>Nickelodeon Universe</span><span class="sep">✦</span>
-    <span>DreamWorks Water Park</span><span class="sep">✦</span>
-    <span>Big SNOW Indoor Ski</span><span class="sep">✦</span>
-    <span>Dream Live PAC · 3,000 Seats</span><span class="sep">✦</span>
-    <span>The Avenue · Luxury Wing</span><span class="sep">✦</span>
-    <span>Hermès · Tiffany · Dolce&amp;Gabbana</span><span class="sep">✦</span>
-    <span>300-Ft Observation Wheel</span><span class="sep">✦</span>
-    <span>Indoor Ice Rink</span><span class="sep">✦</span>
-    <span>100+ Dining Concepts</span><span class="sep">✦</span>
-    <span>8 Miles from Manhattan</span><span class="sep">✦</span>
+<!-- ░░ TICKER ░░ -->
+<div class="ticker">
+  <div class="ticker-inner" id="tickerInner">
+    <span>Nickelodeon Universe</span><b>✦</b>
+    <span>DreamWorks Water Park</span><b>✦</b>
+    <span>Big SNOW Indoor Ski</span><b>✦</b>
+    <span>Dream Live PAC · 3,000 Seats</span><b>✦</b>
+    <span>The Avenue · Luxury Wing</span><b>✦</b>
+    <span>Hermès · Tiffany · Dolce&amp;Gabbana</span><b>✦</b>
+    <span>300-Ft Observation Wheel</span><b>✦</b>
+    <span>NHL Ice Rink · Event Conversions</span><b>✦</b>
+    <span>100+ Dining Concepts</span><b>✦</b>
+    <span>8 Miles from Manhattan</span><b>✦</b>
+    <span>Nickelodeon Universe</span><b>✦</b>
+    <span>DreamWorks Water Park</span><b>✦</b>
+    <span>Big SNOW Indoor Ski</span><b>✦</b>
+    <span>Dream Live PAC · 3,000 Seats</span><b>✦</b>
+    <span>The Avenue · Luxury Wing</span><b>✦</b>
+    <span>Hermès · Tiffany · Dolce&amp;Gabbana</span><b>✦</b>
+    <span>300-Ft Observation Wheel</span><b>✦</b>
+    <span>NHL Ice Rink · Event Conversions</span><b>✦</b>
+    <span>100+ Dining Concepts</span><b>✦</b>
+    <span>8 Miles from Manhattan</span><b>✦</b>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     WHY THIS PROPERTY
-═══════════════════════════════════════════ -->
-<section id="why" class="section section-dark">
-  <div class="section-inner">
-    <div class="section-head reveal">
-      <div class="tag">The Property</div>
-      <h2 class="section-title">Where <em>Every Number</em><br>Tells the Story</h2>
-      <p class="section-desc">The most data-rich pitch in commercial real estate. Here's why every major brand needs a presence at American Dream.</p>
+<!-- ══════════════════════════════════════════════════
+     §2  PROPERTY
+══════════════════════════════════════════════════ -->
+<section id="property" class="s-dark">
+  <div class="s-inner">
+    <div class="s-head rv">
+      <div class="stag">The Property</div>
+      <h2 class="s-title">Where Every Number<br><em>Tells the Story</em></h2>
+      <p class="s-desc">The most data-rich pitch in commercial real estate — backed by 40 million annual visits, the wealthiest demographic corridor in America, and zero comparable competition.</p>
     </div>
 
-    <!-- Interactive Stat Cards Grid -->
-    <div class="stat-grid reveal">
-      <div class="stat-card stat-card-lg" data-hover="tilt">
-        <div class="stat-card-bg" style="--hue:38"></div>
-        <div class="stat-num counter" data-target="40" data-suffix="M+">0</div>
-        <div class="stat-name">Annual Visitors</div>
-        <div class="stat-desc">More than Disneyland + Universal Studios combined</div>
-        <div class="stat-icon"><i class="fas fa-users"></i></div>
+    <!-- KPI Bento Grid -->
+    <div class="bento-grid rv">
+      <div class="bento bento-xl" id="b1">
+        <div class="bento-glow" style="--gc:38"></div>
+        <div class="bento-ico"><i class="fas fa-users"></i></div>
+        <div class="bento-n counter" data-target="40" data-sfx="M+">0</div>
+        <div class="bento-label">Annual Visitors</div>
+        <div class="bento-sub">More than Disneyland + Universal Studios combined</div>
+        <div class="bento-bar"><div class="bb-fill" style="--p:88%"></div></div>
       </div>
-      <div class="stat-card" data-hover="tilt">
-        <div class="stat-card-bg" style="--hue:45"></div>
-        <div class="stat-num counter" data-target="3" data-suffix="M">0</div>
-        <div class="stat-name">Square Feet</div>
-        <div class="stat-desc">2nd largest mall in North America</div>
-        <div class="stat-icon"><i class="fas fa-building"></i></div>
+      <div class="bento" id="b2">
+        <div class="bento-glow" style="--gc:45"></div>
+        <div class="bento-ico"><i class="fas fa-vector-square"></i></div>
+        <div class="bento-n counter" data-target="3" data-sfx="M sqft">0</div>
+        <div class="bento-label">Total GLA</div>
+        <div class="bento-sub">2nd largest in North America</div>
       </div>
-      <div class="stat-card" data-hover="tilt">
-        <div class="stat-card-bg" style="--hue:32"></div>
-        <div class="stat-num counter" data-target="4.3" data-suffix="h" data-decimal="1">0</div>
-        <div class="stat-name">Avg Dwell Time</div>
-        <div class="stat-desc">Captive audience, every single visit</div>
-        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+      <div class="bento" id="b3">
+        <div class="bento-glow" style="--gc:32"></div>
+        <div class="bento-ico"><i class="fas fa-clock"></i></div>
+        <div class="bento-n counter" data-target="4.3" data-sfx="h" data-dec="1">0</div>
+        <div class="bento-label">Avg Dwell Time</div>
+        <div class="bento-sub">Captive audience, every visit</div>
       </div>
-      <div class="stat-card" data-hover="tilt">
-        <div class="stat-card-bg" style="--hue:50"></div>
-        <div class="stat-num counter" data-target="92" data-suffix="%">0</div>
-        <div class="stat-name">Repeat Visitors</div>
-        <div class="stat-desc">Highest loyalty rate in any US mall</div>
-        <div class="stat-icon"><i class="fas fa-heart"></i></div>
+      <div class="bento" id="b4">
+        <div class="bento-glow" style="--gc:50"></div>
+        <div class="bento-ico"><i class="fas fa-redo-alt"></i></div>
+        <div class="bento-n counter" data-target="92" data-sfx="%">0</div>
+        <div class="bento-label">Repeat Visitors</div>
+        <div class="bento-sub">Highest loyalty rate in any US mall</div>
       </div>
-      <div class="stat-card" data-hover="tilt">
-        <div class="stat-card-bg" style="--hue:42"></div>
-        <div class="stat-num counter" data-target="24" data-suffix="M">0</div>
-        <div class="stat-name">Catchment Population</div>
-        <div class="stat-desc">Within 25-mile radius — wealthiest US corridor</div>
-        <div class="stat-icon"><i class="fas fa-map-marked-alt"></i></div>
+      <div class="bento" id="b5">
+        <div class="bento-glow" style="--gc:42"></div>
+        <div class="bento-ico"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="bento-n counter" data-target="24" data-sfx="M">0</div>
+        <div class="bento-label">Catchment Population</div>
+        <div class="bento-sub">Within 25-mile radius — wealthiest US corridor</div>
       </div>
-      <div class="stat-card" data-hover="tilt">
-        <div class="stat-card-bg" style="--hue:36"></div>
-        <div class="stat-num counter" data-target="68" data-suffix="%">0</div>
-        <div class="stat-name">HHI $75K+</div>
-        <div class="stat-desc">Affluent, brand-aware, high-spend demographic</div>
-        <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+      <div class="bento" id="b6">
+        <div class="bento-glow" style="--gc:36"></div>
+        <div class="bento-ico"><i class="fas fa-dollar-sign"></i></div>
+        <div class="bento-n counter" data-target="68" data-sfx="%">0</div>
+        <div class="bento-label">HHI $75K+</div>
+        <div class="bento-sub">Affluent, brand-aware, high-spend demo</div>
       </div>
     </div>
 
-    <!-- Location + Demographics -->
-    <div class="why-split reveal">
-      <!-- Radar chart / location visual -->
-      <div class="why-radar-wrap">
-        <canvas id="radarCanvas" width="460" height="460"></canvas>
-        <div class="radar-center-badge">
-          <div class="rcb-star">✦</div>
-          <div class="rcb-title">American<br>Dream</div>
-          <div class="rcb-sub">East Rutherford, NJ</div>
+    <!-- Map + Demo split -->
+    <div class="prop-split rv">
+      <!-- Interactive radar map -->
+      <div class="radar-wrap">
+        <canvas id="radarCanvas"></canvas>
+        <div class="radar-badge">
+          <div class="rb-star">✦</div>
+          <div class="rb-name">American<br>Dream</div>
+          <div class="rb-loc">East Rutherford, NJ</div>
         </div>
-        <div class="radar-labels">
-          <div class="rl rl-1">NYC<br><span>8 mi</span></div>
-          <div class="rl rl-2">Newark<br>Airport<br><span>12 min</span></div>
-          <div class="rl rl-3">JFK<br><span>35 min</span></div>
-          <div class="rl rl-4">MetLife<br>Stadium<br><span>On-site</span></div>
-          <div class="rl rl-5">24M<br>People<br><span>25-mi ring</span></div>
-        </div>
+        <div class="radar-pin rp1"><span>NYC</span><em>8 mi</em></div>
+        <div class="radar-pin rp2"><span>Newark EWR</span><em>12 min</em></div>
+        <div class="radar-pin rp3"><span>JFK</span><em>35 min</em></div>
+        <div class="radar-pin rp4"><span>MetLife Stadium</span><em>On-site</em></div>
+        <div class="radar-pin rp5"><span>24M People</span><em>25-mi ring</em></div>
       </div>
 
-      <!-- Demographics bar chart -->
-      <div class="why-demo">
-        <div class="tag">Visitor Profile</div>
-        <h3 class="why-demo-title">The Audience<br>Brands <em>Fight For</em></h3>
-
-        <div class="demo-bars">
-          <div class="demo-bar-row reveal-bar" data-w="72">
-            <div class="db-label">Millennials 25–40</div>
-            <div class="db-track"><div class="db-fill" style="--w:72%"></div></div>
-            <div class="db-val">72%</div>
+      <!-- Audience bars -->
+      <div class="demo-panel">
+        <div class="stag">Visitor Profile</div>
+        <h3 class="demo-title">The Audience<br>Brands <em>Fight For</em></h3>
+        <div class="dbars">
+          <div class="dbar rv-bar" data-w="72">
+            <div class="dbar-top">
+              <span class="dbar-lbl">Millennials 25–40</span>
+              <span class="dbar-val">72%</span>
+            </div>
+            <div class="dbar-track"><div class="dbar-fill" style="--w:72%"></div></div>
           </div>
-          <div class="demo-bar-row reveal-bar" data-w="68">
-            <div class="db-label">Household Income $75K+</div>
-            <div class="db-track"><div class="db-fill" style="--w:68%"></div></div>
-            <div class="db-val">68%</div>
+          <div class="dbar rv-bar" data-w="68">
+            <div class="dbar-top">
+              <span class="dbar-lbl">Household Income $75K+</span>
+              <span class="dbar-val">68%</span>
+            </div>
+            <div class="dbar-track"><div class="dbar-fill" style="--w:68%"></div></div>
           </div>
-          <div class="demo-bar-row reveal-bar" data-w="92">
-            <div class="db-label">Return Visitors</div>
-            <div class="db-track"><div class="db-fill" style="--w:92%"></div></div>
-            <div class="db-val">92%</div>
+          <div class="dbar rv-bar" data-w="92">
+            <div class="dbar-top">
+              <span class="dbar-lbl">Return Visitors</span>
+              <span class="dbar-val">92%</span>
+            </div>
+            <div class="dbar-track"><div class="dbar-fill" style="--w:92%"></div></div>
           </div>
-          <div class="demo-bar-row reveal-bar" data-w="61">
-            <div class="db-label">Dwell 4+ Hours</div>
-            <div class="db-track"><div class="db-fill" style="--w:61%"></div></div>
-            <div class="db-val">61%</div>
+          <div class="dbar rv-bar" data-w="61">
+            <div class="dbar-top">
+              <span class="dbar-lbl">Dwell 4+ Hours</span>
+              <span class="dbar-val">61%</span>
+            </div>
+            <div class="dbar-track"><div class="dbar-fill" style="--w:61%"></div></div>
           </div>
-          <div class="demo-bar-row reveal-bar" data-w="55">
-            <div class="db-label">Out-of-State Visitors</div>
-            <div class="db-track"><div class="db-fill" style="--w:55%"></div></div>
-            <div class="db-val">55%</div>
+          <div class="dbar rv-bar" data-w="55">
+            <div class="dbar-top">
+              <span class="dbar-lbl">Out-of-State Visitors</span>
+              <span class="dbar-val">55%</span>
+            </div>
+            <div class="dbar-track"><div class="dbar-fill" style="--w:55%"></div></div>
           </div>
-          <div class="demo-bar-row reveal-bar" data-w="82">
-            <div class="db-label">Social Media Active</div>
-            <div class="db-track"><div class="db-fill" style="--w:82%"></div></div>
-            <div class="db-val">82%</div>
+          <div class="dbar rv-bar" data-w="82">
+            <div class="dbar-top">
+              <span class="dbar-lbl">Active on Social Media</span>
+              <span class="dbar-val">82%</span>
+            </div>
+            <div class="dbar-track"><div class="dbar-fill" style="--w:82%"></div></div>
           </div>
         </div>
-
-        <div class="why-tags">
-          <span class="wtag">Gen Z &amp; Millennial Core</span>
-          <span class="wtag">High-Spend Families</span>
-          <span class="wtag">Luxury Shoppers</span>
-          <span class="wtag">NYC Daytrippers</span>
-          <span class="wtag">Experience-Seekers</span>
+        <div class="demo-chips">
+          <span>Gen Z &amp; Millennial Core</span>
+          <span>High-Spend Families</span>
+          <span>Luxury Shoppers</span>
+          <span>NYC Daytrippers</span>
+          <span>Experience Seekers</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     RETAIL
-═══════════════════════════════════════════ -->
-<section id="retail" class="section section-mid">
-  <div class="section-inner">
-    <div class="section-head reveal">
-      <div class="tag">Retail Environment</div>
-      <h2 class="section-title">450+ Brands.<br>One <em>Unstoppable</em> Address.</h2>
-      <p class="section-desc">From global flagships to first-time physical ventures — American Dream is where brands make statements.</p>
+<!-- ══════════════════════════════════════════════════
+     §3  RETAIL
+══════════════════════════════════════════════════ -->
+<section id="retail" class="s-mid">
+  <div class="s-inner">
+    <div class="s-head rv">
+      <div class="stag">Retail Environment</div>
+      <h2 class="s-title">450+ Brands.<br><em>One Unstoppable</em> Address.</h2>
+      <p class="s-desc">From global flagships to first-time physical ventures — American Dream is where brands make history.</p>
     </div>
 
-    <!-- 3D card flip grid -->
-    <div class="retail-flip-grid reveal">
-      <div class="flip-card" data-hover="tilt">
-        <div class="flip-front" style="--c1:#1a1208;--c2:#2a1e0a">
-          <div class="flip-icon">🏪</div>
-          <div class="flip-title">Flagship Retail</div>
-          <div class="flip-hint">Tap to explore →</div>
+    <!-- Flip card grid -->
+    <div class="flip-grid rv">
+      <div class="fcard" id="fc1" onclick="flipCard(this)">
+        <div class="fcard-f" style="--a:#1a1208;--b:#2d1e0a">
+          <div class="fci">🏪</div>
+          <div class="fct">Flagship Retail</div>
+          <div class="fch">Tap to explore →</div>
         </div>
-        <div class="flip-back">
-          <div class="flip-back-tag">Flagship</div>
-          <div class="flip-back-title">Own the Conversation</div>
-          <div class="flip-back-body">5,000–80,000 sq ft · double-height ceilings · prime galleria frontage · 3–15 year flexible leases</div>
-          <a href="#contact" class="flip-cta">Request Info</a>
-        </div>
-      </div>
-      <div class="flip-card" data-hover="tilt">
-        <div class="flip-front" style="--c1:#080f14;--c2:#101e28">
-          <div class="flip-icon">✨</div>
-          <div class="flip-title">Luxury — The Avenue</div>
-          <div class="flip-hint">Tap to explore →</div>
-        </div>
-        <div class="flip-back">
-          <div class="flip-back-tag">Luxury</div>
-          <div class="flip-back-title">NJ's Only Luxury Address</div>
-          <div class="flip-back-body">1,500–12,000 sq ft · private concierge · valet parking · invitation-only tenant curation</div>
-          <a href="#luxury" class="flip-cta">See The Avenue</a>
+        <div class="fcard-b">
+          <div class="fcbt">Flagship</div>
+          <div class="fcbh">Own the Conversation</div>
+          <div class="fcbd">5,000–80,000 sq ft · double-height ceilings · prime galleria frontage · 3–15 year flexible leases with performance reviews</div>
+          <a href="#contact" class="flip-cta" onclick="presetInquiry('Flagship leasing inquiry')">Request Leasing Pack →</a>
         </div>
       </div>
-      <div class="flip-card" data-hover="tilt">
-        <div class="flip-front" style="--c1:#0a1005;--c2:#121a08">
-          <div class="flip-icon">🍽️</div>
-          <div class="flip-title">Food &amp; Beverage</div>
-          <div class="flip-hint">Tap to explore →</div>
+      <div class="fcard" id="fc2" onclick="flipCard(this)">
+        <div class="fcard-f" style="--a:#080f14;--b:#0f1e2c">
+          <div class="fci">✨</div>
+          <div class="fct">Luxury — The Avenue</div>
+          <div class="fch">Tap to explore →</div>
         </div>
-        <div class="flip-back">
-          <div class="flip-back-tag">F&amp;B</div>
-          <div class="flip-back-title">4.3-Hour Captive Audience</div>
-          <div class="flip-back-body">Inline, kiosk &amp; food-hall formats · all dayparts · full kitchen buildout support</div>
-          <a href="#contact" class="flip-cta">Explore F&amp;B</a>
+        <div class="fcard-b">
+          <div class="fcbt">Luxury Wing</div>
+          <div class="fcbh">NJ's Only Luxury Address</div>
+          <div class="fcbd">1,500–12,000 sq ft · private concierge · valet · invite-only tenant curation · direct access from premium parking</div>
+          <a href="#luxury" class="flip-cta">See The Avenue →</a>
         </div>
       </div>
-      <div class="flip-card" data-hover="tilt">
-        <div class="flip-front" style="--c1:#14080a;--c2:#200c10">
-          <div class="flip-icon">⚡</div>
-          <div class="flip-title">Pop-Up &amp; Short-Term</div>
-          <div class="flip-hint">Tap to explore →</div>
+      <div class="fcard" id="fc3" onclick="flipCard(this)">
+        <div class="fcard-f" style="--a:#0a1005;--b:#131a08">
+          <div class="fci">🍽️</div>
+          <div class="fct">Food &amp; Beverage</div>
+          <div class="fch">Tap to explore →</div>
         </div>
-        <div class="flip-back">
-          <div class="flip-back-tag">Pop-Up</div>
-          <div class="flip-back-title">Launch in Days, Not Months</div>
-          <div class="flip-back-body">200–2,000 sq ft · move-in ready · 2 weeks minimum · social amplification included</div>
-          <a href="#contact" class="flip-cta">Check Availability</a>
+        <div class="fcard-b">
+          <div class="fcbt">F&amp;B</div>
+          <div class="fcbh">4.3-Hour Captive Audience</div>
+          <div class="fcbd">Inline, kiosk &amp; food-hall formats · all dayparts · full kitchen buildout support · anchor positioning available</div>
+          <a href="#contact" class="flip-cta" onclick="presetInquiry('Food & Beverage leasing inquiry')">Explore F&amp;B →</a>
+        </div>
+      </div>
+      <div class="fcard" id="fc4" onclick="flipCard(this)">
+        <div class="fcard-f" style="--a:#14080a;--b:#200c10">
+          <div class="fci">⚡</div>
+          <div class="fct">Pop-Up &amp; Short-Term</div>
+          <div class="fch">Tap to explore →</div>
+        </div>
+        <div class="fcard-b">
+          <div class="fcbt">Pop-Up</div>
+          <div class="fcbh">Launch in Days, Not Months</div>
+          <div class="fcbd">200–2,000 sq ft · move-in ready units · 2-week minimum term · social amplification package included</div>
+          <a href="#contact" class="flip-cta" onclick="presetInquiry('Pop-up space inquiry')">Check Availability →</a>
         </div>
       </div>
     </div>
 
-    <!-- Tenant Marquee with hover interaction -->
-    <div class="tenant-section reveal">
-      <div class="tag" style="margin-bottom:24px">Featured Tenants</div>
+    <!-- Tenant filter cloud -->
+    <div class="tenant-wrap rv">
+      <div class="stag" style="margin-bottom:20px">Featured Tenants</div>
+      <div class="tenant-filters" id="tFilters">
+        <button class="tf active" data-cat="all"     onclick="filterTenants('all',this)">All</button>
+        <button class="tf" data-cat="fashion"  onclick="filterTenants('fashion',this)">Fashion</button>
+        <button class="tf" data-cat="beauty"   onclick="filterTenants('beauty',this)">Beauty</button>
+        <button class="tf" data-cat="lifestyle" onclick="filterTenants('lifestyle',this)">Lifestyle</button>
+        <button class="tf" data-cat="dining"   onclick="filterTenants('dining',this)">Dining</button>
+      </div>
       <div class="tenant-cloud" id="tenantCloud">
-        <button class="tbtn" onclick="filterTenants('all')" data-cat="all">All</button>
-        <button class="tbtn" onclick="filterTenants('fashion')" data-cat="fashion">Fashion</button>
-        <button class="tbtn" onclick="filterTenants('beauty')" data-cat="beauty">Beauty</button>
-        <button class="tbtn" onclick="filterTenants('lifestyle')" data-cat="lifestyle">Lifestyle</button>
-        <button class="tbtn" onclick="filterTenants('dining')" data-cat="dining">Dining</button>
-      </div>
-      <div class="tenant-grid" id="tenantGrid">
-        <span class="ttag" data-cat="fashion">Zara</span>
-        <span class="ttag" data-cat="fashion">H&amp;M</span>
-        <span class="ttag" data-cat="fashion">Uniqlo</span>
-        <span class="ttag" data-cat="fashion">Nike</span>
-        <span class="ttag" data-cat="fashion">Adidas</span>
-        <span class="ttag" data-cat="fashion">American Eagle</span>
-        <span class="ttag" data-cat="fashion">Forever 21</span>
-        <span class="ttag" data-cat="fashion">Victoria's Secret</span>
-        <span class="ttag" data-cat="beauty">Sephora</span>
-        <span class="ttag" data-cat="beauty">Bath &amp; Body Works</span>
-        <span class="ttag" data-cat="beauty">Lush</span>
-        <span class="ttag" data-cat="lifestyle">Apple</span>
-        <span class="ttag" data-cat="lifestyle">Toys "R" Us</span>
-        <span class="ttag" data-cat="lifestyle">GameStop</span>
-        <span class="ttag" data-cat="lifestyle">Primark</span>
-        <span class="ttag" data-cat="lifestyle">Hot Topic</span>
-        <span class="ttag" data-cat="dining">Carpaccio</span>
-        <span class="ttag" data-cat="dining">PF Chang's</span>
-        <span class="ttag" data-cat="dining">Benihana</span>
-        <span class="ttag ttag-plus" data-cat="all">+430 More</span>
+        <span class="tc" data-cat="fashion">Zara</span>
+        <span class="tc" data-cat="fashion">H&amp;M</span>
+        <span class="tc" data-cat="fashion">Uniqlo</span>
+        <span class="tc" data-cat="fashion">Nike</span>
+        <span class="tc" data-cat="fashion">Adidas</span>
+        <span class="tc" data-cat="fashion">American Eagle</span>
+        <span class="tc" data-cat="fashion">Forever 21</span>
+        <span class="tc" data-cat="fashion">Victoria's Secret</span>
+        <span class="tc" data-cat="fashion">Levi's</span>
+        <span class="tc" data-cat="beauty">Sephora</span>
+        <span class="tc" data-cat="beauty">Bath &amp; Body Works</span>
+        <span class="tc" data-cat="beauty">Lush</span>
+        <span class="tc" data-cat="beauty">MAC Cosmetics</span>
+        <span class="tc" data-cat="lifestyle">Apple</span>
+        <span class="tc" data-cat="lifestyle">Toys "R" Us</span>
+        <span class="tc" data-cat="lifestyle">GameStop</span>
+        <span class="tc" data-cat="lifestyle">Primark</span>
+        <span class="tc" data-cat="lifestyle">Hot Topic</span>
+        <span class="tc" data-cat="dining">Carpaccio</span>
+        <span class="tc" data-cat="dining">PF Chang's</span>
+        <span class="tc" data-cat="dining">Benihana</span>
+        <span class="tc tc-more" data-cat="all">+430 More</span>
       </div>
     </div>
 
-    <!-- Leasing calculator -->
-    <div class="calc-wrap reveal" id="leasingCalc">
-      <div class="calc-head">
-        <div class="tag">Leasing ROI Estimator</div>
-        <h3 class="calc-title">See Your <em>Potential Return</em></h3>
+    <!-- ROI Calculator -->
+    <div class="calc-box rv" id="roiCalc">
+      <div class="calc-hd">
+        <div class="stag">Leasing ROI Estimator</div>
+        <h3 class="calc-title">Model Your <em>Potential Return</em></h3>
       </div>
-      <div class="calc-body">
-        <div class="calc-inputs">
-          <div class="calc-field">
-            <label>Space Size (sq ft)</label>
-            <input type="range" id="calcSize" min="500" max="20000" value="2000" step="500" oninput="updateCalc()"/>
-            <div class="range-val" id="calcSizeVal">2,000 sq ft</div>
+      <div class="calc-layout">
+        <div class="calc-left">
+          <!-- Size slider -->
+          <div class="cf">
+            <div class="cf-lbl">Space Size: <strong id="szLabel">2,000 sq ft</strong></div>
+            <div class="slider-wrap">
+              <input type="range" id="szSlider" min="500" max="20000" value="2000" step="500" oninput="calcUpdate()"/>
+              <div class="slider-thumb-track">
+                <div class="slider-fill" id="szFill"></div>
+              </div>
+            </div>
+            <div class="cf-scale"><span>500</span><span>20,000</span></div>
           </div>
-          <div class="calc-field">
-            <label>Location Tier</label>
-            <div class="calc-select-row">
-              <button class="tier-btn active" data-tier="1" onclick="selectTier(this,1)">Prime</button>
-              <button class="tier-btn" data-tier="2" onclick="selectTier(this,2)">Standard</button>
-              <button class="tier-btn" data-tier="3" onclick="selectTier(this,3)">Pop-Up</button>
+          <!-- Tier -->
+          <div class="cf">
+            <div class="cf-lbl">Location Tier</div>
+            <div class="btn-row" id="tierRow">
+              <button class="pr active" data-tier="prime"    onclick="setTier(this,'prime')">Prime Location</button>
+              <button class="pr"        data-tier="standard" onclick="setTier(this,'standard')">Standard</button>
+              <button class="pr"        data-tier="popup"    onclick="setTier(this,'popup')">Pop-Up Zone</button>
             </div>
           </div>
-          <div class="calc-field">
-            <label>Category</label>
-            <div class="calc-select-row">
-              <button class="cat-btn active" data-mult="1.3" onclick="selectCat(this,1.3)">Fashion</button>
-              <button class="cat-btn" data-mult="1.5" onclick="selectCat(this,1.5)">Luxury</button>
-              <button class="cat-btn" data-mult="1.1" onclick="selectCat(this,1.1)">F&amp;B</button>
-              <button class="cat-btn" data-mult="0.9" onclick="selectCat(this,0.9)">Pop-Up</button>
+          <!-- Category -->
+          <div class="cf">
+            <div class="cf-lbl">Brand Category</div>
+            <div class="btn-row" id="catRow">
+              <button class="pr active" data-mult="1.3" onclick="setCat(this,1.3)">Fashion</button>
+              <button class="pr"        data-mult="1.5" onclick="setCat(this,1.5)">Luxury</button>
+              <button class="pr"        data-mult="1.1" onclick="setCat(this,1.1)">F&amp;B</button>
+              <button class="pr"        data-mult="0.9" onclick="setCat(this,0.9)">Pop-Up</button>
             </div>
           </div>
         </div>
-        <div class="calc-output">
-          <div class="calc-out-item">
-            <div class="co-val" id="coVisitors">2.4M</div>
-            <div class="co-lbl">Annual Visitor Exposure</div>
+        <div class="calc-right" id="calcRight">
+          <div class="cr-item">
+            <div class="cr-val" id="crVisitors">2.4M</div>
+            <div class="cr-lbl">Annual Visitor Exposure</div>
+            <div class="cr-bar"><div class="crb-fill" id="crVbar" style="width:60%"></div></div>
           </div>
-          <div class="calc-out-item">
-            <div class="co-val" id="coRevenue">$2.6M</div>
-            <div class="co-lbl">Estimated Annual Revenue</div>
+          <div class="cr-item">
+            <div class="cr-val" id="crRevenue">$2.6M</div>
+            <div class="cr-lbl">Estimated Annual Revenue</div>
+            <div class="cr-bar"><div class="crb-fill" id="crRbar" style="width:50%"></div></div>
           </div>
-          <div class="calc-out-item">
-            <div class="co-val" id="coRoi">3.2×</div>
-            <div class="co-lbl">Projected ROI Multiple</div>
+          <div class="cr-item">
+            <div class="cr-val" id="crROI">3.2×</div>
+            <div class="cr-lbl">Projected ROI Multiple</div>
+            <div class="cr-bar"><div class="crb-fill" id="crObar" style="width:80%"></div></div>
           </div>
-          <a href="#contact" class="btn-gold" style="margin-top:8px">Get Full Leasing Pack</a>
+          <a href="#contact" class="btn-g" style="margin-top:4px" onclick="presetInquiry('Leasing ROI inquiry')">Get Full Leasing Pack <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     LUXURY
-═══════════════════════════════════════════ -->
-<section id="luxury" class="section section-dark luxury-section">
-  <div class="lux-ambient"></div>
-  <div class="section-inner">
-    <div class="section-head reveal">
-      <div class="tag tag-gold">The Avenue</div>
-      <h2 class="section-title">Where Luxury<br>Finds <em>New Altitude</em></h2>
-      <p class="section-desc">New Jersey's only luxury retail destination. 24 million affluent consumers. No comparable competition within 40 miles.</p>
+<!-- ══════════════════════════════════════════════════
+     §4  LUXURY
+══════════════════════════════════════════════════ -->
+<section id="luxury" class="s-dark lux-sec">
+  <div class="lux-aura"></div>
+  <div class="s-inner">
+    <div class="s-head rv">
+      <div class="stag stag-g">The Avenue · Luxury Wing</div>
+      <h2 class="s-title">Where Luxury<br>Finds <em>New Altitude</em></h2>
+      <p class="s-desc">New Jersey's only true luxury retail destination. 24 million affluent consumers with no comparable alternative within 40 miles of Manhattan.</p>
     </div>
 
     <div class="lux-layout">
-      <!-- Visual showcase -->
-      <div class="lux-visual reveal">
-        <div class="lux-visual-inner" id="luxVisual">
-          <div class="lux-glow"></div>
-          <div class="lux-ornament top-left">✦</div>
-          <div class="lux-ornament bot-right">✦</div>
-          <div class="lux-center-text">
-            <div class="lct-eyebrow">The Avenue</div>
-            <div class="lct-title">A Sanctuary<br>for the<br><em>Exceptional</em></div>
-            <div class="lct-rule"></div>
-            <div class="lct-sub">Dedicated concierge · Private suites<br>Valet · Curated curation</div>
+      <!-- Visual showcase with floating pills -->
+      <div class="lux-vis rv">
+        <div class="lux-frame" id="luxFrame">
+          <div class="lux-shimmer"></div>
+          <div class="lux-corner tl">✦</div>
+          <div class="lux-corner br">✦</div>
+          <div class="lux-text-center">
+            <div class="ltc-ey">The Avenue</div>
+            <div class="ltc-title">A Sanctuary<br>for the<br><em>Exceptional</em></div>
+            <div class="ltc-rule"></div>
+            <div class="ltc-body">Dedicated concierge · Private suites<br>Valet parking · Curated curation</div>
           </div>
         </div>
-        <!-- Floating brand pills -->
-        <div class="lux-pill lp1" data-hover="magnetic">Hermès</div>
-        <div class="lux-pill lp2" data-hover="magnetic">Tiffany &amp; Co.</div>
-        <div class="lux-pill lp3" data-hover="magnetic">Dolce &amp; Gabbana</div>
-        <div class="lux-pill lp4" data-hover="magnetic">Mulberry</div>
-        <div class="lux-pill lp5" data-hover="magnetic">Saks Fifth Ave</div>
+        <!-- Orbit pills -->
+        <div class="lux-pill lp-1" data-mag="1">Hermès</div>
+        <div class="lux-pill lp-2" data-mag="1">Tiffany &amp; Co.</div>
+        <div class="lux-pill lp-3" data-mag="1">Dolce &amp; Gabbana</div>
+        <div class="lux-pill lp-4" data-mag="1">Mulberry</div>
+        <div class="lux-pill lp-5" data-mag="1">Saks Fifth Ave</div>
       </div>
 
-      <!-- Maison list -->
-      <div class="lux-list reveal">
-        <div class="lux-kpi-row">
-          <div class="lux-kpi">
-            <div class="lk-val">NJ's Only</div>
-            <div class="lk-lbl">Luxury Retail Wing</div>
-          </div>
-          <div class="lux-kpi">
-            <div class="lk-val">24M</div>
-            <div class="lk-lbl">Affluent Consumers</div>
-          </div>
-          <div class="lux-kpi">
-            <div class="lk-val">0</div>
-            <div class="lk-lbl">Competing Luxury Malls</div>
-          </div>
+      <!-- Maison accordion + KPIs -->
+      <div class="lux-right rv">
+        <div class="lux-kpis">
+          <div class="lk"><div class="lk-v">NJ's Only</div><div class="lk-l">Luxury Wing</div></div>
+          <div class="lk"><div class="lk-v">24M</div><div class="lk-l">Affluent Consumers</div></div>
+          <div class="lk"><div class="lk-v">0</div><div class="lk-l">Competing Luxury Malls</div></div>
         </div>
 
-        <ul class="maison-list" id="maisonList">
-          <li class="maison-item" onclick="toggleMaison(this)">
-            <div class="mi-left">
-              <div class="mi-dot"></div>
-              <div>
-                <div class="mi-name">Hermès</div>
-                <div class="mi-cat">French Luxury · Leather &amp; Silk</div>
+        <ul class="maisons" id="maisonList">
+          <li class="maison" onclick="toggleMaison(this)">
+            <div class="m-row">
+              <div class="m-dot"></div>
+              <div class="m-info">
+                <div class="m-name">Hermès</div>
+                <div class="m-cat">French Luxury · Leather &amp; Silk</div>
               </div>
+              <span class="m-status open">Open</span>
+              <i class="fas fa-plus m-ico"></i>
             </div>
-            <div class="mi-right">
-              <span class="mi-status open">Open</span>
-              <i class="fas fa-chevron-down mi-arrow"></i>
-            </div>
-            <div class="mi-detail">Founded 1837. The world's most coveted luxury house. Birkin bags, silk scarves, bespoke leather. The Avenue's anchor maison — drawing qualified HNW buyers from across the tri-state area.</div>
+            <div class="m-body">Founded 1837 in Paris. The world's most coveted luxury house — Birkin bags, silk scarves, bespoke leather goods. The Avenue's anchor maison, drawing qualified HNW buyers from across the entire tri-state area.</div>
           </li>
-          <li class="maison-item" onclick="toggleMaison(this)">
-            <div class="mi-left">
-              <div class="mi-dot"></div>
-              <div>
-                <div class="mi-name">Tiffany &amp; Co.</div>
-                <div class="mi-cat">American Luxury · Fine Jewelry</div>
+          <li class="maison" onclick="toggleMaison(this)">
+            <div class="m-row">
+              <div class="m-dot"></div>
+              <div class="m-info">
+                <div class="m-name">Tiffany &amp; Co.</div>
+                <div class="m-cat">American Luxury · Fine Jewelry</div>
               </div>
+              <span class="m-status open">Open</span>
+              <i class="fas fa-plus m-ico"></i>
             </div>
-            <div class="mi-right">
-              <span class="mi-status open">Open</span>
-              <i class="fas fa-chevron-down mi-arrow"></i>
-            </div>
-            <div class="mi-detail">America's most iconic luxury jewelry brand. The 1837 NYC heritage, now accessible to 24M New Jersey and tri-state consumers without a Manhattan trip.</div>
+            <div class="m-body">America's most iconic luxury jewelry brand. 1837 NYC heritage, now accessible to 24M New Jersey and tri-state consumers — without a Manhattan trip. Highest basket conversion in The Avenue.</div>
           </li>
-          <li class="maison-item" onclick="toggleMaison(this)">
-            <div class="mi-left">
-              <div class="mi-dot"></div>
-              <div>
-                <div class="mi-name">Dolce &amp; Gabbana</div>
-                <div class="mi-cat">Italian Fashion · Luxury RTW</div>
+          <li class="maison" onclick="toggleMaison(this)">
+            <div class="m-row">
+              <div class="m-dot"></div>
+              <div class="m-info">
+                <div class="m-name">Dolce &amp; Gabbana</div>
+                <div class="m-cat">Italian Fashion · Luxury RTW</div>
               </div>
+              <span class="m-status open">Open</span>
+              <i class="fas fa-plus m-ico"></i>
             </div>
-            <div class="mi-right">
-              <span class="mi-status open">Open</span>
-              <i class="fas fa-chevron-down mi-arrow"></i>
-            </div>
-            <div class="mi-detail">Milan's boldest house. Bringing D&G's signature Mediterranean maximalism to America's most exciting mixed-use destination — attracting fashion-forward, high-spend clientele.</div>
+            <div class="m-body">Milan's boldest house. D&amp;G's Mediterranean maximalism meets America's most exciting mixed-use destination — attracting fashion-forward, high-spend clientele from across the NY metro region.</div>
           </li>
-          <li class="maison-item" onclick="toggleMaison(this)">
-            <div class="mi-left">
-              <div class="mi-dot"></div>
-              <div>
-                <div class="mi-name">Mulberry</div>
-                <div class="mi-cat">British Luxury · Leather Goods</div>
+          <li class="maison" onclick="toggleMaison(this)">
+            <div class="m-row">
+              <div class="m-dot"></div>
+              <div class="m-info">
+                <div class="m-name">Mulberry</div>
+                <div class="m-cat">British Luxury · Leather Goods</div>
               </div>
+              <span class="m-status open">Open</span>
+              <i class="fas fa-plus m-ico"></i>
             </div>
-            <div class="mi-right">
-              <span class="mi-status open">Open</span>
-              <i class="fas fa-chevron-down mi-arrow"></i>
-            </div>
-            <div class="mi-detail">Somerset's finest. Mulberry brings British heritage craftsmanship to The Avenue — reaching the US's most affluent luxury consumer market outside of Manhattan.</div>
+            <div class="m-body">Somerset's finest. Mulberry brings British heritage craftsmanship to The Avenue — reaching the most affluent luxury consumer market in the US outside of Manhattan.</div>
           </li>
-          <li class="maison-item maison-open-slot" onclick="openLuxInquiry()">
-            <div class="mi-left">
-              <div class="mi-dot mi-dot-open"></div>
-              <div>
-                <div class="mi-name" style="color:var(--gold)">Your Maison Here</div>
-                <div class="mi-cat">Invitation-Only Availability</div>
+          <li class="maison maison-open" onclick="openLuxModal()">
+            <div class="m-row">
+              <div class="m-dot m-dot-open"></div>
+              <div class="m-info">
+                <div class="m-name" style="color:var(--g)">Your Maison Here</div>
+                <div class="m-cat">Invitation-Only Availability</div>
               </div>
-            </div>
-            <div class="mi-right">
-              <span class="mi-status available">Inquire</span>
-              <i class="fas fa-plus mi-arrow"></i>
+              <span class="m-status avail">Inquire</span>
+              <i class="fas fa-arrow-right m-ico" style="color:var(--g)"></i>
             </div>
           </li>
         </ul>
-        <button class="btn-gold" onclick="openLuxInquiry()" style="margin-top:32px">Apply for The Avenue</button>
+        <button class="btn-g" onclick="openLuxModal()" style="margin-top:32px">Apply for The Avenue <i class="fas fa-arrow-right"></i></button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     DINING
-═══════════════════════════════════════════ -->
-<section id="dining" class="section section-mid">
-  <div class="section-inner">
-    <div class="section-head reveal">
-      <div class="tag">Dining &amp; Lifestyle</div>
-      <h2 class="section-title">100+ Concepts.<br><em>Zero</em> Compromises.</h2>
-      <p class="section-desc">Food isn't an afterthought — it's a daypart strategy. 4.3-hour dwell times mean three meals, every visit.</p>
+<!-- ══════════════════════════════════════════════════
+     §5  DINING
+══════════════════════════════════════════════════ -->
+<section id="dining" class="s-mid">
+  <div class="s-inner">
+    <div class="s-head rv">
+      <div class="stag">Dining &amp; Lifestyle</div>
+      <h2 class="s-title">100+ Concepts.<br><em>Zero</em> Compromises.</h2>
+      <p class="s-desc">Food isn't an afterthought — it's a daypart strategy. 4.3-hour dwell times mean three meals, every single visit.</p>
     </div>
 
-    <!-- Drag scroll dining cards -->
-    <div class="dining-slider-wrap">
-      <button class="slide-arrow slide-prev" id="dPrev"><i class="fas fa-chevron-left"></i></button>
-      <div class="dining-slider" id="diningSlider">
-        <div class="d-card" data-hover="tilt">
-          <div class="d-card-img" style="background:linear-gradient(160deg,#1a0f05,#2d1a08)"><span>🍷</span></div>
-          <div class="d-card-body">
-            <div class="d-tag">Fine Dining</div>
-            <div class="d-name">Carpaccio</div>
-            <div class="d-desc">Italian fine dining anchor of The Avenue luxury wing — signature tasting menus, curated wine list</div>
-            <div class="d-meta"><i class="fas fa-star"></i> Signature · Lunch &amp; Dinner</div>
+    <!-- Horizontal drag-scroll cards -->
+    <div class="dslider-wrap">
+      <button class="darr darr-l" id="dprev" onclick="dSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+      <div class="dslider" id="dslider">
+        <div class="dc">
+          <div class="dc-img" style="background:linear-gradient(150deg,#1a0f05,#2d1a08)"><span>🍷</span></div>
+          <div class="dc-body">
+            <div class="dc-tag">Fine Dining</div>
+            <div class="dc-name">Carpaccio</div>
+            <div class="dc-desc">Italian fine dining anchor of The Avenue — signature tasting menus, curated wine list, Michelin-level service</div>
+            <div class="dc-meta"><i class="fas fa-star"></i>Signature · Lunch &amp; Dinner</div>
           </div>
         </div>
-        <div class="d-card" data-hover="tilt">
-          <div class="d-card-img" style="background:linear-gradient(160deg,#001220,#002040)"><span>🍣</span></div>
-          <div class="d-card-body">
-            <div class="d-tag">Pan-Asian</div>
-            <div class="d-name">Asia Row</div>
-            <div class="d-desc">Omakase sushi, modern Korean, Hong Kong dim sum — a full continent of cuisine in one wing</div>
-            <div class="d-meta"><i class="fas fa-fire"></i> Multi-concept · All Day</div>
+        <div class="dc">
+          <div class="dc-img" style="background:linear-gradient(150deg,#001220,#002040)"><span>🍣</span></div>
+          <div class="dc-body">
+            <div class="dc-tag">Pan-Asian</div>
+            <div class="dc-name">Asia Row</div>
+            <div class="dc-desc">Omakase sushi, modern Korean, Hong Kong dim sum — a full continent of cuisine in one reimagined wing</div>
+            <div class="dc-meta"><i class="fas fa-fire"></i>Multi-concept · All Day</div>
           </div>
         </div>
-        <div class="d-card" data-hover="tilt">
-          <div class="d-card-img" style="background:linear-gradient(160deg,#0f0015,#1a0025)"><span>🥩</span></div>
-          <div class="d-card-body">
-            <div class="d-tag">American Steakhouse</div>
-            <div class="d-name">Liberty Grill</div>
-            <div class="d-desc">USDA Prime cuts, craft cocktails, open seven days. The go-to for corporate dining and celebrations</div>
-            <div class="d-meta"><i class="fas fa-utensils"></i> All Dayparts</div>
+        <div class="dc">
+          <div class="dc-img" style="background:linear-gradient(150deg,#0f0015,#1a0025)"><span>🥩</span></div>
+          <div class="dc-body">
+            <div class="dc-tag">American Steakhouse</div>
+            <div class="dc-name">Liberty Grill</div>
+            <div class="dc-desc">USDA Prime cuts, craft cocktails, open seven days. The go-to venue for corporate dining and celebrations</div>
+            <div class="dc-meta"><i class="fas fa-utensils"></i>All Dayparts</div>
           </div>
         </div>
-        <div class="d-card" data-hover="tilt">
-          <div class="d-card-img" style="background:linear-gradient(160deg,#0a1408,#121f0c)"><span>🌮</span></div>
-          <div class="d-card-body">
-            <div class="d-tag">Global Street Food</div>
-            <div class="d-name">World Kitchen</div>
-            <div class="d-desc">20+ international vendors, 5 cuisines — the most diverse food hall in NJ with 800+ seats</div>
-            <div class="d-meta"><i class="fas fa-globe"></i> Food Hall · Open Daily</div>
+        <div class="dc">
+          <div class="dc-img" style="background:linear-gradient(150deg,#0a1408,#121f0c)"><span>🌮</span></div>
+          <div class="dc-body">
+            <div class="dc-tag">Global Street Food</div>
+            <div class="dc-name">World Kitchen</div>
+            <div class="dc-desc">20+ international vendors, 5 cuisines — NJ's most diverse food hall with 800+ seats across three levels</div>
+            <div class="dc-meta"><i class="fas fa-globe"></i>Food Hall · Open Daily</div>
           </div>
         </div>
-        <div class="d-card" data-hover="tilt">
-          <div class="d-card-img" style="background:linear-gradient(160deg,#140808,#200c0c)"><span>🍰</span></div>
-          <div class="d-card-body">
-            <div class="d-tag">Dessert &amp; Café</div>
-            <div class="d-name">Sweet District</div>
-            <div class="d-desc">Artisan patisseries, specialty espresso, crépe stations and dessert bars — a dedicated sweet mile</div>
-            <div class="d-meta"><i class="fas fa-coffee"></i> All Day · Family Friendly</div>
+        <div class="dc">
+          <div class="dc-img" style="background:linear-gradient(150deg,#140808,#200c0c)"><span>🍰</span></div>
+          <div class="dc-body">
+            <div class="dc-tag">Dessert &amp; Café</div>
+            <div class="dc-name">Sweet District</div>
+            <div class="dc-desc">Artisan patisseries, specialty espresso, crépe stations and dessert bars — a dedicated sweet experience mile</div>
+            <div class="dc-meta"><i class="fas fa-coffee"></i>All Day · Family Friendly</div>
           </div>
         </div>
-        <div class="d-card" data-hover="tilt">
-          <div class="d-card-img" style="background:linear-gradient(160deg,#0a0a14,#10102a)"><span>🥂</span></div>
-          <div class="d-card-body">
-            <div class="d-tag">Rooftop Bar</div>
-            <div class="d-name">Sky Lounge</div>
-            <div class="d-desc">Panoramic NYC skyline views, premium spirits, private event buyout. The dream venue above the dream mall</div>
-            <div class="d-meta"><i class="fas fa-cocktail"></i> Evening · Private Events</div>
+        <div class="dc">
+          <div class="dc-img" style="background:linear-gradient(150deg,#0a0a14,#10102a)"><span>🥂</span></div>
+          <div class="dc-body">
+            <div class="dc-tag">Rooftop Bar</div>
+            <div class="dc-name">Sky Lounge</div>
+            <div class="dc-desc">Panoramic NYC skyline views, premium spirits, private event buyout. The dream venue above the dream mall</div>
+            <div class="dc-meta"><i class="fas fa-cocktail"></i>Evening · Private Events</div>
           </div>
         </div>
       </div>
-      <button class="slide-arrow slide-next" id="dNext"><i class="fas fa-chevron-right"></i></button>
+      <button class="darr darr-r" id="dnext" onclick="dSlide(1)"><i class="fas fa-chevron-right"></i></button>
     </div>
 
-    <div class="dining-kpis reveal">
-      <div class="dkpi"><div class="dkpi-n">100+</div><div class="dkpi-l">Dining Concepts</div></div>
-      <div class="dkpi"><div class="dkpi-n">3</div><div class="dkpi-l">Full Food Halls</div></div>
-      <div class="dkpi"><div class="dkpi-n">$42</div><div class="dkpi-l">Avg F&amp;B Spend / Visit</div></div>
-      <div class="dkpi"><div class="dkpi-n">4.3h</div><div class="dkpi-l">Avg Dwell Time</div></div>
+    <!-- Dining stats row -->
+    <div class="dining-stats rv">
+      <div class="ds"><div class="ds-n">100+</div><div class="ds-l">Dining Concepts</div></div>
+      <div class="ds-div"></div>
+      <div class="ds"><div class="ds-n">3</div><div class="ds-l">Full Food Halls</div></div>
+      <div class="ds-div"></div>
+      <div class="ds"><div class="ds-n">$42</div><div class="ds-l">Avg F&amp;B Spend / Visit</div></div>
+      <div class="ds-div"></div>
+      <div class="ds"><div class="ds-n">4.3h</div><div class="ds-l">Average Dwell Time</div></div>
+      <div class="ds-div"></div>
+      <div class="ds"><div class="ds-n">800+</div><div class="ds-l">Food Hall Seats</div></div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     ENTERTAINMENT
-═══════════════════════════════════════════ -->
-<section id="entertainment" class="section section-dark ent-section">
+<!-- ══════════════════════════════════════════════════
+     §6  ENTERTAINMENT
+══════════════════════════════════════════════════ -->
+<section id="ent" class="s-dark ent-sec">
   <canvas id="entCanvas"></canvas>
-  <div class="section-inner" style="position:relative;z-index:2">
-    <div class="section-head reveal">
-      <div class="tag">Attractions &amp; Entertainment</div>
-      <h2 class="section-title">The Western Hemisphere's<br>Largest <em>Indoor Theme Park.</em></h2>
-      <p class="section-desc">No other retail destination generates foot traffic like this. Six world-class attractions — all weather-proof, all year-round.</p>
+  <div class="s-inner" style="position:relative;z-index:2">
+    <div class="s-head rv">
+      <div class="stag">Attractions &amp; Entertainment</div>
+      <h2 class="s-title">Western Hemisphere's<br>Largest <em>Indoor Theme Park.</em></h2>
+      <p class="s-desc">No other retail address generates foot traffic like this. Six world-class all-weather attractions — all year round, all weather-proof.</p>
     </div>
 
-    <!-- Interactive attraction cards -->
-    <div class="ent-cards">
-      <div class="ent-card ent-card-lg reveal" data-attraction="nick" onclick="openAttr('nick')">
-        <div class="ent-card-inner" style="--bg1:#0a0a1a;--bg2:#0f0f28">
-          <div class="ent-card-icon">🎢</div>
-          <div class="ent-card-tag">INDOOR THEME PARK</div>
-          <div class="ent-card-name">Nickelodeon Universe</div>
-          <div class="ent-card-claim">Largest in the Western Hemisphere</div>
-          <div class="ent-card-stats">
-            <span><strong>35+</strong> Rides</span>
-            <span><strong>8</strong> Acres</span>
-            <span><strong>365</strong> Days/Year</span>
+    <!-- Attraction mosaic -->
+    <div class="attr-mosaic">
+      <!-- Large hero card -->
+      <div class="am-card am-lg rv" onclick="openAttr('nick')">
+        <div class="am-inner" style="--c1:#050510;--c2:#0d0d22">
+          <div class="am-glow" style="--gc:rgba(255,120,0,0.15)"></div>
+          <div class="am-ico">🎢</div>
+          <div class="am-tag">INDOOR THEME PARK · WESTERN HEMISPHERE'S LARGEST</div>
+          <div class="am-name">Nickelodeon Universe</div>
+          <div class="am-stats">
+            <span><strong>35+</strong> Rides &amp; Attractions</span>
+            <span><strong>8</strong> Themed Acres</span>
+            <span><strong>365</strong> Days / Year</span>
           </div>
-          <div class="ent-card-cta">Explore <i class="fas fa-arrow-right"></i></div>
-        </div>
-        <div class="ent-card-glow" style="--gc:rgba(255,140,0,0.15)"></div>
-      </div>
-      <div class="ent-card reveal reveal-delay-1" data-attraction="water" onclick="openAttr('water')">
-        <div class="ent-card-inner" style="--bg1:#001220;--bg2:#002040">
-          <div class="ent-card-icon">🌊</div>
-          <div class="ent-card-tag">INDOOR WATER PARK</div>
-          <div class="ent-card-name">DreamWorks</div>
-          <div class="ent-card-claim">North America's Largest Indoor</div>
-          <div class="ent-card-stats">
-            <span><strong>40</strong> Slides</span>
-            <span><strong>Year-Round</strong></span>
-          </div>
-          <div class="ent-card-cta">Explore <i class="fas fa-arrow-right"></i></div>
-        </div>
-        <div class="ent-card-glow" style="--gc:rgba(0,180,255,0.12)"></div>
-      </div>
-      <div class="ent-card reveal reveal-delay-2" data-attraction="snow" onclick="openAttr('snow')">
-        <div class="ent-card-inner" style="--bg1:#0a1018;--bg2:#102030">
-          <div class="ent-card-icon">⛷️</div>
-          <div class="ent-card-tag">INDOOR SKI RESORT</div>
-          <div class="ent-card-name">Big SNOW</div>
-          <div class="ent-card-claim">America's Only Real Indoor Snow</div>
-          <div class="ent-card-stats">
-            <span><strong>6</strong> Slopes</span>
-            <span><strong>Real Snow</strong></span>
-          </div>
-          <div class="ent-card-cta">Explore <i class="fas fa-arrow-right"></i></div>
-        </div>
-        <div class="ent-card-glow" style="--gc:rgba(100,200,255,0.1)"></div>
-      </div>
-      <div class="ent-card reveal reveal-delay-3" data-attraction="wheel" onclick="openAttr('wheel')">
-        <div class="ent-card-inner" style="--bg1:#140a00;--bg2:#201200">
-          <div class="ent-card-icon">🎡</div>
-          <div class="ent-card-tag">OBSERVATION WHEEL</div>
-          <div class="ent-card-name">The Wheel</div>
-          <div class="ent-card-claim">300 Ft · NYC Skyline Views</div>
-          <div class="ent-card-stats">
-            <span><strong>300 ft</strong> High</span>
-            <span><strong>NYC</strong> Views</span>
-          </div>
-          <div class="ent-card-cta">Explore <i class="fas fa-arrow-right"></i></div>
-        </div>
-        <div class="ent-card-glow" style="--gc:rgba(255,180,0,0.1)"></div>
-      </div>
-      <div class="ent-card reveal reveal-delay-4" data-attraction="ice" onclick="openAttr('ice')">
-        <div class="ent-card-inner" style="--bg1:#0a0818;--bg2:#100f28">
-          <div class="ent-card-icon">🏒</div>
-          <div class="ent-card-tag">ICE RINK</div>
-          <div class="ent-card-name">The Rink</div>
-          <div class="ent-card-claim">NHL-Regulation · Event Bookings</div>
-          <div class="ent-card-stats">
-            <span><strong>NHL</strong> Size</span>
-            <span><strong>Private</strong> Events</span>
-          </div>
-          <div class="ent-card-cta">Explore <i class="fas fa-arrow-right"></i></div>
-        </div>
-        <div class="ent-card-glow" style="--gc:rgba(150,100,255,0.1)"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     EVENTS
-═══════════════════════════════════════════ -->
-<section id="events" class="section section-mid">
-  <div class="section-inner">
-    <div class="section-head reveal">
-      <div class="tag">Events &amp; Live Platform</div>
-      <h2 class="section-title">500+ Events a Year.<br>One <em>Legendary</em> Stage.</h2>
-      <p class="section-desc">Dream Live PAC just opened. The Rink converts. The Expo floors are ready. Every category of live experience lives here.</p>
-    </div>
-
-    <!-- Event KPIs animated ring -->
-    <div class="event-kpi-row reveal">
-      <div class="ekpi-ring-wrap">
-        <svg class="ekpi-ring" viewBox="0 0 120 120">
-          <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(201,168,76,0.1)" stroke-width="8"/>
-          <circle cx="60" cy="60" r="52" fill="none" stroke="url(#goldGrad)" stroke-width="8"
-            stroke-dasharray="327" stroke-dashoffset="327" stroke-linecap="round"
-            class="ring-prog" data-target="0" id="ring1" style="transform-origin:center;transform:rotate(-90deg)"/>
-          <defs>
-            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#C9A84C"/>
-              <stop offset="100%" stop-color="#F0D080"/>
-            </linearGradient>
-          </defs>
-        </svg>
-        <div class="ekpi-center"><span class="counter" data-target="500" data-suffix="+">0</span><small>Events/Yr</small></div>
-      </div>
-      <div class="ekpi-ring-wrap">
-        <svg class="ekpi-ring" viewBox="0 0 120 120">
-          <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(201,168,76,0.1)" stroke-width="8"/>
-          <circle cx="60" cy="60" r="52" fill="none" stroke="url(#goldGrad2)" stroke-width="8"
-            stroke-dasharray="327" stroke-dashoffset="327" stroke-linecap="round"
-            class="ring-prog" id="ring2" style="transform-origin:center;transform:rotate(-90deg)"/>
-          <defs>
-            <linearGradient id="goldGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#C9A84C"/>
-              <stop offset="100%" stop-color="#F0D080"/>
-            </linearGradient>
-          </defs>
-        </svg>
-        <div class="ekpi-center"><span class="counter" data-target="3000">0</span><small>PAC Seats</small></div>
-      </div>
-      <div class="ekpi-ring-wrap">
-        <svg class="ekpi-ring" viewBox="0 0 120 120">
-          <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(201,168,76,0.1)" stroke-width="8"/>
-          <circle cx="60" cy="60" r="52" fill="none" stroke="url(#goldGrad3)" stroke-width="8"
-            stroke-dasharray="327" stroke-dashoffset="327" stroke-linecap="round"
-            class="ring-prog" id="ring3" style="transform-origin:center;transform:rotate(-90deg)"/>
-          <defs>
-            <linearGradient id="goldGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#C9A84C"/>
-              <stop offset="100%" stop-color="#F0D080"/>
-            </linearGradient>
-          </defs>
-        </svg>
-        <div class="ekpi-center"><span>100K+</span><small>Daily Audience</small></div>
-      </div>
-      <div class="ekpi-ring-wrap">
-        <svg class="ekpi-ring" viewBox="0 0 120 120">
-          <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(201,168,76,0.1)" stroke-width="8"/>
-          <circle cx="60" cy="60" r="52" fill="none" stroke="url(#goldGrad4)" stroke-width="8"
-            stroke-dasharray="327" stroke-dashoffset="327" stroke-linecap="round"
-            class="ring-prog" id="ring4" style="transform-origin:center;transform:rotate(-90deg)"/>
-          <defs>
-            <linearGradient id="goldGrad4" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#C9A84C"/>
-              <stop offset="100%" stop-color="#F0D080"/>
-            </linearGradient>
-          </defs>
-        </svg>
-        <div class="ekpi-center"><span>8</span><small>Distinct Venues</small></div>
-      </div>
-    </div>
-
-    <!-- Venue cards -->
-    <div class="venue-cards reveal">
-      <div class="venue-card active" id="vc-pac" onclick="switchVenue('pac',this)">
-        <div class="vc-ico">🎭</div>
-        <div class="vc-name">Dream Live PAC</div>
-        <div class="vc-cap">3,000 seats</div>
-      </div>
-      <div class="venue-card" id="vc-expo" onclick="switchVenue('expo',this)">
-        <div class="vc-ico">🏛️</div>
-        <div class="vc-name">Expo Center</div>
-        <div class="vc-cap">250K sq ft</div>
-      </div>
-      <div class="venue-card" id="vc-rink" onclick="switchVenue('rink',this)">
-        <div class="vc-ico">🎡</div>
-        <div class="vc-name">The Rink</div>
-        <div class="vc-cap">5,000 standing</div>
-      </div>
-      <div class="venue-card" id="vc-private" onclick="switchVenue('private',this)">
-        <div class="vc-ico">🍾</div>
-        <div class="vc-name">Private Dining</div>
-        <div class="vc-cap">500 gala seated</div>
-      </div>
-    </div>
-
-    <div class="venue-detail" id="venueDetail">
-      <div class="vd-panel active" id="vd-pac">
-        <div class="vd-left">
-          <div class="vd-tag">Now Open · Booking</div>
-          <h3 class="vd-title">Dream Live Performing Arts Center</h3>
-          <p class="vd-body">State-of-the-art 3,000-seat PAC at the heart of American Dream. Full AV production, broadcast infrastructure, in-house production team. Available 365 days for concerts, comedy, theater, cultural programming, brand activations and corporate launches.</p>
-          <div class="vd-specs">
-            <div class="vds"><div class="vds-v">3,000</div><div class="vds-k">Max Capacity</div></div>
-            <div class="vds"><div class="vds-v">Full</div><div class="vds-k">AV/Broadcast</div></div>
-            <div class="vds"><div class="vds-v">365</div><div class="vds-k">Days Available</div></div>
-            <div class="vds"><div class="vds-v">Built-in</div><div class="vds-k">40M Audience</div></div>
-          </div>
-          <a href="#contact" class="btn-gold" onclick="presetInquiry('Dream Live PAC booking')">Book Dream Live PAC</a>
-        </div>
-        <div class="vd-right">
-          <div class="vd-visual" style="background:linear-gradient(135deg,#050510,#0d0d20)">
-            <div style="text-align:center;padding:40px">
-              <div style="font-size:5rem;margin-bottom:16px">🎭</div>
-              <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:#fff;font-weight:300">Dream Live PAC</div>
-              <div style="font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-top:12px">3,000 SEATS · OPENED APRIL 2026</div>
-            </div>
-          </div>
+          <div class="am-cta">Full Profile <i class="fas fa-arrow-right"></i></div>
         </div>
       </div>
-      <div class="vd-panel" id="vd-expo">
-        <div class="vd-left">
-          <div class="vd-tag">Booking Now</div>
-          <h3 class="vd-title">American Dream Exposition Center</h3>
-          <p class="vd-body">250,000 sq ft of multi-level expo space for trade shows, consumer expos, conventions, and large-format brand activations. Drive-in access, flexible floor configurations, direct connectivity to 10,000+ parking spaces.</p>
-          <div class="vd-specs">
-            <div class="vds"><div class="vds-v">250K</div><div class="vds-k">Sq Ft Expo</div></div>
-            <div class="vds"><div class="vds-v">Drive-In</div><div class="vds-k">Vehicle Access</div></div>
-            <div class="vds"><div class="vds-v">10K+</div><div class="vds-k">Parking Spaces</div></div>
-            <div class="vds"><div class="vds-v">Multi</div><div class="vds-k">Level Layout</div></div>
-          </div>
-          <a href="#contact" class="btn-gold" onclick="presetInquiry('Exposition Center booking')">Book Expo Space</a>
-        </div>
-        <div class="vd-right">
-          <div class="vd-visual" style="background:linear-gradient(135deg,#100500,#1e0a00)">
-            <div style="text-align:center;padding:40px">
-              <div style="font-size:5rem;margin-bottom:16px">🏛️</div>
-              <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:#fff;font-weight:300">Expo Center</div>
-              <div style="font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-top:12px">250,000 SQ FT · TRADE &amp; CONSUMER</div>
-            </div>
+      <!-- Right 2×2 grid -->
+      <div class="am-grid">
+        <div class="am-card rv reveal-delay-1" onclick="openAttr('water')">
+          <div class="am-inner" style="--c1:#001220;--c2:#002040">
+            <div class="am-glow" style="--gc:rgba(0,160,255,0.12)"></div>
+            <div class="am-ico">🌊</div>
+            <div class="am-tag">INDOOR WATER PARK</div>
+            <div class="am-name">DreamWorks Water Park</div>
+            <div class="am-stats"><span><strong>40</strong> Slides</span><span><strong>Year-Round</strong></span></div>
+            <div class="am-cta">Explore <i class="fas fa-arrow-right"></i></div>
           </div>
         </div>
-      </div>
-      <div class="vd-panel" id="vd-rink">
-        <div class="vd-left">
-          <div class="vd-tag">Private Buyout Available</div>
-          <h3 class="vd-title">The Rink — Center Stage</h3>
-          <p class="vd-body">NHL-regulation ice rink convertible to event floor for concerts and esports. Up to 5,000 standing capacity. Surrounded by the mall's daily traffic — every event gets pre-built audience exposure before doors open.</p>
-          <div class="vd-specs">
-            <div class="vds"><div class="vds-v">5,000</div><div class="vds-k">Standing Capacity</div></div>
-            <div class="vds"><div class="vds-v">NHL</div><div class="vds-k">Regulation Rink</div></div>
-            <div class="vds"><div class="vds-v">Convert</div><div class="vds-k">To Event Floor</div></div>
-            <div class="vds"><div class="vds-v">Built-in</div><div class="vds-k">Foot Traffic</div></div>
-          </div>
-          <a href="#contact" class="btn-gold" onclick="presetInquiry('The Rink event booking')">Book The Rink</a>
-        </div>
-        <div class="vd-right">
-          <div class="vd-visual" style="background:linear-gradient(135deg,#0a0818,#100f28)">
-            <div style="text-align:center;padding:40px">
-              <div style="font-size:5rem;margin-bottom:16px">🎡</div>
-              <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:#fff;font-weight:300">The Rink</div>
-              <div style="font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-top:12px">5,000 STANDING · CONCERTS &amp; ESPORTS</div>
-            </div>
+        <div class="am-card rv reveal-delay-2" onclick="openAttr('snow')">
+          <div class="am-inner" style="--c1:#0a1018;--c2:#102030">
+            <div class="am-glow" style="--gc:rgba(100,200,255,0.10)"></div>
+            <div class="am-ico">⛷️</div>
+            <div class="am-tag">INDOOR SKI RESORT</div>
+            <div class="am-name">Big SNOW</div>
+            <div class="am-stats"><span><strong>6</strong> Slopes</span><span><strong>Real Snow</strong></span></div>
+            <div class="am-cta">Explore <i class="fas fa-arrow-right"></i></div>
           </div>
         </div>
-      </div>
-      <div class="vd-panel" id="vd-private">
-        <div class="vd-left">
-          <div class="vd-tag">Private Events</div>
-          <h3 class="vd-title">Private Dining &amp; Event Suites</h3>
-          <p class="vd-body">From intimate 12-person board dinners to 500-seat black-tie galas. Multiple private dining rooms, event suites, and experiential spaces across the property — each configurable to your exact brief.</p>
-          <div class="vd-specs">
-            <div class="vds"><div class="vds-v">500</div><div class="vds-k">Gala Seated</div></div>
-            <div class="vds"><div class="vds-v">12–500</div><div class="vds-k">Group Size Range</div></div>
-            <div class="vds"><div class="vds-v">Full</div><div class="vds-k">Catering Team</div></div>
-            <div class="vds"><div class="vds-v">Multiple</div><div class="vds-k">Room Options</div></div>
+        <div class="am-card rv reveal-delay-3" onclick="openAttr('wheel')">
+          <div class="am-inner" style="--c1:#140a00;--c2:#201200">
+            <div class="am-glow" style="--gc:rgba(255,180,0,0.10)"></div>
+            <div class="am-ico">🎡</div>
+            <div class="am-tag">OBSERVATION WHEEL</div>
+            <div class="am-name">The Wheel</div>
+            <div class="am-stats"><span><strong>300 ft</strong> High</span><span><strong>NYC Views</strong></span></div>
+            <div class="am-cta">Explore <i class="fas fa-arrow-right"></i></div>
           </div>
-          <a href="#contact" class="btn-gold" onclick="presetInquiry('Private dining/event space booking')">Book Private Event</a>
         </div>
-        <div class="vd-right">
-          <div class="vd-visual" style="background:linear-gradient(135deg,#100805,#1e1008)">
-            <div style="text-align:center;padding:40px">
-              <div style="font-size:5rem;margin-bottom:16px">🍾</div>
-              <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:#fff;font-weight:300">Private Events</div>
-              <div style="font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-top:12px">12–500 GUESTS · FULL CATERING</div>
-            </div>
+        <div class="am-card rv reveal-delay-4" onclick="openAttr('ice')">
+          <div class="am-inner" style="--c1:#0a0818;--c2:#100f28">
+            <div class="am-glow" style="--gc:rgba(150,100,255,0.10)"></div>
+            <div class="am-ico">🏒</div>
+            <div class="am-tag">NHL ICE RINK</div>
+            <div class="am-name">The Rink</div>
+            <div class="am-stats"><span><strong>NHL</strong> Size</span><span><strong>Private</strong> Events</span></div>
+            <div class="am-cta">Explore <i class="fas fa-arrow-right"></i></div>
           </div>
         </div>
       </div>
@@ -948,96 +736,233 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     PARTNERS / SPONSORSHIP
-═══════════════════════════════════════════ -->
-<section id="partners" class="section section-dark">
-  <div class="section-inner">
-    <div class="section-head reveal">
-      <div class="tag">Partnerships &amp; Sponsorship</div>
-      <h2 class="section-title">Build a Partnership<br>That <em>Can't Be Ignored</em></h2>
-      <p class="section-desc">40M captive visitors. 4.3-hour dwell time. Category exclusivity. First-party data. This is the most efficient brand spend on the market.</p>
+<!-- ══════════════════════════════════════════════════
+     §7  EVENTS
+══════════════════════════════════════════════════ -->
+<section id="events" class="s-mid">
+  <div class="s-inner">
+    <div class="s-head rv">
+      <div class="stag">Events &amp; Live Platform</div>
+      <h2 class="s-title">500+ Events a Year.<br>One <em>Legendary</em> Stage.</h2>
+      <p class="s-desc">Dream Live PAC just opened. The Rink converts. The Expo floors are ready. Every category of live experience has a home here.</p>
     </div>
 
-    <!-- Interactive sponsorship tiers -->
-    <div class="sponsor-tiers reveal">
-      <div class="s-tier" data-tier="silver" onclick="selectSponsor(this,'silver')">
-        <div class="st-header">
-          <div class="st-name">Silver</div>
-          <div class="st-price">$150K<span>/yr</span></div>
-          <div class="st-tag">Brand Partner</div>
-        </div>
-        <ul class="st-feats">
-          <li><i class="fas fa-check"></i>Digital signage in 3 locations</li>
-          <li><i class="fas fa-check"></i>2 brand activation days/year</li>
-          <li><i class="fas fa-check"></i>Social media features (12/yr)</li>
-          <li><i class="fas fa-check"></i>Event co-branding rights</li>
-          <li><i class="fas fa-check"></i>Quarterly audience reports</li>
-          <li class="feat-no"><i class="fas fa-times"></i>Category exclusivity</li>
-          <li class="feat-no"><i class="fas fa-times"></i>Naming rights</li>
-        </ul>
-        <button class="st-btn" onclick="presetInquiry('Silver Sponsorship inquiry'); document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
+    <!-- Animated ring KPIs -->
+    <div class="ring-row rv">
+      <div class="ring-wrap" id="rw1">
+        <svg viewBox="0 0 120 120" class="ring-svg">
+          <circle cx="60" cy="60" r="50" class="ring-bg"/>
+          <circle cx="60" cy="60" r="50" class="ring-arc" id="ra1" stroke="url(#rg1)" stroke-dasharray="314" stroke-dashoffset="314"/>
+          <defs><linearGradient id="rg1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#9A7A2E"/><stop offset="100%" stop-color="#F0D080"/></linearGradient></defs>
+        </svg>
+        <div class="ring-mid"><span class="counter" data-target="500" data-sfx="+">0</span><small>Events/Yr</small></div>
       </div>
-
-      <div class="s-tier s-tier-featured" data-tier="gold" onclick="selectSponsor(this,'gold')">
-        <div class="st-badge">MOST POPULAR</div>
-        <div class="st-header">
-          <div class="st-name">Gold</div>
-          <div class="st-price">$500K<span>/yr</span></div>
-          <div class="st-tag">Presenting Sponsor</div>
-        </div>
-        <ul class="st-feats">
-          <li><i class="fas fa-check"></i>Category exclusivity</li>
-          <li><i class="fas fa-check"></i>Venue naming rights (1)</li>
-          <li><i class="fas fa-check"></i>8 activation days + pop-up space</li>
-          <li><i class="fas fa-check"></i>Full digital package</li>
-          <li><i class="fas fa-check"></i>Celebrity event co-hosting</li>
-          <li><i class="fas fa-check"></i>Dedicated account team</li>
-          <li><i class="fas fa-check"></i>First-party data access</li>
-        </ul>
-        <button class="st-btn st-btn-gold" onclick="presetInquiry('Gold Sponsorship inquiry'); document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire Now</button>
+      <div class="ring-wrap" id="rw2">
+        <svg viewBox="0 0 120 120" class="ring-svg">
+          <circle cx="60" cy="60" r="50" class="ring-bg"/>
+          <circle cx="60" cy="60" r="50" class="ring-arc" id="ra2" stroke="url(#rg2)" stroke-dasharray="314" stroke-dashoffset="314"/>
+          <defs><linearGradient id="rg2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#9A7A2E"/><stop offset="100%" stop-color="#F0D080"/></linearGradient></defs>
+        </svg>
+        <div class="ring-mid"><span class="counter" data-target="3000">0</span><small>PAC Seats</small></div>
       </div>
-
-      <div class="s-tier" data-tier="platinum" onclick="selectSponsor(this,'platinum')">
-        <div class="st-header">
-          <div class="st-name">Platinum</div>
-          <div class="st-price">Custom<span></span></div>
-          <div class="st-tag">Premier · Multi-Year</div>
-        </div>
-        <ul class="st-feats">
-          <li><i class="fas fa-check"></i>Multi-venue naming rights</li>
-          <li><i class="fas fa-check"></i>Permanent branded installation</li>
-          <li><i class="fas fa-check"></i>Unlimited activation calendar</li>
-          <li><i class="fas fa-check"></i>Co-produced annual event</li>
-          <li><i class="fas fa-check"></i>Board-level engagement</li>
-          <li><i class="fas fa-check"></i>Custom integration package</li>
-          <li><i class="fas fa-check"></i>IP co-creation rights</li>
-        </ul>
-        <button class="st-btn" onclick="presetInquiry('Platinum Sponsorship inquiry'); document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Us</button>
+      <div class="ring-wrap" id="rw3">
+        <svg viewBox="0 0 120 120" class="ring-svg">
+          <circle cx="60" cy="60" r="50" class="ring-bg"/>
+          <circle cx="60" cy="60" r="50" class="ring-arc" id="ra3" stroke="url(#rg3)" stroke-dasharray="314" stroke-dashoffset="314"/>
+          <defs><linearGradient id="rg3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#9A7A2E"/><stop offset="100%" stop-color="#F0D080"/></linearGradient></defs>
+        </svg>
+        <div class="ring-mid"><span>100K+</span><small>Daily Audience</small></div>
+      </div>
+      <div class="ring-wrap" id="rw4">
+        <svg viewBox="0 0 120 120" class="ring-svg">
+          <circle cx="60" cy="60" r="50" class="ring-bg"/>
+          <circle cx="60" cy="60" r="50" class="ring-arc" id="ra4" stroke="url(#rg4)" stroke-dasharray="314" stroke-dashoffset="314"/>
+          <defs><linearGradient id="rg4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#9A7A2E"/><stop offset="100%" stop-color="#F0D080"/></linearGradient></defs>
+        </svg>
+        <div class="ring-mid"><span>8</span><small>Distinct Venues</small></div>
       </div>
     </div>
 
-    <!-- Past brand partners -->
-    <div class="past-partners reveal">
-      <div class="pp-label">Brands That Have Activated Here</div>
-      <div class="pp-logos">
-        <div class="pp-logo">Pepsi</div>
-        <div class="pp-logo">Samsung</div>
-        <div class="pp-logo">Toyota</div>
-        <div class="pp-logo">Mastercard</div>
-        <div class="pp-logo">T-Mobile</div>
-        <div class="pp-logo">Amazon</div>
-        <div class="pp-logo">L'Oréal</div>
-        <div class="pp-logo">Spotify</div>
-        <div class="pp-logo">Google</div>
-        <div class="pp-logo">Chase</div>
+    <!-- Venue switcher tabs -->
+    <div class="vtabs rv" id="vtabs">
+      <div class="vtab active" id="vt-pac"     onclick="switchVenue('pac',this)"><span>🎭</span><div><b>Dream Live PAC</b><em>3,000 seats</em></div></div>
+      <div class="vtab"        id="vt-expo"    onclick="switchVenue('expo',this)"><span>🏛️</span><div><b>Expo Center</b><em>250K sq ft</em></div></div>
+      <div class="vtab"        id="vt-rink"    onclick="switchVenue('rink',this)"><span>🎡</span><div><b>The Rink</b><em>5,000 standing</em></div></div>
+      <div class="vtab"        id="vt-private" onclick="switchVenue('private',this)"><span>🍾</span><div><b>Private Dining</b><em>500 gala seats</em></div></div>
+    </div>
+
+    <!-- Venue panels -->
+    <div class="vpanels">
+      <div class="vp active" id="vp-pac">
+        <div class="vp-left">
+          <div class="vp-badge">Now Open · Booking Open</div>
+          <h3 class="vp-title">Dream Live Performing Arts Center</h3>
+          <p class="vp-body">State-of-the-art 3,000-seat PAC at the heart of American Dream. Full AV production, broadcast infrastructure, in-house production team. Available 365 days for concerts, comedy, theater, cultural programming, brand activations and corporate launches.</p>
+          <div class="vp-specs">
+            <div class="vps"><div class="vps-v">3,000</div><div class="vps-l">Max Capacity</div></div>
+            <div class="vps"><div class="vps-v">Full</div><div class="vps-l">AV/Broadcast</div></div>
+            <div class="vps"><div class="vps-v">365</div><div class="vps-l">Days Available</div></div>
+            <div class="vps"><div class="vps-v">Built-in</div><div class="vps-l">40M Audience</div></div>
+          </div>
+          <a href="#contact" class="btn-g" onclick="presetInquiry('Dream Live PAC booking')">Book Dream Live PAC <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="vp-right">
+          <div class="vp-visual" style="background:linear-gradient(135deg,#050510,#0d0d20)">
+            <div class="vpv-inner"><div class="vpv-ico">🎭</div><div class="vpv-name">Dream Live PAC</div><div class="vpv-sub">3,000 SEATS · OPENED 2026</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="vp" id="vp-expo">
+        <div class="vp-left">
+          <div class="vp-badge">Booking Now</div>
+          <h3 class="vp-title">American Dream Exposition Center</h3>
+          <p class="vp-body">250,000 sq ft of multi-level expo space for trade shows, consumer expos, conventions, and large-format brand activations. Drive-in access, flexible floor configurations, direct connectivity to 10,000+ parking spaces.</p>
+          <div class="vp-specs">
+            <div class="vps"><div class="vps-v">250K</div><div class="vps-l">Sq Ft Expo</div></div>
+            <div class="vps"><div class="vps-v">Drive-In</div><div class="vps-l">Vehicle Access</div></div>
+            <div class="vps"><div class="vps-v">10K+</div><div class="vps-l">Parking Spaces</div></div>
+            <div class="vps"><div class="vps-v">Multi</div><div class="vps-l">Level Layout</div></div>
+          </div>
+          <a href="#contact" class="btn-g" onclick="presetInquiry('Exposition Center booking')">Book Expo Space <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="vp-right">
+          <div class="vp-visual" style="background:linear-gradient(135deg,#100500,#1e0a00)">
+            <div class="vpv-inner"><div class="vpv-ico">🏛️</div><div class="vpv-name">Expo Center</div><div class="vpv-sub">250,000 SQ FT · TRADE &amp; CONSUMER</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="vp" id="vp-rink">
+        <div class="vp-left">
+          <div class="vp-badge">Private Buyout Available</div>
+          <h3 class="vp-title">The Rink — Center Stage</h3>
+          <p class="vp-body">NHL-regulation ice rink convertible to event floor for concerts and esports. Up to 5,000 standing capacity. Surrounded by the mall's daily traffic — every event gets pre-built audience exposure before doors open.</p>
+          <div class="vp-specs">
+            <div class="vps"><div class="vps-v">5,000</div><div class="vps-l">Standing Cap.</div></div>
+            <div class="vps"><div class="vps-v">NHL</div><div class="vps-l">Regulation Rink</div></div>
+            <div class="vps"><div class="vps-v">Convert</div><div class="vps-l">To Event Floor</div></div>
+            <div class="vps"><div class="vps-v">Built-in</div><div class="vps-l">Foot Traffic</div></div>
+          </div>
+          <a href="#contact" class="btn-g" onclick="presetInquiry('The Rink event booking')">Book The Rink <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="vp-right">
+          <div class="vp-visual" style="background:linear-gradient(135deg,#0a0818,#100f28)">
+            <div class="vpv-inner"><div class="vpv-ico">🎡</div><div class="vpv-name">The Rink</div><div class="vpv-sub">5,000 STANDING · CONCERTS &amp; ESPORTS</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="vp" id="vp-private">
+        <div class="vp-left">
+          <div class="vp-badge">Private &amp; Corporate Events</div>
+          <h3 class="vp-title">Private Dining &amp; Event Suites</h3>
+          <p class="vp-body">From intimate 12-person board dinners to 500-seat black-tie galas. Multiple private dining rooms, event suites, and experiential spaces across the property — each configurable to your exact brief.</p>
+          <div class="vp-specs">
+            <div class="vps"><div class="vps-v">500</div><div class="vps-l">Gala Seated</div></div>
+            <div class="vps"><div class="vps-v">12–500</div><div class="vps-l">Group Range</div></div>
+            <div class="vps"><div class="vps-v">Full</div><div class="vps-l">Catering Team</div></div>
+            <div class="vps"><div class="vps-v">Multiple</div><div class="vps-l">Room Options</div></div>
+          </div>
+          <a href="#contact" class="btn-g" onclick="presetInquiry('Private dining/event booking')">Book Private Event <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="vp-right">
+          <div class="vp-visual" style="background:linear-gradient(135deg,#100805,#1e1008)">
+            <div class="vpv-inner"><div class="vpv-ico">🍾</div><div class="vpv-name">Private Events</div><div class="vpv-sub">12–500 GUESTS · FULL CATERING</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     §8  PARTNERS
+══════════════════════════════════════════════════ -->
+<section id="partners" class="s-dark">
+  <div class="s-inner">
+    <div class="s-head rv">
+      <div class="stag">Partnerships &amp; Sponsorship</div>
+      <h2 class="s-title">Build a Partnership<br>That <em>Can't Be Ignored</em></h2>
+      <p class="s-desc">40M captive visitors · 4.3-hour dwell time · category exclusivity · first-party data. The most efficient brand spend on the market.</p>
+    </div>
+
+    <!-- Interactive tier cards -->
+    <div class="tiers rv" id="tiersWrap">
+      <div class="tier" id="tier-s" onclick="selectTier(this,'Silver')">
+        <div class="tier-hd">
+          <div class="tier-name">Silver</div>
+          <div class="tier-price">$150K<span>/yr</span></div>
+          <div class="tier-type">Brand Partner</div>
+        </div>
+        <ul class="tier-feats">
+          <li class="y"><i class="fas fa-check"></i>Digital signage · 3 locations</li>
+          <li class="y"><i class="fas fa-check"></i>2 brand activation days / year</li>
+          <li class="y"><i class="fas fa-check"></i>Social media features (12/yr)</li>
+          <li class="y"><i class="fas fa-check"></i>Event co-branding rights</li>
+          <li class="y"><i class="fas fa-check"></i>Quarterly audience reports</li>
+          <li class="n"><i class="fas fa-times"></i>Category exclusivity</li>
+          <li class="n"><i class="fas fa-times"></i>Naming rights</li>
+        </ul>
+        <button class="tier-btn" onclick="presetInquiry('Silver Sponsorship'); scrollTo('contact')">Get Started</button>
+      </div>
+
+      <div class="tier tier-feat" id="tier-g" onclick="selectTier(this,'Gold')">
+        <div class="tier-badge">MOST POPULAR</div>
+        <div class="tier-hd">
+          <div class="tier-name">Gold</div>
+          <div class="tier-price">$500K<span>/yr</span></div>
+          <div class="tier-type">Presenting Sponsor</div>
+        </div>
+        <ul class="tier-feats">
+          <li class="y"><i class="fas fa-check"></i>Category exclusivity</li>
+          <li class="y"><i class="fas fa-check"></i>Venue naming rights (1)</li>
+          <li class="y"><i class="fas fa-check"></i>8 activation days + pop-up space</li>
+          <li class="y"><i class="fas fa-check"></i>Full digital + OOH package</li>
+          <li class="y"><i class="fas fa-check"></i>Celebrity event co-hosting</li>
+          <li class="y"><i class="fas fa-check"></i>Dedicated account team</li>
+          <li class="y"><i class="fas fa-check"></i>First-party data access</li>
+        </ul>
+        <button class="tier-btn tier-btn-g" onclick="presetInquiry('Gold Sponsorship'); scrollTo('contact')">Inquire Now</button>
+      </div>
+
+      <div class="tier" id="tier-p" onclick="selectTier(this,'Platinum')">
+        <div class="tier-hd">
+          <div class="tier-name">Platinum</div>
+          <div class="tier-price">Custom<span></span></div>
+          <div class="tier-type">Premier · Multi-Year</div>
+        </div>
+        <ul class="tier-feats">
+          <li class="y"><i class="fas fa-check"></i>Multi-venue naming rights</li>
+          <li class="y"><i class="fas fa-check"></i>Permanent branded installation</li>
+          <li class="y"><i class="fas fa-check"></i>Unlimited activation calendar</li>
+          <li class="y"><i class="fas fa-check"></i>Co-produced annual event</li>
+          <li class="y"><i class="fas fa-check"></i>Board-level engagement</li>
+          <li class="y"><i class="fas fa-check"></i>Custom integration package</li>
+          <li class="y"><i class="fas fa-check"></i>IP co-creation rights</li>
+        </ul>
+        <button class="tier-btn" onclick="presetInquiry('Platinum Sponsorship'); scrollTo('contact')">Contact Us</button>
+      </div>
+    </div>
+
+    <!-- Past brand logos -->
+    <div class="brands-row rv">
+      <div class="br-label">Brands That Have Activated at American Dream</div>
+      <div class="br-logos" id="brandLogos">
+        <div class="br">Pepsi</div>
+        <div class="br">Samsung</div>
+        <div class="br">Toyota</div>
+        <div class="br">Mastercard</div>
+        <div class="br">T-Mobile</div>
+        <div class="br">Amazon</div>
+        <div class="br">L'Oréal</div>
+        <div class="br">Spotify</div>
+        <div class="br">Google</div>
+        <div class="br">Chase</div>
       </div>
     </div>
 
     <!-- Celebrity wall -->
-    <div class="celebrity-wall reveal">
+    <div class="celeb-wall rv">
       <div class="cw-label">A-List Visitors &amp; Appearances — 2023–2025</div>
-      <div class="cw-names" id="cwNames">
+      <div class="cw-grid" id="celebGrid">
         <span>Kim Kardashian</span>
         <span>Cardi B</span>
         <span>Lil Uzi Vert</span>
@@ -1048,75 +973,71 @@
         <span>DJ Envy</span>
         <span>North West</span>
       </div>
-      <div class="cw-sub">Organic celebrity presence generating 400M+ social impressions annually</div>
+      <div class="cw-note">Organic celebrity presence generating 400M+ social impressions annually</div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     CONTACT / CTA
-═══════════════════════════════════════════ -->
-<section id="contact" class="section contact-section">
-  <div class="contact-ambient"></div>
-  <div class="section-inner" style="position:relative;z-index:2">
-    <div class="section-head reveal" style="text-align:center">
-      <div class="tag" style="justify-content:center">Take the Next Step</div>
-      <h2 class="section-title" style="text-align:center">Ready to Be Part<br>of the <em>Dream?</em></h2>
-      <p class="section-desc" style="max-width:520px;margin:0 auto">Our commercial team responds within one business day. Every great partnership starts here.</p>
+<!-- ══════════════════════════════════════════════════
+     §9  CONTACT
+══════════════════════════════════════════════════ -->
+<section id="contact" class="s-dark contact-sec">
+  <div class="contact-glow"></div>
+  <div class="s-inner" style="position:relative;z-index:2">
+    <div class="s-head rv" style="text-align:center">
+      <div class="stag" style="justify-content:center">Take the Next Step</div>
+      <h2 class="s-title" style="text-align:center">Ready to Be Part<br>of the <em>Dream?</em></h2>
+      <p class="s-desc" style="max-width:500px;margin:0 auto">Our commercial team responds within one business day. Every great partnership starts with one conversation.</p>
     </div>
 
-    <!-- 3-path CTA -->
-    <div class="cta-paths reveal">
-      <div class="cta-path" onclick="selectPath(this,'Retail Leasing inquiry')" data-hover="tilt">
-        <div class="cp-icon"><i class="fas fa-store"></i></div>
-        <div class="cp-title">Retail &amp; Leasing</div>
-        <div class="cp-desc">Flagship, luxury, F&amp;B, or pop-up — we'll find the right space and terms for your brand.</div>
-        <div class="cp-arrow"><i class="fas fa-arrow-right"></i></div>
+    <!-- Path selector -->
+    <div class="paths rv" id="pathsWrap">
+      <div class="path" onclick="selectPath(this,'Retail Leasing inquiry')">
+        <div class="path-ico"><i class="fas fa-store"></i></div>
+        <div class="path-title">Retail &amp; Leasing</div>
+        <div class="path-desc">Flagship, luxury, F&amp;B, or pop-up — find the right space and terms for your brand.</div>
+        <div class="path-arr"><i class="fas fa-arrow-right"></i></div>
       </div>
-      <div class="cta-path" onclick="selectPath(this,'Sponsorship inquiry')" data-hover="tilt">
-        <div class="cp-icon"><i class="fas fa-handshake"></i></div>
-        <div class="cp-title">Sponsorships</div>
-        <div class="cp-desc">Category exclusivity, activation rights, first-party data, and 40M annual impressions.</div>
-        <div class="cp-arrow"><i class="fas fa-arrow-right"></i></div>
+      <div class="path" onclick="selectPath(this,'Sponsorship inquiry')">
+        <div class="path-ico"><i class="fas fa-handshake"></i></div>
+        <div class="path-title">Sponsorships</div>
+        <div class="path-desc">Category exclusivity, activation rights, first-party data, and 40M annual impressions.</div>
+        <div class="path-arr"><i class="fas fa-arrow-right"></i></div>
       </div>
-      <div class="cta-path" onclick="selectPath(this,'Event/Venue booking inquiry')" data-hover="tilt">
-        <div class="cp-icon"><i class="fas fa-calendar-star"></i></div>
-        <div class="cp-title">Events &amp; Venues</div>
-        <div class="cp-desc">Book Dream Live PAC, the Expo Center, or a full property buyout. Your biggest event ever.</div>
-        <div class="cp-arrow"><i class="fas fa-arrow-right"></i></div>
+      <div class="path" onclick="selectPath(this,'Event/Venue booking inquiry')">
+        <div class="path-ico"><i class="fas fa-calendar-alt"></i></div>
+        <div class="path-title">Events &amp; Venues</div>
+        <div class="path-desc">Book Dream Live PAC, the Expo Center, or a full property buyout.</div>
+        <div class="path-arr"><i class="fas fa-arrow-right"></i></div>
       </div>
     </div>
 
-    <!-- Contact form -->
-    <div class="contact-form-wrap reveal" id="formWrap">
-      <form class="contact-form" id="contactForm" onsubmit="submitForm(event)">
+    <!-- Form -->
+    <div class="form-wrap rv" id="formWrap">
+      <form id="contactForm" onsubmit="submitForm(event)">
         <div class="form-row">
-          <div class="form-group">
-            <label>First Name <span>*</span></label>
+          <div class="fg">
+            <label>First Name <sup>*</sup></label>
             <input type="text" id="fFirst" placeholder="First name" required/>
-            <div class="form-line"></div>
           </div>
-          <div class="form-group">
-            <label>Last Name <span>*</span></label>
+          <div class="fg">
+            <label>Last Name <sup>*</sup></label>
             <input type="text" id="fLast" placeholder="Last name" required/>
-            <div class="form-line"></div>
           </div>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label>Email <span>*</span></label>
+          <div class="fg">
+            <label>Email <sup>*</sup></label>
             <input type="email" id="fEmail" placeholder="you@brand.com" required/>
-            <div class="form-line"></div>
           </div>
-          <div class="form-group">
+          <div class="fg">
             <label>Company</label>
             <input type="text" id="fCompany" placeholder="Brand or agency"/>
-            <div class="form-line"></div>
           </div>
         </div>
-        <div class="form-group">
-          <label>Inquiry Type <span>*</span></label>
-          <div class="custom-select-wrap">
+        <div class="fg">
+          <label>Inquiry Type <sup>*</sup></label>
+          <div class="sel-wrap">
             <select id="fType" required>
               <option value="">Select your interest…</option>
               <option>Retail Leasing — Flagship</option>
@@ -1136,59 +1057,58 @@
             <i class="fas fa-chevron-down"></i>
           </div>
         </div>
-        <div class="form-group">
+        <div class="fg">
           <label>Tell Us Your Vision</label>
           <textarea id="fMsg" rows="4" placeholder="Describe what you want to achieve at American Dream…"></textarea>
-          <div class="form-line"></div>
         </div>
-        <button type="submit" class="form-submit" id="formSubmit">
-          <span id="submitText">Send Inquiry</span>
-          <i class="fas fa-arrow-right" id="submitIcon"></i>
-          <div class="submit-loader" id="submitLoader"></div>
+        <button type="submit" class="form-sub" id="formSub">
+          <span id="subTxt">Send Inquiry</span>
+          <i class="fas fa-arrow-right" id="subIco"></i>
+          <span class="sub-spin" id="subSpin"></span>
         </button>
       </form>
-      <div class="form-success" id="formSuccess">
-        <div class="fs-star">✦</div>
-        <div class="fs-title">Thank You</div>
-        <div class="fs-body">Your inquiry has been received. Our commercial team will be in touch within one business day.</div>
-        <button class="btn-ghost" onclick="resetForm()" style="margin-top:24px">Send Another Inquiry</button>
+      <div class="form-ok" id="formOK">
+        <div class="fok-star">✦</div>
+        <div class="fok-title">Inquiry Received</div>
+        <div class="fok-body">Our commercial team will be in touch within one business day. Thank you for your interest in American Dream.</div>
+        <button class="btn-ghost" onclick="resetForm()" style="margin-top:28px">Send Another Inquiry</button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo">✦ American Dream</div>
-        <p class="footer-tagline">North America's most ambitious mixed-use destination. 3 million sq ft of retail, entertainment, dining, and live events — 8 miles from Midtown Manhattan.</p>
-        <div class="footer-social">
+<!-- ░░ FOOTER ░░ -->
+<footer id="footer">
+  <div class="ft-inner">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <div class="ft-logo">✦ American Dream</div>
+        <p class="ft-about">North America's most ambitious mixed-use destination. 3 million sq ft of retail, entertainment, dining, and live events — 8 miles from Midtown Manhattan.</p>
+        <div class="ft-social">
           <a href="https://instagram.com/americandreamofficial" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="https://twitter.com/americandream" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://twitter.com/americandream" target="_blank" rel="noopener" aria-label="X"><i class="fab fa-x-twitter"></i></a>
           <a href="https://facebook.com/americandreamofficial" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
           <a href="https://youtube.com/@americandream" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
-      <div class="footer-col">
-        <div class="fc-title">Opportunities</div>
+      <div class="ft-col">
+        <div class="ft-col-title">Opportunities</div>
         <a href="#retail">Flagship Leasing</a>
         <a href="#luxury">The Avenue</a>
         <a href="#retail">Pop-Up Spaces</a>
         <a href="#partners">Sponsorships</a>
         <a href="#events">Event Bookings</a>
       </div>
-      <div class="footer-col">
-        <div class="fc-title">The Property</div>
-        <a href="#why">Location &amp; Data</a>
-        <a href="#entertainment">Attractions</a>
+      <div class="ft-col">
+        <div class="ft-col-title">The Property</div>
+        <a href="#property">Location &amp; Data</a>
+        <a href="#ent">Attractions</a>
         <a href="#dining">Dining</a>
         <a href="#events">Events Platform</a>
         <a href="#partners">Partner Stories</a>
       </div>
-      <div class="footer-col">
-        <div class="fc-title">Contact</div>
+      <div class="ft-col">
+        <div class="ft-col-title">Contact</div>
         <a href="#contact">Commercial Leasing</a>
         <a href="#contact">Events &amp; Venues</a>
         <a href="#contact">Sponsorships</a>
@@ -1196,45 +1116,41 @@
         <a href="tel:+12018040100">+1 (201) 804-0100</a>
       </div>
     </div>
-    <div class="footer-bottom">
-      <div class="fc-copy">© 2025 American Dream · 1 American Dream Way, East Rutherford, NJ 07073</div>
-      <div class="fc-legal">
-        <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Media Kit</a>
-      </div>
+    <div class="ft-bot">
+      <span>© 2025 American Dream · 1 American Dream Way, East Rutherford, NJ 07073</span>
+      <div class="ft-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Media Kit</a></div>
     </div>
   </div>
 </footer>
 
-<!-- ═══ MODALS ═══ -->
+<!-- ══════ MODALS ══════ -->
 
-<!-- Video Reel Modal -->
-<div class="modal-overlay" id="reelModal">
-  <div class="modal-inner modal-video">
-    <button class="modal-close" onclick="closeModal('reelModal')"><i class="fas fa-times"></i></button>
-    <div class="video-frame-wrap">
+<!-- Video reel -->
+<div class="modal" id="reelModal" onclick="closeModal('reelModal')">
+  <div class="modal-box modal-vid" onclick="event.stopPropagation()">
+    <button class="m-close" onclick="closeModal('reelModal')"><i class="fas fa-times"></i></button>
+    <div class="vid-ratio">
       <iframe id="reelFrame" src="" allow="autoplay;encrypted-media" allowfullscreen></iframe>
     </div>
   </div>
 </div>
 
-<!-- Attraction Detail Modal -->
-<div class="modal-overlay" id="attrModal">
-  <div class="modal-inner modal-attr">
-    <button class="modal-close" onclick="closeModal('attrModal')"><i class="fas fa-times"></i></button>
-    <div id="attrContent"></div>
+<!-- Attraction detail -->
+<div class="modal" id="attrModal" onclick="closeModal('attrModal')">
+  <div class="modal-box modal-attr" onclick="event.stopPropagation()">
+    <button class="m-close" onclick="closeModal('attrModal')"><i class="fas fa-times"></i></button>
+    <div id="attrBody"></div>
   </div>
 </div>
 
-<!-- Luxury Inquiry Modal -->
-<div class="modal-overlay" id="luxModal">
-  <div class="modal-inner modal-lux">
-    <button class="modal-close" onclick="closeModal('luxModal')"><i class="fas fa-times"></i></button>
-    <div class="lux-modal-body">
-      <div class="tag tag-gold">The Avenue · Luxury Leasing</div>
-      <h3 style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;margin:16px 0;color:#fff">Apply for <em style="color:var(--gold)">The Avenue</em></h3>
-      <p style="color:rgba(255,255,255,0.5);font-size:.9rem;line-height:1.7;margin-bottom:28px">The Avenue is an invitation-only luxury wing. Please share your brand details below and our luxury leasing team will be in contact within 48 hours.</p>
-      <button class="btn-gold" onclick="closeModal('luxModal'); presetInquiry('Luxury leasing — The Avenue application'); document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Complete Application →</button>
-    </div>
+<!-- Luxury inquiry -->
+<div class="modal" id="luxModal" onclick="closeModal('luxModal')">
+  <div class="modal-box modal-lux" onclick="event.stopPropagation()">
+    <button class="m-close" onclick="closeModal('luxModal')"><i class="fas fa-times"></i></button>
+    <div class="stag stag-g" style="justify-content:center;margin-bottom:20px">The Avenue · Luxury Leasing</div>
+    <h3 class="lux-m-title">Apply for <em>The Avenue</em></h3>
+    <p class="lux-m-body">The Avenue is an invitation-only luxury wing. Share your brand details and our luxury leasing team will respond within 48 hours.</p>
+    <button class="btn-g" onclick="closeModal('luxModal');presetInquiry('Luxury leasing — The Avenue');document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Complete Application <i class="fas fa-arrow-right"></i></button>
   </div>
 </div>
 
