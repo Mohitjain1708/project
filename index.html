@@ -14,10 +14,22 @@
 </head>
 <body>
 
+<!-- ░░ NOISE OVERLAY ░░ -->
+<div id="noiseOverlay" aria-hidden="true"></div>
+
 <!-- ░░ PRELOADER ░░ -->
 <div id="preloader">
   <div class="pre-wrap">
-    <svg class="pre-ring-svg" viewBox="0 0 100 100"><circle class="pre-ring-bg" cx="50" cy="50" r="42"/><circle class="pre-ring-fill" id="preRing" cx="50" cy="50" r="42"/></svg>
+    <svg class="pre-ring-svg" viewBox="0 0 100 100">
+      <defs>
+        <linearGradient id="preGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#9A7A2E"/>
+          <stop offset="100%" stop-color="#F0D080"/>
+        </linearGradient>
+      </defs>
+      <circle class="pre-ring-bg" cx="50" cy="50" r="42"/>
+      <circle class="pre-ring-fill" id="preRing" cx="50" cy="50" r="42"/>
+    </svg>
     <div class="pre-center">
       <div class="pre-star" id="preStar">✦</div>
       <div class="pre-pct" id="preNum">0</div>
@@ -34,6 +46,15 @@
 
 <!-- ░░ PROGRESS ░░ -->
 <div id="scrollBar"></div>
+
+<!-- ░░ BACK TO TOP ░░ -->
+<button id="backTop" aria-label="Back to top">
+  <svg class="btt-ring-svg" viewBox="0 0 44 44">
+    <circle cx="22" cy="22" r="18" class="btt-track"/>
+    <circle cx="22" cy="22" r="18" class="btt-fill" id="bttRing"/>
+  </svg>
+  <i class="fas fa-arrow-up btt-ico"></i>
+</button>
 
 <!-- ░░ NAV ░░ -->
 <nav id="mainNav">
@@ -85,6 +106,11 @@
 <section id="hero">
   <canvas id="heroCanvas"></canvas>
 
+  <!-- Ambient glow orbs -->
+  <div class="hero-orb orb-1" aria-hidden="true"></div>
+  <div class="hero-orb orb-2" aria-hidden="true"></div>
+  <div class="hero-orb orb-3" aria-hidden="true"></div>
+
   <div class="hero-vid">
     <iframe id="heroIframe"
       src="https://www.youtube.com/embed/YEKsgfP5-s8?autoplay=1&mute=1&loop=1&playlist=YEKsgfP5-s8&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3"
@@ -94,7 +120,9 @@
 
   <div class="hero-body">
     <div class="hero-eyebrow" id="hEye">
-      <span class="heb-line"></span>North America's Most Ambitious Destination<span class="heb-line"></span>
+      <span class="heb-line"></span>
+      <span class="heb-type" id="hEyeType"></span>
+      <span class="heb-line"></span>
     </div>
     <h1 class="hero-h1" id="hH1">
       <span class="h1w">The</span>
@@ -110,25 +138,30 @@
     </div>
   </div>
 
-  <!-- Floating stat pills -->
+  <!-- Floating stat pills with pulse rings -->
   <div class="hero-stats" id="hStats">
     <div class="hstat" data-delay="0">
+      <div class="hstat-pulse"></div>
       <div class="hstat-n" data-count="3" data-sfx="M+">0</div>
       <div class="hstat-l">Square Feet</div>
     </div>
     <div class="hstat" data-delay="80">
+      <div class="hstat-pulse"></div>
       <div class="hstat-n" data-count="40" data-sfx="M+">0</div>
       <div class="hstat-l">Annual Visitors</div>
     </div>
     <div class="hstat" data-delay="160">
+      <div class="hstat-pulse"></div>
       <div class="hstat-n" data-count="450" data-sfx="+">0</div>
       <div class="hstat-l">Retail Brands</div>
     </div>
     <div class="hstat" data-delay="240">
+      <div class="hstat-pulse"></div>
       <div class="hstat-n" data-count="4.3" data-sfx="h" data-dec="1">0</div>
       <div class="hstat-l">Avg Dwell Time</div>
     </div>
     <div class="hstat" data-delay="320">
+      <div class="hstat-pulse"></div>
       <div class="hstat-n" data-count="8" data-sfx=" mi">0</div>
       <div class="hstat-l">From Manhattan</div>
     </div>
@@ -178,14 +211,17 @@
     <div class="bento-grid rv">
       <div class="bento bento-xl" id="b1">
         <div class="bento-glow" style="--gc:38"></div>
+        <div class="bento-shimmer"></div>
         <div class="bento-ico"><i class="fas fa-users"></i></div>
         <div class="bento-n counter" data-target="40" data-sfx="M+">0</div>
         <div class="bento-label">Annual Visitors</div>
         <div class="bento-sub">More than Disneyland + Universal Studios combined</div>
         <div class="bento-bar"><div class="bb-fill" style="--p:88%"></div></div>
+        <div class="bento-spark" aria-hidden="true"></div>
       </div>
       <div class="bento" id="b2">
         <div class="bento-glow" style="--gc:45"></div>
+        <div class="bento-shimmer"></div>
         <div class="bento-ico"><i class="fas fa-vector-square"></i></div>
         <div class="bento-n counter" data-target="3" data-sfx="M sqft">0</div>
         <div class="bento-label">Total GLA</div>
@@ -193,6 +229,7 @@
       </div>
       <div class="bento" id="b3">
         <div class="bento-glow" style="--gc:32"></div>
+        <div class="bento-shimmer"></div>
         <div class="bento-ico"><i class="fas fa-clock"></i></div>
         <div class="bento-n counter" data-target="4.3" data-sfx="h" data-dec="1">0</div>
         <div class="bento-label">Avg Dwell Time</div>
@@ -200,6 +237,7 @@
       </div>
       <div class="bento" id="b4">
         <div class="bento-glow" style="--gc:50"></div>
+        <div class="bento-shimmer"></div>
         <div class="bento-ico"><i class="fas fa-redo-alt"></i></div>
         <div class="bento-n counter" data-target="92" data-sfx="%">0</div>
         <div class="bento-label">Repeat Visitors</div>
@@ -207,6 +245,7 @@
       </div>
       <div class="bento" id="b5">
         <div class="bento-glow" style="--gc:42"></div>
+        <div class="bento-shimmer"></div>
         <div class="bento-ico"><i class="fas fa-map-marker-alt"></i></div>
         <div class="bento-n counter" data-target="24" data-sfx="M">0</div>
         <div class="bento-label">Catchment Population</div>
@@ -214,6 +253,7 @@
       </div>
       <div class="bento" id="b6">
         <div class="bento-glow" style="--gc:36"></div>
+        <div class="bento-shimmer"></div>
         <div class="bento-ico"><i class="fas fa-dollar-sign"></i></div>
         <div class="bento-n counter" data-target="68" data-sfx="%">0</div>
         <div class="bento-label">HHI $75K+</div>
@@ -298,6 +338,9 @@
   </div>
 </section>
 
+<!-- ░░ SECTION DIVIDER ░░ -->
+<div class="sec-div" aria-hidden="true"></div>
+
 <!-- ══════════════════════════════════════════════════
      §3  RETAIL
 ══════════════════════════════════════════════════ -->
@@ -369,11 +412,11 @@
     <div class="tenant-wrap rv">
       <div class="stag" style="margin-bottom:20px">Featured Tenants</div>
       <div class="tenant-filters" id="tFilters">
-        <button class="tf active" data-cat="all"     onclick="filterTenants('all',this)">All</button>
-        <button class="tf" data-cat="fashion"  onclick="filterTenants('fashion',this)">Fashion</button>
-        <button class="tf" data-cat="beauty"   onclick="filterTenants('beauty',this)">Beauty</button>
+        <button class="tf active" data-cat="all"      onclick="filterTenants('all',this)">All</button>
+        <button class="tf" data-cat="fashion"   onclick="filterTenants('fashion',this)">Fashion</button>
+        <button class="tf" data-cat="beauty"    onclick="filterTenants('beauty',this)">Beauty</button>
         <button class="tf" data-cat="lifestyle" onclick="filterTenants('lifestyle',this)">Lifestyle</button>
-        <button class="tf" data-cat="dining"   onclick="filterTenants('dining',this)">Dining</button>
+        <button class="tf" data-cat="dining"    onclick="filterTenants('dining',this)">Dining</button>
       </div>
       <div class="tenant-cloud" id="tenantCloud">
         <span class="tc" data-cat="fashion">Zara</span>
@@ -462,6 +505,9 @@
     </div>
   </div>
 </section>
+
+<!-- ░░ SECTION DIVIDER ░░ -->
+<div class="sec-div sec-div-flip" aria-hidden="true"></div>
 
 <!-- ══════════════════════════════════════════════════
      §4  LUXURY
@@ -572,6 +618,9 @@
   </div>
 </section>
 
+<!-- ░░ SECTION DIVIDER ░░ -->
+<div class="sec-div" aria-hidden="true"></div>
+
 <!-- ══════════════════════════════════════════════════
      §5  DINING
 ══════════════════════════════════════════════════ -->
@@ -645,20 +694,38 @@
       <button class="darr darr-r" id="dnext" onclick="dSlide(1)"><i class="fas fa-chevron-right"></i></button>
     </div>
 
-    <!-- Dining stats row -->
+    <!-- Dining stats row — animated counters -->
     <div class="dining-stats rv">
-      <div class="ds"><div class="ds-n">100+</div><div class="ds-l">Dining Concepts</div></div>
+      <div class="ds">
+        <div class="ds-n dstat-counter" data-target="100" data-sfx="+">0</div>
+        <div class="ds-l">Dining Concepts</div>
+      </div>
       <div class="ds-div"></div>
-      <div class="ds"><div class="ds-n">3</div><div class="ds-l">Full Food Halls</div></div>
+      <div class="ds">
+        <div class="ds-n dstat-counter" data-target="3">0</div>
+        <div class="ds-l">Full Food Halls</div>
+      </div>
       <div class="ds-div"></div>
-      <div class="ds"><div class="ds-n">$42</div><div class="ds-l">Avg F&amp;B Spend / Visit</div></div>
+      <div class="ds">
+        <div class="ds-n dstat-counter" data-target="42" data-pfx="$">0</div>
+        <div class="ds-l">Avg F&amp;B Spend / Visit</div>
+      </div>
       <div class="ds-div"></div>
-      <div class="ds"><div class="ds-n">4.3h</div><div class="ds-l">Average Dwell Time</div></div>
+      <div class="ds">
+        <div class="ds-n dstat-counter" data-target="4.3" data-sfx="h" data-dec="1">0</div>
+        <div class="ds-l">Average Dwell Time</div>
+      </div>
       <div class="ds-div"></div>
-      <div class="ds"><div class="ds-n">800+</div><div class="ds-l">Food Hall Seats</div></div>
+      <div class="ds">
+        <div class="ds-n dstat-counter" data-target="800" data-sfx="+">0</div>
+        <div class="ds-l">Food Hall Seats</div>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- ░░ SECTION DIVIDER ░░ -->
+<div class="sec-div sec-div-flip" aria-hidden="true"></div>
 
 <!-- ══════════════════════════════════════════════════
      §6  ENTERTAINMENT
@@ -675,9 +742,9 @@
     <!-- Attraction mosaic -->
     <div class="attr-mosaic">
       <!-- Large hero card -->
-      <div class="am-card am-lg rv" onclick="openAttr('nick')">
+      <div class="am-card am-lg rv" onclick="openAttr('nick')" data-cursor="Explore">
         <div class="am-inner" style="--c1:#050510;--c2:#0d0d22">
-          <div class="am-glow" style="--gc:rgba(255,120,0,0.15)"></div>
+          <div class="am-glow" style="--gc:rgba(255,120,0,0.18)"></div>
           <div class="am-ico">🎢</div>
           <div class="am-tag">INDOOR THEME PARK · WESTERN HEMISPHERE'S LARGEST</div>
           <div class="am-name">Nickelodeon Universe</div>
@@ -691,9 +758,9 @@
       </div>
       <!-- Right 2×2 grid -->
       <div class="am-grid">
-        <div class="am-card rv reveal-delay-1" onclick="openAttr('water')">
+        <div class="am-card rv reveal-delay-1" onclick="openAttr('water')" data-cursor="Explore">
           <div class="am-inner" style="--c1:#001220;--c2:#002040">
-            <div class="am-glow" style="--gc:rgba(0,160,255,0.12)"></div>
+            <div class="am-glow" style="--gc:rgba(0,160,255,0.15)"></div>
             <div class="am-ico">🌊</div>
             <div class="am-tag">INDOOR WATER PARK</div>
             <div class="am-name">DreamWorks Water Park</div>
@@ -701,9 +768,9 @@
             <div class="am-cta">Explore <i class="fas fa-arrow-right"></i></div>
           </div>
         </div>
-        <div class="am-card rv reveal-delay-2" onclick="openAttr('snow')">
+        <div class="am-card rv reveal-delay-2" onclick="openAttr('snow')" data-cursor="Explore">
           <div class="am-inner" style="--c1:#0a1018;--c2:#102030">
-            <div class="am-glow" style="--gc:rgba(100,200,255,0.10)"></div>
+            <div class="am-glow" style="--gc:rgba(100,200,255,0.12)"></div>
             <div class="am-ico">⛷️</div>
             <div class="am-tag">INDOOR SKI RESORT</div>
             <div class="am-name">Big SNOW</div>
@@ -711,9 +778,9 @@
             <div class="am-cta">Explore <i class="fas fa-arrow-right"></i></div>
           </div>
         </div>
-        <div class="am-card rv reveal-delay-3" onclick="openAttr('wheel')">
+        <div class="am-card rv reveal-delay-3" onclick="openAttr('wheel')" data-cursor="Explore">
           <div class="am-inner" style="--c1:#140a00;--c2:#201200">
-            <div class="am-glow" style="--gc:rgba(255,180,0,0.10)"></div>
+            <div class="am-glow" style="--gc:rgba(255,180,0,0.12)"></div>
             <div class="am-ico">🎡</div>
             <div class="am-tag">OBSERVATION WHEEL</div>
             <div class="am-name">The Wheel</div>
@@ -721,9 +788,9 @@
             <div class="am-cta">Explore <i class="fas fa-arrow-right"></i></div>
           </div>
         </div>
-        <div class="am-card rv reveal-delay-4" onclick="openAttr('ice')">
+        <div class="am-card rv reveal-delay-4" onclick="openAttr('ice')" data-cursor="Explore">
           <div class="am-inner" style="--c1:#0a0818;--c2:#100f28">
-            <div class="am-glow" style="--gc:rgba(150,100,255,0.10)"></div>
+            <div class="am-glow" style="--gc:rgba(150,100,255,0.12)"></div>
             <div class="am-ico">🏒</div>
             <div class="am-tag">NHL ICE RINK</div>
             <div class="am-name">The Rink</div>
@@ -735,6 +802,9 @@
     </div>
   </div>
 </section>
+
+<!-- ░░ SECTION DIVIDER ░░ -->
+<div class="sec-div" aria-hidden="true"></div>
 
 <!-- ══════════════════════════════════════════════════
      §7  EVENTS
@@ -873,6 +943,9 @@
   </div>
 </section>
 
+<!-- ░░ SECTION DIVIDER ░░ -->
+<div class="sec-div sec-div-flip" aria-hidden="true"></div>
+
 <!-- ══════════════════════════════════════════════════
      §8  PARTNERS
 ══════════════════════════════════════════════════ -->
@@ -978,6 +1051,9 @@
   </div>
 </section>
 
+<!-- ░░ SECTION DIVIDER ░░ -->
+<div class="sec-div" aria-hidden="true"></div>
+
 <!-- ══════════════════════════════════════════════════
      §9  CONTACT
 ══════════════════════════════════════════════════ -->
@@ -1012,31 +1088,38 @@
       </div>
     </div>
 
-    <!-- Form -->
+    <!-- Form with floating labels -->
     <div class="form-wrap rv" id="formWrap">
-      <form id="contactForm" onsubmit="submitForm(event)">
+      <form id="contactForm" onsubmit="submitForm(event)" novalidate>
         <div class="form-row">
-          <div class="fg">
-            <label>First Name <sup>*</sup></label>
-            <input type="text" id="fFirst" placeholder="First name" required/>
+          <div class="fg fg-float">
+            <input type="text" id="fFirst" placeholder=" " required/>
+            <label for="fFirst">First Name <sup>*</sup></label>
+            <div class="fg-line"></div>
+            <div class="fg-err">Required</div>
           </div>
-          <div class="fg">
-            <label>Last Name <sup>*</sup></label>
-            <input type="text" id="fLast" placeholder="Last name" required/>
+          <div class="fg fg-float">
+            <input type="text" id="fLast" placeholder=" " required/>
+            <label for="fLast">Last Name <sup>*</sup></label>
+            <div class="fg-line"></div>
+            <div class="fg-err">Required</div>
           </div>
         </div>
         <div class="form-row">
-          <div class="fg">
-            <label>Email <sup>*</sup></label>
-            <input type="email" id="fEmail" placeholder="you@brand.com" required/>
+          <div class="fg fg-float">
+            <input type="email" id="fEmail" placeholder=" " required/>
+            <label for="fEmail">Email <sup>*</sup></label>
+            <div class="fg-line"></div>
+            <div class="fg-err">Valid email required</div>
           </div>
-          <div class="fg">
-            <label>Company</label>
-            <input type="text" id="fCompany" placeholder="Brand or agency"/>
+          <div class="fg fg-float">
+            <input type="text" id="fCompany" placeholder=" "/>
+            <label for="fCompany">Company</label>
+            <div class="fg-line"></div>
           </div>
         </div>
         <div class="fg">
-          <label>Inquiry Type <sup>*</sup></label>
+          <label class="fg-static-lbl">Inquiry Type <sup>*</sup></label>
           <div class="sel-wrap">
             <select id="fType" required>
               <option value="">Select your interest…</option>
@@ -1057,9 +1140,10 @@
             <i class="fas fa-chevron-down"></i>
           </div>
         </div>
-        <div class="fg">
-          <label>Tell Us Your Vision</label>
-          <textarea id="fMsg" rows="4" placeholder="Describe what you want to achieve at American Dream…"></textarea>
+        <div class="fg fg-float fg-ta">
+          <textarea id="fMsg" rows="4" placeholder=" "></textarea>
+          <label for="fMsg">Tell Us Your Vision</label>
+          <div class="fg-line"></div>
         </div>
         <button type="submit" class="form-sub" id="formSub">
           <span id="subTxt">Send Inquiry</span>

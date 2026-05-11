@@ -1,6 +1,7 @@
 /* ============================================================
-   AMERICAN DREAM — SALES DECK · main.js
+   AMERICAN DREAM — SALES DECK · main.js  v4
    Matches actual index.html IDs / classes / inline handlers exactly
+   Enhanced: parallax, typewriter, toast, magnetic btns, tilt, trails
    ============================================================ */
 
 'use strict';
@@ -9,83 +10,99 @@
 const $ = id => document.getElementById(id);
 const $$ = sel => document.querySelectorAll(sel);
 
-/* ── PRELOADER ──────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   PRELOADER
+══════════════════════════════════════════════════════════ */
 (function initPreloader() {
-  const loader  = $('preloader');
-  const ring    = $('preRing');
-  const numEl   = $('preNum');
-  const starEl  = $('preStar');
-
+  const loader = $('preloader');
+  const ring   = $('preRing');
+  const numEl  = $('preNum');
   if (!loader) return;
 
   const circumference = 2 * Math.PI * 42; // r=42
   ring.style.strokeDasharray  = circumference;
   ring.style.strokeDashoffset = circumference;
 
+  document.body.style.overflow = 'hidden';
+
   let pct = 0;
   const tick = setInterval(() => {
-    pct += Math.random() * 14 + 4;
-    if (pct >= 100) { pct = 100; clearInterval(tick); }
-    const offset = circumference * (1 - pct / 100);
-    ring.style.strokeDashoffset = offset;
+    pct = Math.min(pct + Math.random() * 12 + 5, 100);
+    ring.style.strokeDashoffset = circumference * (1 - pct / 100);
     numEl.textContent = Math.floor(pct) + '%';
     if (pct >= 100) {
+      clearInterval(tick);
       setTimeout(() => {
         loader.classList.add('done');
         document.body.style.overflow = '';
-        setTimeout(() => loader.remove(), 700);
+        setTimeout(() => loader.remove(), 750);
         kickoffHeroAnimations();
-      }, 350);
+      }, 300);
     }
-  }, 60);
-
-  document.body.style.overflow = 'hidden';
+  }, 55);
 })();
 
-/* ── HERO ENTRY ANIMATIONS ──────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   HERO ENTRY ANIMATIONS
+══════════════════════════════════════════════════════════ */
 function kickoffHeroAnimations() {
-  // Eyebrow
-  const eye = $('hEye');
-  if (eye) { requestAnimationFrame(() => eye.classList.add('visible')); }
-
-  // H1 words
-  $$('.h1w').forEach((w, i) => {
-    setTimeout(() => w.classList.add('visible'), i * 150 + 100);
-  });
-
-  // Desc + btns
+  const eye   = $('hEye');
   const hDesc = $('hDesc');
   const hBtns = $('hBtns');
-  if (hDesc) setTimeout(() => hDesc.classList.add('visible'), 600);
-  if (hBtns) setTimeout(() => hBtns.classList.add('visible'), 800);
 
-  // Stat pills
+  if (eye)   requestAnimationFrame(() => eye.classList.add('visible'));
+
+  $$('.h1w').forEach((w, i) =>
+    setTimeout(() => w.classList.add('visible'), i * 160 + 80));
+
+  if (hDesc) setTimeout(() => {
+    hDesc.classList.add('visible');
+    startTypewriter(hDesc, hDesc.textContent);
+  }, 560);
+
+  if (hBtns) setTimeout(() => hBtns.classList.add('visible'), 780);
+
   $$('.hstat').forEach(el => {
     const delay = parseInt(el.dataset.delay || 0);
-    setTimeout(() => el.classList.add('visible'), 1000 + delay);
+    setTimeout(() => el.classList.add('visible'), 1050 + delay);
   });
 
-  // Animate stat counters
   $$('.hstat-n[data-count]').forEach(el => {
-    const target = parseFloat(el.dataset.count);
-    const sfx    = el.dataset.sfx || '';
-    const dec    = parseInt(el.dataset.dec || 0);
-    const delay  = parseInt(el.closest('.hstat')?.dataset.delay || 0);
-    setTimeout(() => animateCounter(el, 0, target, 1400, sfx, dec), 1200 + delay);
+    const delay = parseInt(el.closest('.hstat')?.dataset.delay || 0);
+    setTimeout(() => {
+      animateCounter(el, 0,
+        parseFloat(el.dataset.count),
+        1600,
+        el.dataset.sfx || '',
+        parseInt(el.dataset.dec || 0));
+    }, 1200 + delay);
   });
 }
 
-/* ── CUSTOM CURSOR ──────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   TYPEWRITER — hero description
+══════════════════════════════════════════════════════════ */
+function startTypewriter(el, text) {
+  el.textContent = '';
+  let i = 0;
+  const interval = setInterval(() => {
+    el.textContent += text[i];
+    i++;
+    if (i >= text.length) clearInterval(interval);
+  }, 28);
+}
+
+/* ══════════════════════════════════════════════════════════
+   CUSTOM CURSOR
+══════════════════════════════════════════════════════════ */
 (function initCursor() {
   const dot    = $('curDot');
   const circle = $('curCircle');
   const text   = $('curText');
-
   if (!dot || !circle || !text) return;
   if (window.matchMedia('(hover:none)').matches) return;
 
-  let mx = -200, my = -200, cx = -200, cy = -200;
-  let raf;
+  let mx = -300, my = -300, cx = -300, cy = -300;
 
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
@@ -95,55 +112,63 @@ function kickoffHeroAnimations() {
     text.style.top  = my + 'px';
   });
 
-  function loop() {
-    cx += (mx - cx) * 0.12;
-    cy += (my - cy) * 0.12;
+  (function loop() {
+    cx += (mx - cx) * 0.11;
+    cy += (my - cy) * 0.11;
     circle.style.left = cx + 'px';
     circle.style.top  = cy + 'px';
-    raf = requestAnimationFrame(loop);
-  }
-  loop();
+    requestAnimationFrame(loop);
+  })();
 
-  // Hover detection
+  // Click ripple
+  document.addEventListener('mousedown', () => {
+    document.body.classList.add('cursor-click');
+    setTimeout(() => document.body.classList.remove('cursor-click'), 180);
+  });
+
+  // Interactive targets
+  const HOVER_SEL = 'a,button,.fcard,.maison,.am-card,.tier,.path,.vtab,.dc,.tf,.tc,.pr,.hstat,.bento,[onclick],.darr,.m-close,.lux-pill,.cw-grid span,.br,.ft-social a,.flip-cta';
   document.addEventListener('mouseover', e => {
-    const t = e.target.closest('a, button, .fcard, .maison, .am-card, .tier, .path, .vtab, .dc, .tf, .tc, .pr, .hstat, .bento, [onclick]');
-    if (t) {
+    if (e.target.closest(HOVER_SEL)) {
       document.body.classList.add('cursor-hover');
-      const label = t.dataset.curLabel || t.title || '';
+      const label = e.target.closest('[data-cur]')?.dataset.cur || '';
       text.textContent = label || '✦';
     }
   });
   document.addEventListener('mouseout', e => {
-    const t = e.target.closest('a, button, .fcard, .maison, .am-card, .tier, .path, .vtab, .dc, .tf, .tc, .pr, .hstat, .bento, [onclick]');
-    if (t) document.body.classList.remove('cursor-hover');
+    if (e.target.closest(HOVER_SEL)) document.body.classList.remove('cursor-hover');
   });
 })();
 
-/* ── SCROLL PROGRESS BAR ────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   SCROLL PROGRESS BAR
+══════════════════════════════════════════════════════════ */
 (function initScrollBar() {
   const bar = $('scrollBar');
   if (!bar) return;
   window.addEventListener('scroll', () => {
-    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+    const pct = window.scrollY /
+      (document.documentElement.scrollHeight - window.innerHeight) * 100;
     bar.style.width = Math.min(pct, 100) + '%';
   }, { passive: true });
 })();
 
-/* ── NAV: scrolled state + active link + hamburger ─────── */
+/* ══════════════════════════════════════════════════════════
+   NAV: scrolled + active + hamburger
+══════════════════════════════════════════════════════════ */
 (function initNav() {
-  const nav  = $('mainNav');
-  const ham  = $('ham');
+  const nav    = $('mainNav');
+  const ham    = $('ham');
   const drawer = $('drawer');
   if (!nav) return;
 
-  // Scrolled class
-  window.addEventListener('scroll', () => {
+  const onScroll = () => {
     nav.classList.toggle('scrolled', window.scrollY > 40);
     updateActiveDot();
-  }, { passive: true });
-  nav.classList.toggle('scrolled', window.scrollY > 40);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
-  // Hamburger toggle
   if (ham && drawer) {
     ham.addEventListener('click', () => {
       ham.classList.toggle('open');
@@ -151,429 +176,515 @@ function kickoffHeroAnimations() {
     });
   }
 
-  // Click outside drawer closes it
   document.addEventListener('click', e => {
-    if (drawer && drawer.classList.contains('open')) {
-      if (!drawer.contains(e.target) && e.target !== ham && !ham.contains(e.target)) {
-        closeDrawer();
-      }
-    }
+    if (!drawer || !drawer.classList.contains('open')) return;
+    if (!drawer.contains(e.target) && !ham?.contains(e.target)) closeDrawer();
   });
 })();
 
-/* exposed so inline onclick="closeDrawer()" works */
 function closeDrawer() {
-  const ham    = $('ham');
-  const drawer = $('drawer');
-  if (ham)    ham.classList.remove('open');
-  if (drawer) drawer.classList.remove('open');
+  $('ham')?.classList.remove('open');
+  $('drawer')?.classList.remove('open');
 }
 window.closeDrawer = closeDrawer;
 
-/* ── SIDE DOTS active state ─────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   SIDE DOTS + NAV ACTIVE
+══════════════════════════════════════════════════════════ */
 function updateActiveDot() {
   const sections = $$('section[id], footer[id]');
-  const scrollY  = window.scrollY + window.innerHeight * 0.4;
-  let active = null;
-  sections.forEach(s => { if (s.offsetTop <= scrollY) active = s.id; });
-  $$('.sd').forEach(d => {
-    d.classList.toggle('active', d.getAttribute('href') === '#' + active);
-  });
-  $$('.nl').forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + active);
-  });
+  const trigger  = window.scrollY + window.innerHeight * 0.38;
+  let activeId   = null;
+
+  sections.forEach(s => { if (s.offsetTop <= trigger) activeId = s.id; });
+
+  $$('.sd').forEach(d =>
+    d.classList.toggle('active', d.getAttribute('href') === '#' + activeId));
+  $$('.nl').forEach(a =>
+    a.classList.toggle('active', a.getAttribute('href') === '#' + activeId));
 }
 
-/* ── INTERSECTION OBSERVER — scroll reveals ─────────────── */
+/* ══════════════════════════════════════════════════════════
+   INTERSECTION OBSERVER — scroll reveals + counters + rings
+══════════════════════════════════════════════════════════ */
 (function initReveal() {
-  const io = new IntersectionObserver((entries) => {
+  // Generic reveal
+  const rvIO = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       entry.target.classList.add('visible');
-      // Fire counter if applicable
-      entry.target.querySelectorAll('.counter[data-target]').forEach(el => {
-        if (!el.dataset.animated) {
-          el.dataset.animated = '1';
-          const target = parseFloat(el.dataset.target);
-          const sfx    = el.dataset.sfx || '';
-          const dec    = parseInt(el.dataset.dec || 0);
-          animateCounter(el, 0, target, 1600, sfx, dec);
-        }
+
+      // Counters inside revealed blocks
+      entry.target.querySelectorAll('.counter[data-target]:not([data-animated])').forEach(el => {
+        el.dataset.animated = '1';
+        animateCounter(el, 0,
+          parseFloat(el.dataset.target),
+          1700, el.dataset.sfx || '',
+          parseInt(el.dataset.dec || 0));
       });
-      // Animate SVG rings if inside
+      rvIO.unobserve(entry.target);
+    });
+  }, { threshold: 0.14 });
+
+  $$('.rv').forEach(el => rvIO.observe(el));
+
+  // Bar reveals
+  const barIO = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      barIO.unobserve(entry.target);
+    });
+  }, { threshold: 0.28 });
+
+  $$('.rv-bar').forEach(el => barIO.observe(el));
+
+  // Ring wraps
+  const ringIO = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
       entry.target.querySelectorAll('.ring-arc').forEach(arc => animateRing(arc));
-      io.unobserve(entry.target);
-    });
-  }, { threshold: 0.15 });
-
-  // Also observe rv-bar individually
-  const barIo = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('visible');
-      barIo.unobserve(entry.target);
-    });
-  }, { threshold: 0.3 });
-
-  $$('.rv').forEach(el => io.observe(el));
-  $$('.rv-bar').forEach(el => barIo.observe(el));
-
-  // Ring rows observed separately
-  $$('.ring-wrap').forEach(rw => {
-    const rwIo = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        e.target.querySelectorAll('.ring-arc').forEach(arc => animateRing(arc));
-        e.target.querySelectorAll('.counter[data-target]').forEach(el => {
-          if (!el.dataset.animated) {
-            el.dataset.animated = '1';
-            const target = parseFloat(el.dataset.target);
-            const sfx    = el.dataset.sfx || '';
-            const dec    = parseInt(el.dataset.dec || 0);
-            animateCounter(el, 0, target, 1800, sfx, dec);
-          }
-        });
-        rwIo.unobserve(e.target);
+      entry.target.querySelectorAll('.counter[data-target]:not([data-animated])').forEach(el => {
+        el.dataset.animated = '1';
+        animateCounter(el, 0,
+          parseFloat(el.dataset.target),
+          2000, el.dataset.sfx || '',
+          parseInt(el.dataset.dec || 0));
       });
-    }, { threshold: 0.3 });
-    rwIo.observe(rw);
-  });
+      ringIO.unobserve(entry.target);
+    });
+  }, { threshold: 0.25 });
+
+  $$('.ring-wrap').forEach(el => ringIO.observe(el));
 })();
 
-/* ── COUNTER ANIMATION ──────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   COUNTER ANIMATION  (easeOutExpo)
+══════════════════════════════════════════════════════════ */
 function animateCounter(el, from, to, dur, sfx, dec) {
   const start = performance.now();
-  function frame(now) {
+  const step  = now => {
     const t   = Math.min((now - start) / dur, 1);
     const val = from + (to - from) * easeOutExpo(t);
     el.textContent = (dec > 0 ? val.toFixed(dec) : Math.floor(val)) + sfx;
-    if (t < 1) requestAnimationFrame(frame);
+    if (t < 1) requestAnimationFrame(step);
     else el.textContent = (dec > 0 ? to.toFixed(dec) : to) + sfx;
-  }
-  requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(step);
 }
-function easeOutExpo(t) {
-  return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-}
+function easeOutExpo(t) { return t >= 1 ? 1 : 1 - Math.pow(2, -10 * t); }
 
-/* ── SVG RING ANIMATION ─────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   SVG RING ANIMATION
+══════════════════════════════════════════════════════════ */
 function animateRing(arc) {
   const total  = parseFloat(arc.getAttribute('stroke-dasharray') || 314);
-  // Map ring ID to fill pct
-  const pcts   = { ra1: 0.80, ra2: 0.60, ra3: 0.90, ra4: 1.00 };
-  const id     = arc.id;
-  const pct    = pcts[id] !== undefined ? pcts[id] : 0.75;
+  const PCTS   = { ra1: 0.80, ra2: 0.60, ra3: 0.90, ra4: 1.00 };
+  const pct    = PCTS[arc.id] ?? 0.75;
   const target = total * (1 - pct);
-  arc.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(0.4,0,0.2,1)';
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      arc.style.strokeDashoffset = target;
-    });
-  });
+  arc.style.transition = 'stroke-dashoffset 2s cubic-bezier(0.4,0,0.2,1)';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    arc.style.strokeDashoffset = target;
+  }));
 }
 
-/* ── HERO CANVAS — particle field ───────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   HERO CANVAS — gold particle network
+══════════════════════════════════════════════════════════ */
 (function initHeroCanvas() {
   const canvas = $('heroCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  let W, H, particles = [];
+  let W, H;
 
-  function resize() {
+  const resize = () => {
     W = canvas.width  = canvas.offsetWidth;
     H = canvas.height = canvas.offsetHeight;
-  }
+  };
   resize();
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', resize, { passive: true });
 
-  const N = Math.min(120, Math.floor(window.innerWidth / 12));
-  for (let i = 0; i < N; i++) {
-    particles.push({
-      x: Math.random() * (W || 1200),
-      y: Math.random() * (H || 800),
-      r: Math.random() * 1.5 + 0.2,
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: (Math.random() - 0.5) * 0.25,
-      a: Math.random() * 0.6 + 0.1,
-    });
-  }
+  const N = Math.min(100, Math.floor(window.innerWidth / 14));
+  const particles = Array.from({ length: N }, () => ({
+    x: Math.random(), y: Math.random(),
+    vx: (Math.random() - .5) * .22,
+    vy: (Math.random() - .5) * .22,
+    r:  Math.random() * 1.4 + .3,
+    a:  Math.random() * .55 + .1,
+  }));
 
   let mouse = { x: -9999, y: -9999 };
-  canvas.closest('section')?.addEventListener('mousemove', e => {
+  canvas.parentElement?.addEventListener('mousemove', e => {
     const r = canvas.getBoundingClientRect();
     mouse.x = e.clientX - r.left;
     mouse.y = e.clientY - r.top;
   });
 
-  function drawFrame() {
+  (function draw() {
     if (!canvas.isConnected) return;
-    W = canvas.width; H = canvas.height;
     ctx.clearRect(0, 0, W, H);
 
     particles.forEach(p => {
-      // Gentle mouse repulsion
-      const dx = p.x - mouse.x;
-      const dy = p.y - mouse.y;
-      const dist = Math.sqrt(dx*dx + dy*dy);
-      if (dist < 80) {
-        p.x += dx / dist * 0.5;
-        p.y += dy / dist * 0.5;
+      const px = p.x * W, py = p.y * H;
+      // Gentle repulsion from cursor
+      const dx = px - mouse.x, dy = py - mouse.y;
+      const d2 = dx * dx + dy * dy;
+      if (d2 < 6400) { // 80px²
+        const d = Math.sqrt(d2);
+        p.vx += (dx / d) * .018;
+        p.vy += (dy / d) * .018;
       }
-
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0) p.x = W;
-      if (p.x > W) p.x = 0;
-      if (p.y < 0) p.y = H;
-      if (p.y > H) p.y = 0;
+      p.vx = Math.max(-0.4, Math.min(0.4, p.vx));
+      p.vy = Math.max(-0.4, Math.min(0.4, p.vy));
+      p.x  = ((p.x + p.vx / W) + 1) % 1;
+      p.y  = ((p.y + p.vy / H) + 1) % 1;
 
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.arc(px, py, p.r, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(201,168,76,${p.a})`;
       ctx.fill();
     });
 
-    // Draw connecting lines
+    // Connection lines
     for (let i = 0; i < particles.length; i++) {
+      const pi = particles[i];
       for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const d  = Math.sqrt(dx*dx + dy*dy);
-        if (d < 90) {
+        const pj = particles[j];
+        const dx = (pi.x - pj.x) * W;
+        const dy = (pi.y - pj.y) * H;
+        const d  = Math.sqrt(dx * dx + dy * dy);
+        if (d < 95) {
           ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(201,168,76,${0.08 * (1 - d/90)})`;
-          ctx.lineWidth = 0.5;
+          ctx.moveTo(pi.x * W, pi.y * H);
+          ctx.lineTo(pj.x * W, pj.y * H);
+          ctx.strokeStyle = `rgba(201,168,76,${.09 * (1 - d / 95)})`;
+          ctx.lineWidth = .6;
           ctx.stroke();
         }
       }
     }
-    requestAnimationFrame(drawFrame);
-  }
-  requestAnimationFrame(drawFrame);
+    requestAnimationFrame(draw);
+  })();
 })();
 
-/* ── ENTERTAINMENT CANVAS — star field ──────────────────── */
+/* ══════════════════════════════════════════════════════════
+   ENTERTAINMENT CANVAS — starfield + shooting stars
+══════════════════════════════════════════════════════════ */
 (function initEntCanvas() {
   const canvas = $('entCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  let W, H, stars = [], shootings = [];
+  let W, H;
 
-  function resize() {
+  const resize = () => {
     W = canvas.width  = canvas.offsetWidth;
     H = canvas.height = canvas.offsetHeight;
-  }
+  };
   resize();
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', resize, { passive: true });
 
-  const N = Math.min(200, Math.floor(window.innerWidth / 7));
-  for (let i = 0; i < N; i++) {
-    stars.push({
-      x: Math.random(),
-      y: Math.random(),
-      r: Math.random() * 1.2 + 0.1,
-      a: Math.random() * 0.5 + 0.1,
-      twinkle: Math.random() * Math.PI * 2,
-      speed: Math.random() * 0.02 + 0.005,
-    });
-  }
+  const N = Math.min(180, Math.floor(window.innerWidth / 8));
+  const stars = Array.from({ length: N }, () => ({
+    x: Math.random(), y: Math.random(),
+    r: Math.random() * 1.1 + .15,
+    a: Math.random() * .45 + .08,
+    phase: Math.random() * Math.PI * 2,
+    speed: Math.random() * .025 + .006,
+  }));
 
-  function spawnShoot() {
+  let shootings = [];
+  setInterval(() => {
     shootings.push({
-      x: Math.random() * W,
-      y: Math.random() * H * 0.4,
-      len: Math.random() * 80 + 40,
-      speed: Math.random() * 8 + 4,
-      angle: Math.PI / 6 + Math.random() * 0.2,
+      x: Math.random() * (W || 1000),
+      y: Math.random() * ((H || 600) * .45),
+      len: Math.random() * 90 + 50,
+      spd: Math.random() * 9 + 4,
+      ang: Math.PI / 6 + (Math.random() - .5) * .3,
       life: 1,
     });
-  }
-  setInterval(spawnShoot, 3000);
+  }, 2800);
 
-  function drawEnt() {
+  (function draw() {
     if (!canvas.isConnected) return;
-    W = canvas.width; H = canvas.height;
     ctx.clearRect(0, 0, W, H);
 
     stars.forEach(s => {
-      s.twinkle += s.speed;
-      const a = s.a * (0.5 + 0.5 * Math.sin(s.twinkle));
+      s.phase += s.speed;
+      const alpha = s.a * (.5 + .5 * Math.sin(s.phase));
       ctx.beginPath();
       ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(201,168,76,${a})`;
+      ctx.fillStyle = `rgba(201,168,76,${alpha})`;
       ctx.fill();
     });
 
     shootings = shootings.filter(s => s.life > 0);
     shootings.forEach(s => {
-      s.x += Math.cos(s.angle) * s.speed;
-      s.y += Math.sin(s.angle) * s.speed;
-      s.life -= 0.025;
+      s.x    += Math.cos(s.ang) * s.spd;
+      s.y    += Math.sin(s.ang) * s.spd;
+      s.life -= .022;
       const grad = ctx.createLinearGradient(
-        s.x - Math.cos(s.angle) * s.len, s.y - Math.sin(s.angle) * s.len,
-        s.x, s.y
-      );
+        s.x - Math.cos(s.ang) * s.len, s.y - Math.sin(s.ang) * s.len,
+        s.x, s.y);
       grad.addColorStop(0, `rgba(201,168,76,0)`);
-      grad.addColorStop(1, `rgba(201,168,76,${s.life * 0.8})`);
+      grad.addColorStop(1, `rgba(201,168,76,${(s.life * .85).toFixed(2)})`);
       ctx.beginPath();
-      ctx.moveTo(s.x - Math.cos(s.angle) * s.len, s.y - Math.sin(s.angle) * s.len);
+      ctx.moveTo(s.x - Math.cos(s.ang) * s.len, s.y - Math.sin(s.ang) * s.len);
       ctx.lineTo(s.x, s.y);
       ctx.strokeStyle = grad;
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth   = 1.8;
       ctx.stroke();
     });
 
-    requestAnimationFrame(drawEnt);
-  }
-  requestAnimationFrame(drawEnt);
+    requestAnimationFrame(draw);
+  })();
 })();
 
-/* ── RADAR CANVAS ───────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   RADAR CANVAS
+══════════════════════════════════════════════════════════ */
 (function initRadarCanvas() {
   const canvas = $('radarCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  let W, H, angle = 0;
+  let W, H, sweepAngle = 0;
 
-  function resize() {
+  const resize = () => {
     W = canvas.width  = canvas.offsetWidth;
     H = canvas.height = canvas.offsetHeight;
-  }
+  };
   resize();
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', resize, { passive: true });
 
-  const rings = 4;
-  const pointData = [
-    { label: 'NYC',           dist: 0.28, angle: 0.35 },
-    { label: 'Newark EWR',    dist: 0.35, angle: 1.1  },
-    { label: 'JFK',           dist: 0.55, angle: 1.8  },
-    { label: 'MetLife',       dist: 0.15, angle: 3.5  },
-    { label: '24M radius',    dist: 0.45, angle: 4.2  },
+  const POINTS = [
+    { dist: .28, angle: .35 },
+    { dist: .38, angle: 1.10 },
+    { dist: .56, angle: 1.82 },
+    { dist: .16, angle: 3.50 },
+    { dist: .46, angle: 4.22 },
   ];
 
-  function drawRadar() {
+  (function draw() {
     if (!canvas.isConnected) return;
     W = canvas.width; H = canvas.height;
     const cx = W / 2, cy = H / 2;
-    const maxR = Math.min(cx, cy) * 0.9;
+    const maxR = Math.min(cx, cy) * .90;
     ctx.clearRect(0, 0, W, H);
 
     // Background
-    const bgGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR);
-    bgGrad.addColorStop(0, 'rgba(14,10,3,0.9)');
-    bgGrad.addColorStop(1, 'rgba(5,5,5,0.95)');
-    ctx.beginPath(); ctx.arc(cx, cy, maxR, 0, Math.PI*2);
-    ctx.fillStyle = bgGrad; ctx.fill();
+    const bgG = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR);
+    bgG.addColorStop(0, 'rgba(14,10,3,.95)');
+    bgG.addColorStop(1, 'rgba(4,4,4,.98)');
+    ctx.beginPath(); ctx.arc(cx, cy, maxR, 0, Math.PI * 2);
+    ctx.fillStyle = bgG; ctx.fill();
 
     // Rings
-    for (let i = 1; i <= rings; i++) {
+    for (let i = 1; i <= 4; i++) {
       ctx.beginPath();
-      ctx.arc(cx, cy, maxR * i / rings, 0, Math.PI*2);
-      ctx.strokeStyle = `rgba(201,168,76,${0.06 + i*0.01})`;
+      ctx.arc(cx, cy, maxR * i / 4, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(201,168,76,${.05 + i * .012})`;
       ctx.lineWidth = 1; ctx.stroke();
     }
 
-    // Cross hairs
-    ctx.strokeStyle = 'rgba(201,168,76,0.06)'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(cx, cy - maxR); ctx.lineTo(cx, cy + maxR); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(cx - maxR, cy); ctx.lineTo(cx + maxR, cy); ctx.stroke();
-
-    // Sweep
-    angle = (angle + 0.008) % (Math.PI * 2);
-    const sweepGrad = ctx.createConicalGradient
-      ? ctx.createConicalGradient(cx, cy, angle)
-      : null;
-    if (!sweepGrad) {
-      // Fallback triangle wedge
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(angle);
-      const wGrad = ctx.createLinearGradient(0, 0, maxR, 0);
-      wGrad.addColorStop(0, 'rgba(201,168,76,0.25)');
-      wGrad.addColorStop(1, 'rgba(201,168,76,0)');
+    // Crosshairs
+    ctx.strokeStyle = 'rgba(201,168,76,.045)'; ctx.lineWidth = 1;
+    [0, Math.PI / 4, Math.PI / 2, 3 * Math.PI / 4].forEach(a => {
       ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.arc(0, 0, maxR, -0.4, 0, false);
-      ctx.closePath();
-      ctx.fillStyle = wGrad; ctx.fill();
-      ctx.restore();
-    }
-
-    // Points
-    pointData.forEach((pt, i) => {
-      const r = maxR * pt.dist;
-      const px = cx + Math.cos(pt.angle) * r;
-      const py = cy + Math.sin(pt.angle) * r;
-      // Pulse
-      const pulsePct = (Math.sin(Date.now() * 0.002 + i) + 1) / 2;
-      ctx.beginPath();
-      ctx.arc(px, py, 2 + pulsePct * 2, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(201,168,76,${0.6 + pulsePct * 0.4})`;
-      ctx.fill();
+      ctx.moveTo(cx + Math.cos(a) * maxR, cy + Math.sin(a) * maxR);
+      ctx.lineTo(cx - Math.cos(a) * maxR, cy - Math.sin(a) * maxR);
+      ctx.stroke();
     });
 
-    // Center dot
-    const dotGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 8);
-    dotGrad.addColorStop(0, 'rgba(201,168,76,0.9)');
-    dotGrad.addColorStop(1, 'rgba(201,168,76,0)');
-    ctx.beginPath(); ctx.arc(cx, cy, 8, 0, Math.PI*2);
-    ctx.fillStyle = dotGrad; ctx.fill();
+    // Sweep wedge
+    sweepAngle = (sweepAngle + .007) % (Math.PI * 2);
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(sweepAngle);
+    const wGrad = ctx.createLinearGradient(0, 0, maxR, 0);
+    wGrad.addColorStop(0,   'rgba(201,168,76,.22)');
+    wGrad.addColorStop(.6,  'rgba(201,168,76,.05)');
+    wGrad.addColorStop(1,   'rgba(201,168,76,0)');
+    ctx.beginPath();
+    ctx.moveTo(0, 0); ctx.arc(0, 0, maxR, -.45, 0, false); ctx.closePath();
+    ctx.fillStyle = wGrad; ctx.fill();
+    ctx.restore();
 
-    requestAnimationFrame(drawRadar);
-  }
-  requestAnimationFrame(drawRadar);
+    // Points
+    const t = Date.now() * .002;
+    POINTS.forEach((pt, i) => {
+      const r  = maxR * pt.dist;
+      const px = cx + Math.cos(pt.angle) * r;
+      const py = cy + Math.sin(pt.angle) * r;
+      const pulse = (.5 + .5 * Math.sin(t + i * 1.3)) * .5 + .5;
+
+      // Halo
+      const halo = ctx.createRadialGradient(px, py, 0, px, py, 14);
+      halo.addColorStop(0,   `rgba(201,168,76,${.25 * pulse})`);
+      halo.addColorStop(1,   'rgba(201,168,76,0)');
+      ctx.beginPath(); ctx.arc(px, py, 14, 0, Math.PI * 2);
+      ctx.fillStyle = halo; ctx.fill();
+
+      // Dot
+      ctx.beginPath(); ctx.arc(px, py, 2.5 + pulse * 1.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(201,168,76,${.7 + .3 * pulse})`; ctx.fill();
+    });
+
+    // Center
+    const cGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 10);
+    cGrad.addColorStop(0, 'rgba(201,168,76,.95)');
+    cGrad.addColorStop(1, 'rgba(201,168,76,0)');
+    ctx.beginPath(); ctx.arc(cx, cy, 10, 0, Math.PI * 2);
+    ctx.fillStyle = cGrad; ctx.fill();
+
+    requestAnimationFrame(draw);
+  })();
 })();
 
-/* ── FLIP CARDS ─────────────────────────────────────────── */
-function flipCard(el) {
-  el.classList.toggle('flipped');
-}
+/* ══════════════════════════════════════════════════════════
+   PARALLAX — sections scroll parallax
+══════════════════════════════════════════════════════════ */
+(function initParallax() {
+  const targets = [
+    { el: $('heroCanvas'),   speed: .15 },
+    { el: document.querySelector('.lux-aura'), speed: .08 },
+    { el: document.querySelector('.contact-glow'), speed: .06 },
+  ];
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    targets.forEach(t => {
+      if (!t.el) return;
+      t.el.style.transform = `translateY(${y * t.speed}px)`;
+    });
+  }, { passive: true });
+})();
+
+/* ══════════════════════════════════════════════════════════
+   MAGNETIC BUTTONS
+══════════════════════════════════════════════════════════ */
+(function initMagneticButtons() {
+  if (window.matchMedia('(hover:none)').matches) return;
+  $$('.btn-g, .nav-cta').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r  = btn.getBoundingClientRect();
+      const dx = (e.clientX - r.left - r.width  / 2) * .2;
+      const dy = (e.clientY - r.top  - r.height / 2) * .2;
+      btn.style.transform = `translate(${dx}px,${dy}px) translateY(-2px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+})();
+
+/* ══════════════════════════════════════════════════════════
+   BENTO / CARD TILT (3-D perspective)
+══════════════════════════════════════════════════════════ */
+(function initCardTilt() {
+  if (window.matchMedia('(hover:none)').matches) return;
+  const TILT_SEL = '.bento,.am-card,.tier,.dc,.path';
+  $$(TILT_SEL).forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r  = card.getBoundingClientRect();
+      const x  = (e.clientX - r.left) / r.width  - .5;
+      const y  = (e.clientY - r.top)  / r.height - .5;
+      card.style.transform =
+        `perspective(700px) rotateY(${x * 7}deg) rotateX(${-y * 7}deg) translateY(-4px)`;
+
+      // Spotlight effect
+      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100) + '%');
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+})();
+
+/* ══════════════════════════════════════════════════════════
+   LUX PILL MAGNETIC HOVER
+══════════════════════════════════════════════════════════ */
+(function initLuxPills() {
+  if (window.matchMedia('(hover:none)').matches) return;
+  $$('.lux-pill').forEach(pill => {
+    pill.addEventListener('mousemove', e => {
+      const r  = pill.getBoundingClientRect();
+      const dx = (e.clientX - r.left - r.width  / 2) * .3;
+      const dy = (e.clientY - r.top  - r.height / 2) * .3;
+      pill.style.transform = `translate(${dx}px,${dy}px) scale(1.08)`;
+    });
+    pill.addEventListener('mouseleave', () => { pill.style.transform = ''; });
+  });
+})();
+
+/* ══════════════════════════════════════════════════════════
+   CELEBRITY GRID STAGGER ENTRANCE
+══════════════════════════════════════════════════════════ */
+(function initCelebGrid() {
+  const grid = $('celebGrid');
+  if (!grid) return;
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      grid.querySelectorAll('span').forEach((s, i) => {
+        s.style.opacity   = '0';
+        s.style.transform = 'translateY(14px)';
+        s.style.transition= `opacity .45s ${i*.06}s ease, transform .45s ${i*.06}s ease`;
+        requestAnimationFrame(() => {
+          s.style.opacity   = '1';
+          s.style.transform = 'translateY(0)';
+        });
+      });
+      io.unobserve(entry.target);
+    });
+  }, { threshold: .25 });
+  io.observe(grid);
+})();
+
+/* ══════════════════════════════════════════════════════════
+   FLIP CARDS
+══════════════════════════════════════════════════════════ */
+function flipCard(el) { el.classList.toggle('flipped'); }
 window.flipCard = flipCard;
 
-/* ── TENANT FILTER ──────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   TENANT FILTER
+══════════════════════════════════════════════════════════ */
 function filterTenants(cat, btn) {
-  // Update active button
   $$('.tf').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
 
-  // Filter tenant chips
   $$('.tc').forEach(chip => {
     if (cat === 'all') {
       chip.classList.remove('hidden');
+      chip.style.animation = '';
     } else {
-      const match = chip.dataset.cat === cat || chip.classList.contains('tc-more');
-      chip.classList.toggle('hidden', !match);
+      const show = chip.dataset.cat === cat || chip.classList.contains('tc-more');
+      if (show) {
+        chip.classList.remove('hidden');
+        chip.style.animation = 'tcPop .3s ease';
+      } else {
+        chip.classList.add('hidden');
+      }
     }
   });
 }
 window.filterTenants = filterTenants;
 
-/* ── ROI CALCULATOR ─────────────────────────────────────── */
-let calcState = {
-  size: 2000,
-  tierMult: 1.0,    // prime=1.0, standard=0.8, popup=0.5
-  catMult:  1.3,    // fashion=1.3, luxury=1.5, fb=1.1, popup=0.9
-};
+/* ══════════════════════════════════════════════════════════
+   ROI CALCULATOR
+══════════════════════════════════════════════════════════ */
+const calcState = { size: 2000, tierMult: 1.0, catMult: 1.3 };
 
 function calcUpdate() {
   const slider = $('szSlider');
   if (!slider) return;
-
   calcState.size = parseInt(slider.value) || 2000;
 
-  // Update label
   const label = $('szLabel');
   if (label) label.textContent = Number(calcState.size).toLocaleString() + ' sq ft';
 
-  // Update fill bar
   const fill = $('szFill');
   if (fill) {
     const min = parseInt(slider.min), max = parseInt(slider.max);
-    const pct = ((calcState.size - min) / (max - min)) * 100;
-    fill.style.width = pct + '%';
+    fill.style.width = ((calcState.size - min) / (max - min) * 100) + '%';
   }
-
   updateCalcResults();
 }
 window.calcUpdate = calcUpdate;
@@ -581,8 +692,7 @@ window.calcUpdate = calcUpdate;
 function setTier(btn, tier) {
   $$('#tierRow .pr').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const mults = { prime: 1.0, standard: 0.75, popup: 0.45 };
-  calcState.tierMult = mults[tier] || 1.0;
+  calcState.tierMult = { prime: 1.0, standard: .74, popup: .44 }[tier] ?? 1.0;
   updateCalcResults();
 }
 window.setTier = setTier;
@@ -596,56 +706,55 @@ function setCat(btn, mult) {
 window.setCat = setCat;
 
 function updateCalcResults() {
-  const BASE_VISITOR_RATE = 1200;  // visitors per sqft per year
-  const BASE_CONVERSION   = 0.0022; // revenue per visitor per sqft
+  const visitors = Math.round(calcState.size * 1180 * calcState.tierMult / 1000) * 1000;
+  const revenue  = calcState.size * calcState.catMult * .0021 * visitors / 1000;
+  const roi      = revenue / (calcState.size * .075);
 
-  const visitors = Math.round(calcState.size * BASE_VISITOR_RATE * calcState.tierMult * 0.001) * 1000;
-  const revenue  = calcState.size * calcState.catMult * BASE_CONVERSION * visitors / 1000;
-  const roi      = (revenue / (calcState.size * 80)) ; // 80 $/sqft baseline cost
+  animateValue('crVisitors', visitors >= 1e6
+    ? (visitors / 1e6).toFixed(1) + 'M'
+    : (visitors / 1000).toFixed(0) + 'K');
+  animateValue('crRevenue', revenue >= 1000
+    ? '$' + (revenue * 1000 / 1e6).toFixed(1) + 'M'
+    : '$' + (revenue * 1000 / 1000).toFixed(0) + 'K');
+  animateValue('crROI', roi.toFixed(1) + '×');
 
-  // Visitors
-  const crV = $('crVisitors');
-  if (crV) {
-    crV.textContent = visitors >= 1000000
-      ? (visitors / 1000000).toFixed(1) + 'M'
-      : (visitors / 1000).toFixed(0) + 'K';
-  }
-  const crVbar = $('crVbar');
-  if (crVbar) crVbar.style.width = Math.min(visitors / 40000000 * 100, 100) + '%';
+  const vPct = Math.min(visitors / 40e6 * 100, 100);
+  const rPct = Math.min(revenue / 50 * 100, 100);
+  const oPct = Math.min(roi / 8 * 100, 100);
 
-  // Revenue
-  const crR = $('crRevenue');
-  if (crR) {
-    const rev = revenue * 1000;
-    crR.textContent = rev >= 1000000
-      ? '$' + (rev / 1000000).toFixed(1) + 'M'
-      : '$' + (rev / 1000).toFixed(0) + 'K';
-  }
-  const crRbar = $('crRbar');
-  if (crRbar) crRbar.style.width = Math.min(revenue / 50 * 100, 100) + '%';
-
-  // ROI
-  const crO = $('crROI');
-  if (crO) crO.textContent = roi.toFixed(1) + '×';
-  const crObar = $('crObar');
-  if (crObar) crObar.style.width = Math.min(roi / 8 * 100, 100) + '%';
+  setBar('crVbar', vPct);
+  setBar('crRbar', rPct);
+  setBar('crObar', oPct);
 }
 
-// Init calculator
+function animateValue(id, newVal) {
+  const el = $(id);
+  if (!el || el.textContent === newVal) return;
+  el.style.transform = 'scale(1.1)'; el.style.opacity = '.7';
+  setTimeout(() => {
+    el.textContent = newVal;
+    el.style.transform = ''; el.style.opacity = '';
+  }, 120);
+}
+function setBar(id, pct) {
+  const el = $(id);
+  if (el) el.style.width = pct + '%';
+}
+
 (function initCalc() {
   const slider = $('szSlider');
   if (!slider) return;
-  // Set initial fill
   const fill = $('szFill');
   if (fill) {
     const min = parseInt(slider.min), max = parseInt(slider.max);
-    const pct = ((parseInt(slider.value) - min) / (max - min)) * 100;
-    fill.style.width = pct + '%';
+    fill.style.width = ((parseInt(slider.value) - min) / (max - min) * 100) + '%';
   }
   updateCalcResults();
 })();
 
-/* ── MAISON ACCORDION ───────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   MAISON ACCORDION
+══════════════════════════════════════════════════════════ */
 function toggleMaison(el) {
   const wasOpen = el.classList.contains('expanded');
   $$('.maison').forEach(m => m.classList.remove('expanded'));
@@ -653,57 +762,62 @@ function toggleMaison(el) {
 }
 window.toggleMaison = toggleMaison;
 
-/* ── LUXURY MODAL ───────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   LUXURY MODAL
+══════════════════════════════════════════════════════════ */
 function openLuxModal() { openModal('luxModal'); }
 window.openLuxModal = openLuxModal;
 
-/* ── DINING SLIDER ──────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   DINING SLIDER
+══════════════════════════════════════════════════════════ */
 (function initDiningSlider() {
   const slider = $('dslider');
   const prev   = $('dprev');
   const next   = $('dnext');
   if (!slider) return;
 
-  const CARD_W = 300; // 280px + 20px gap
+  const STEP = 304; // card 284 + gap 20
 
-  function slide(dir) {
-    slider.scrollBy({ left: dir * CARD_W * 2, behavior: 'smooth' });
-  }
-
-  if (prev) prev.addEventListener('click', () => slide(-1));
-  if (next) next.addEventListener('click', () => slide(1));
-
-  // Also update btn states
-  function updateArrows() {
-    if (prev) prev.disabled = slider.scrollLeft < 10;
-    if (next) next.disabled = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10;
-  }
+  const updateArrows = () => {
+    if (prev) prev.disabled = slider.scrollLeft < 8;
+    if (next) next.disabled = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 8;
+  };
   slider.addEventListener('scroll', updateArrows, { passive: true });
-  updateArrows();
+
+  // Smooth programmatic scroll
+  const smoothScroll = dir => {
+    slider.scrollBy({ left: dir * STEP * 2, behavior: 'smooth' });
+  };
+  if (prev) prev.addEventListener('click', () => smoothScroll(-1));
+  if (next) next.addEventListener('click', () => smoothScroll(1));
 
   // Drag-to-scroll
   let isDown = false, startX, startScroll;
-  slider.addEventListener('mousedown', e => {
-    isDown = true; startX = e.pageX; startScroll = slider.scrollLeft;
-    slider.style.cursor = 'grabbing'; e.preventDefault();
+  slider.addEventListener('pointerdown', e => {
+    isDown = true; startX = e.clientX; startScroll = slider.scrollLeft;
+    slider.classList.add('dragging'); slider.setPointerCapture(e.pointerId);
   });
-  document.addEventListener('mouseup', () => {
-    isDown = false; slider.style.cursor = '';
-  });
-  document.addEventListener('mousemove', e => {
+  slider.addEventListener('pointermove', e => {
     if (!isDown) return;
-    slider.scrollLeft = startScroll - (e.pageX - startX);
+    slider.scrollLeft = startScroll - (e.clientX - startX);
   });
+  slider.addEventListener('pointerup', () => {
+    isDown = false; slider.classList.remove('dragging');
+  });
+
+  updateArrows();
 })();
 
-// Expose for inline onclick
 function dSlide(dir) {
-  const slider = $('dslider');
-  if (slider) slider.scrollBy({ left: dir * 600, behavior: 'smooth' });
+  const s = $('dslider');
+  if (s) s.scrollBy({ left: dir * 600, behavior: 'smooth' });
 }
 window.dSlide = dSlide;
 
-/* ── VENUE SWITCHER TABS ────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   VENUE SWITCHER
+══════════════════════════════════════════════════════════ */
 function switchVenue(id, btn) {
   $$('.vtab').forEach(t => t.classList.remove('active'));
   $$('.vp').forEach(p => p.classList.remove('active'));
@@ -713,59 +827,68 @@ function switchVenue(id, btn) {
 }
 window.switchVenue = switchVenue;
 
-/* ── SPONSORSHIP TIER SELECT ────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   SPONSORSHIP TIER
+══════════════════════════════════════════════════════════ */
 function selectTier(el, name) {
   $$('.tier').forEach(t => t.classList.remove('selected'));
   el.classList.add('selected');
-  // Pre-fill the inquiry
   presetInquiry(name + ' Sponsorship');
+  showToast('✦', '<em>' + name + '</em> tier selected — inquire below');
 }
 window.selectTier = selectTier;
 
-/* ── CONTACT PATH SELECT ────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   CONTACT PATH SELECT
+══════════════════════════════════════════════════════════ */
 function selectPath(el, inquiry) {
   $$('.path').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
   presetInquiry(inquiry);
-  // Smooth scroll to form
   const form = $('formWrap');
-  if (form) form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  if (form) {
+    setTimeout(() => form.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+  }
 }
 window.selectPath = selectPath;
 
-/* ── PRESET INQUIRY (form pre-fill) ────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   PRESET INQUIRY
+══════════════════════════════════════════════════════════ */
 function presetInquiry(text) {
   const sel = $('fType');
-  if (!sel) return;
-  // Find best match in options
-  const opts = Array.from(sel.options);
-  const match = opts.find(o => o.text.toLowerCase().includes(text.toLowerCase().split(' ')[0]));
-  if (match) sel.value = match.value || match.text;
-  // Add to message
+  if (sel) {
+    const keyword = text.toLowerCase().split(' ')[0];
+    const match   = Array.from(sel.options).find(o =>
+      o.text.toLowerCase().includes(keyword));
+    if (match) sel.value = match.value || match.text;
+  }
   const msg = $('fMsg');
-  if (msg && !msg.value) {
+  if (msg && !msg.value.trim()) {
     msg.value = 'Re: ' + text + '\n\nI would like to learn more about this opportunity at American Dream.';
   }
 }
 window.presetInquiry = presetInquiry;
 
-/* ── CONTACT FORM SUBMIT ────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   CONTACT FORM
+══════════════════════════════════════════════════════════ */
 function submitForm(e) {
   e.preventDefault();
   const btn  = $('formSub');
   const form = $('contactForm');
   const ok   = $('formOK');
-
   if (!btn) return;
+
   btn.classList.add('loading');
   btn.disabled = true;
 
-  // Simulate async submission
   setTimeout(() => {
     btn.classList.remove('loading');
     if (form) form.style.display = 'none';
-    if (ok) ok.classList.add('visible');
-  }, 1800);
+    if (ok)   ok.classList.add('visible');
+    showToast('✦', 'Inquiry sent — <em>we\'ll be in touch within 24 hours</em>');
+  }, 1900);
 }
 window.submitForm = submitForm;
 
@@ -779,98 +902,68 @@ function resetForm() {
 }
 window.resetForm = resetForm;
 
-/* ── VIDEO REEL MODAL ───────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   VIDEO REEL
+══════════════════════════════════════════════════════════ */
 function openReel() {
   const frame = $('reelFrame');
-  if (frame) frame.src = 'https://www.youtube.com/embed/YEKsgfP5-s8?autoplay=1&rel=0';
+  if (frame) frame.src = 'https://www.youtube.com/embed/YEKsgfP5-s8?autoplay=1&rel=0&modestbranding=1';
   openModal('reelModal');
 }
 window.openReel = openReel;
 
-/* ── ATTRACTION MODALS ──────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   ATTRACTION MODALS
+══════════════════════════════════════════════════════════ */
 const ATTR_DATA = {
   nick: {
-    ico: '🎢',
-    tag: 'INDOOR THEME PARK · WESTERN HEMISPHERE\'S LARGEST',
+    ico: '🎢', tag: 'INDOOR THEME PARK · WESTERN HEMISPHERE\'S LARGEST',
     name: 'Nickelodeon Universe',
     desc: 'The Western Hemisphere\'s largest indoor theme park, spanning 8 themed acres inside American Dream. 35+ rides and attractions, including the tallest indoor roller coaster in North America. Open 365 days a year — fully weather-proof, climate-controlled, and powered by the most recognizable youth entertainment brand on Earth.',
-    stats: [
-      { val: '35+', lbl: 'Rides & Attractions' },
-      { val: '8', lbl: 'Themed Acres' },
-      { val: '365', lbl: 'Days/Year' },
-      { val: '#1', lbl: 'Indoor Coaster in NA' },
-    ]
+    stats: [{ val: '35+', lbl: 'Rides' },{ val: '8', lbl: 'Themed Acres' },{ val: '365', lbl: 'Days/Year' },{ val: '#1', lbl: 'NA Indoor Coaster' }],
   },
   water: {
-    ico: '🌊',
-    tag: 'INDOOR WATER PARK · YEAR-ROUND',
+    ico: '🌊', tag: 'INDOOR WATER PARK · YEAR-ROUND',
     name: 'DreamWorks Water Park',
-    desc: 'North America\'s largest indoor water park, bringing the DreamWorks universe to life across 40 world-class slides and attractions. Fully climate-controlled at 84°F year-round — eliminating the seasonal limitation that defines every outdoor water park competitor.',
-    stats: [
-      { val: '40', lbl: 'Water Slides' },
-      { val: '84°F', lbl: 'Year-Round Temp' },
-      { val: 'NA\'s Largest', lbl: 'Indoor Water Park' },
-      { val: 'DreamWorks', lbl: 'IP Partnership' },
-    ]
+    desc: 'North America\'s largest indoor water park, featuring 40 world-class slides and attractions. Fully climate-controlled at 84°F year-round — eliminating the seasonal limitation that defines every outdoor competitor.',
+    stats: [{ val: '40', lbl: 'Water Slides' },{ val: '84°F', lbl: 'Year-Round' },{ val: 'NA\'s #1', lbl: 'Indoor Water Park' },{ val: 'DreamWorks', lbl: 'IP' }],
   },
   snow: {
-    ico: '⛷️',
-    tag: 'INDOOR SKI RESORT · REAL SNOW',
+    ico: '⛷️', tag: 'INDOOR SKI RESORT · REAL SNOW',
     name: 'Big SNOW',
-    desc: 'America\'s first and only indoor real-snow ski and snowboard slope. Six slopes for all skill levels — beginners to advanced — with real snow, ski school, full rental packages and seasonal events. The only place in the New York metro area where you can ski in July.',
-    stats: [
-      { val: '6', lbl: 'Slopes' },
-      { val: 'Real', lbl: 'Snow (not fake)' },
-      { val: '100%', lbl: 'Climate Controlled' },
-      { val: 'First', lbl: 'Indoor Ski in USA' },
-    ]
+    desc: 'America\'s first and only indoor real-snow ski and snowboard slope. Six slopes for all levels — with real snow, ski school, full rental packages. The only place in the NY metro where you can ski in July.',
+    stats: [{ val: '6', lbl: 'Slopes' },{ val: 'Real', lbl: 'Snow' },{ val: '100%', lbl: 'Climate Ctrl' },{ val: 'First', lbl: 'In USA' }],
   },
   wheel: {
-    ico: '🎡',
-    tag: 'OBSERVATION WHEEL · 300 FT',
+    ico: '🎡', tag: 'OBSERVATION WHEEL · 300 FT',
     name: 'The Wheel',
-    desc: 'A 300-foot observation wheel with sweeping views of the NYC skyline and the New Jersey meadowlands. Each air-conditioned gondola carries up to 8 passengers for a 20-minute journey. Private gondola buyouts available for proposals, celebrations, and brand activations.',
-    stats: [
-      { val: '300 ft', lbl: 'Height' },
-      { val: 'NYC', lbl: 'Skyline Views' },
-      { val: '8', lbl: 'Guests/Gondola' },
-      { val: 'Private', lbl: 'Buyout Available' },
-    ]
+    desc: 'A 300-foot observation wheel with panoramic NYC skyline views. Each air-conditioned gondola carries up to 8 passengers for a 20-minute journey. Private gondola buyouts available for proposals, celebrations, and brand activations.',
+    stats: [{ val: '300 ft', lbl: 'Height' },{ val: 'NYC', lbl: 'Skyline Views' },{ val: '8', lbl: 'Guests/Gondola' },{ val: 'Private', lbl: 'Buyout' }],
   },
   ice: {
-    ico: '🏒',
-    tag: 'NHL ICE RINK · EVENT CONVERSIONS',
+    ico: '🏒', tag: 'NHL ICE RINK · EVENT FLOOR',
     name: 'The Rink',
-    desc: 'An NHL-regulation ice rink at the heart of American Dream, doubling as a 5,000-capacity concert and event venue. When the ice is out, The Rink becomes the most visited indoor event floor in the New York metro area — with a built-in daily audience walking past before doors even open.',
-    stats: [
-      { val: 'NHL', lbl: 'Regulation Size' },
-      { val: '5,000', lbl: 'Standing Capacity' },
-      { val: 'Converts', lbl: 'To Event Floor' },
-      { val: 'Built-in', lbl: '40M Annual Traffic' },
-    ]
+    desc: 'NHL-regulation ice rink at the heart of American Dream, converting to a 5,000-capacity concert and event floor. Every event benefits from a built-in daily audience walking past before doors even open.',
+    stats: [{ val: 'NHL', lbl: 'Regulation' },{ val: '5,000', lbl: 'Standing Cap.' },{ val: 'Converts', lbl: 'Event Floor' },{ val: '40M', lbl: 'Annual Traffic' }],
   },
 };
 
 function openAttr(id) {
-  const data = ATTR_DATA[id];
-  if (!data) return;
+  const d = ATTR_DATA[id];
+  if (!d) return;
   const body = $('attrBody');
   if (!body) return;
   body.innerHTML = `
     <div class="attr-detail-grid">
-      <div class="attr-ico-lg">${data.ico}</div>
+      <div class="attr-ico-lg">${d.ico}</div>
       <div>
-        <div class="attr-info-tag">${data.tag}</div>
-        <div class="attr-info-title">${data.name}</div>
-        <div class="attr-info-desc">${data.desc}</div>
+        <div class="attr-info-tag">${d.tag}</div>
+        <div class="attr-info-title">${d.name}</div>
+        <div class="attr-info-desc">${d.desc}</div>
         <div class="attr-stats">
-          ${data.stats.map(s => `
-            <div class="attr-stat">
-              <strong>${s.val}</strong>
-              <span>${s.lbl}</span>
-            </div>`).join('')}
+          ${d.stats.map(s => `<div class="attr-stat"><strong>${s.val}</strong><span>${s.lbl}</span></div>`).join('')}
         </div>
-        <a href="#contact" class="btn-g" onclick="closeModal('attrModal');presetInquiry('${data.name} partnership')">
+        <a href="#contact" class="btn-g" onclick="closeModal('attrModal');presetInquiry('${d.name}')">
           Discuss Partnership <i class="fas fa-arrow-right"></i>
         </a>
       </div>
@@ -879,7 +972,9 @@ function openAttr(id) {
 }
 window.openAttr = openAttr;
 
-/* ── MODAL SYSTEM ───────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   MODAL SYSTEM
+══════════════════════════════════════════════════════════ */
 function openModal(id) {
   const m = $(id);
   if (!m) return;
@@ -891,157 +986,94 @@ function closeModal(id) {
   if (!m) return;
   m.classList.remove('open');
   document.body.style.overflow = '';
-  // Stop video if it's the reel modal
   if (id === 'reelModal') {
-    const frame = $('reelFrame');
-    if (frame) frame.src = '';
+    const f = $('reelFrame'); if (f) f.src = '';
   }
 }
 window.openModal  = openModal;
 window.closeModal = closeModal;
 
-// ESC closes any open modal
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    $$('.modal.open').forEach(m => closeModal(m.id));
-  }
+  if (e.key === 'Escape') $$('.modal.open').forEach(m => closeModal(m.id));
 });
 
-/* ── LUX PILL MAGNETIC HOVER ────────────────────────────── */
-(function initLuxPills() {
-  $$('.lux-pill').forEach(pill => {
-    pill.addEventListener('mousemove', e => {
-      const rect = pill.getBoundingClientRect();
-      const cx   = rect.left + rect.width  / 2;
-      const cy   = rect.top  + rect.height / 2;
-      const dx   = (e.clientX - cx) * 0.25;
-      const dy   = (e.clientY - cy) * 0.25;
-      pill.style.transform = `translate(${dx}px,${dy}px) scale(1.06)`;
-    });
-    pill.addEventListener('mouseleave', () => {
-      pill.style.transform = '';
-    });
-  });
-})();
-
-/* ── SMOOTH SCROLL HELPER ───────────────────────────────── */
-function scrollTo(id) {
-  const el = $(id) || document.querySelector('#' + id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-window.scrollTo = (id) => {
-  if (typeof id === 'string') {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  } else {
-    // Native scrollTo(x,y) passthrough
-    window.scroll(id);
+/* ══════════════════════════════════════════════════════════
+   TOAST NOTIFICATION
+══════════════════════════════════════════════════════════ */
+let toastTimer = null;
+function showToast(ico, msg) {
+  // Ensure single toast
+  let toast = document.querySelector('.toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.className = 'toast';
+    document.body.appendChild(toast);
   }
+  toast.innerHTML = `<span class="toast-ico">${ico}</span><span>${msg}</span>`;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3400);
+}
+window.showToast = showToast;
+
+/* ══════════════════════════════════════════════════════════
+   SMOOTH SCROLL (with nav offset)
+══════════════════════════════════════════════════════════ */
+window.scrollTo = id => {
+  if (typeof id !== 'string') { window.scroll(id); return; }
+  const el = document.getElementById(id);
+  if (!el) return;
+  const offset = el.getBoundingClientRect().top + window.scrollY - 72;
+  window.scrollTo({ top: offset, behavior: 'smooth' });
 };
 
-/* ── BENTO CARD TILT ────────────────────────────────────── */
-(function initBentoTilt() {
-  $$('.bento, .am-card, .tier, .dc').forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width  - 0.5;
-      const y = (e.clientY - rect.top)  / rect.height - 0.5;
-      card.style.transform = `perspective(600px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateY(-3px)`;
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-    });
-  });
-})();
-
-/* ── CELEBRITY GRID ENTRANCE ────────────────────────────── */
-(function initCelebGrid() {
-  const grid = $('celebGrid');
-  if (!grid) return;
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const spans = grid.querySelectorAll('span');
-      spans.forEach((s, i) => {
-        s.style.opacity = '0';
-        s.style.transform = 'translateY(12px)';
-        s.style.transition = `opacity .4s ${i * 0.05}s, transform .4s ${i * 0.05}s`;
-        requestAnimationFrame(() => {
-          s.style.opacity   = '1';
-          s.style.transform = 'translateY(0)';
-        });
-      });
-      io.unobserve(entry.target);
-    });
-  }, { threshold: 0.3 });
-  io.observe(grid);
-})();
-
-/* ── BRAND LOGOS HOVER GLOW ─────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   BRAND LOGOS hover
+══════════════════════════════════════════════════════════ */
 (function initBrandLogos() {
   $$('.br').forEach(b => {
-    b.addEventListener('mouseenter', () => {
-      b.style.boxShadow = '0 4px 20px rgba(201,168,76,0.12)';
-    });
-    b.addEventListener('mouseleave', () => {
-      b.style.boxShadow = '';
-    });
+    b.addEventListener('mouseenter', () => b.style.boxShadow = '0 4px 20px rgba(201,168,76,0.12)');
+    b.addEventListener('mouseleave', () => b.style.boxShadow = '');
   });
 })();
 
-/* ── TICKER PAUSE ON HOVER (handled by CSS) ─────────────── */
-// Already in CSS: .ticker:hover .ticker-inner { animation-play-state: paused; }
-
-/* ── WINDOW RESIZE DEBOUNCE ─────────────────────────────── */
-(function initResizeHandler() {
-  let timer;
-  window.addEventListener('resize', () => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      // Recheck side-dot active state
-      updateActiveDot();
-    }, 150);
-  });
-})();
-
-/* ── KEYBOARD NAVIGATION ────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   KEYBOARD NAV (arrow keys between sections)
+══════════════════════════════════════════════════════════ */
 (function initKeyNav() {
-  const sections = ['hero','property','retail','luxury','dining','ent','events','partners','contact'];
+  const IDS = ['hero','property','retail','luxury','dining','ent','events','partners','contact'];
   document.addEventListener('keydown', e => {
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+    if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)) return;
     if (e.key === 'ArrowDown' || e.key === 'PageDown') {
       e.preventDefault();
-      const current = sections.findIndex(id => {
+      const idx = IDS.findIndex(id => {
         const el = document.getElementById(id);
-        return el && el.getBoundingClientRect().top > -window.innerHeight * 0.3;
+        return el && el.getBoundingClientRect().top > -window.innerHeight * .3;
       });
-      const next = sections[Math.min(current, sections.length - 1)];
-      if (next) document.getElementById(next)?.scrollIntoView({ behavior: 'smooth' });
+      const next = IDS[Math.min(idx, IDS.length - 1)];
+      document.getElementById(next)?.scrollIntoView({ behavior: 'smooth' });
     }
     if (e.key === 'ArrowUp' || e.key === 'PageUp') {
       e.preventDefault();
-      const current = sections.findLastIndex(id => {
+      const idx = [...IDS].reverse().findIndex(id => {
         const el = document.getElementById(id);
-        return el && el.getBoundingClientRect().top < -50;
+        return el && el.getBoundingClientRect().top < -60;
       });
-      if (current >= 0) {
-        document.getElementById(sections[current])?.scrollIntoView({ behavior: 'smooth' });
-      }
+      if (idx >= 0) document.getElementById(IDS[IDS.length - 1 - idx])?.scrollIntoView({ behavior: 'smooth' });
     }
   });
 })();
 
-/* ── INITIAL REVEAL PASS (elements already in viewport) ─── */
-document.addEventListener('DOMContentLoaded', () => {
-  // Trigger visible elements immediately
+/* ══════════════════════════════════════════════════════════
+   INITIAL VIEWPORT REVEAL PASS
+══════════════════════════════════════════════════════════ */
+window.addEventListener('load', () => {
   setTimeout(() => {
     $$('.rv').forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.9) {
+      if (el.getBoundingClientRect().top < window.innerHeight * .92)
         el.classList.add('visible');
-      }
     });
-  }, 100);
+  }, 80);
 });
 
-/* ── END ─────────────────────────────────────────────────── */
+/* ── END ───────────────────────────────────────────────── */
