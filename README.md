@@ -28,46 +28,68 @@ Selected as the subject for this deck — the most compelling pitch candidate in
 
 ---
 
-## ✨ Features
+## ✨ Features (v4)
 
-### Phase 1 — Core Interactive Overview
+### Core Sections
 | Section | What It Does |
 |---|---|
-| **Loading Screen** | Animated brand loader with progress bar |
+| **Loading Screen** | Animated brand loader with SVG progress ring + percentage counter |
 | **Cinematic Hero** | YouTube embed (4K tour), animated particles, key stats bar, parallax |
-| **Ticker Band** | Scrolling gold marquee of key attractions |
-| **Why This Property** | Interactive map with ripple animation, stats grid, demographics chart bars, proximity list |
+| **Ticker Band** | Scrolling gold marquee of key attractions (pauses on hover) |
+| **Why This Property** | Animated radar canvas, stats grid, demographic bars, proximity list |
 | **Retail** | Mosaic image grid, brand tag cloud, feature cards with hover effects |
-| **Luxury — The Avenue** | Split layout, maison list with animated arrows |
-| **Dining & Lifestyle** | Drag-to-scroll horizontal card track, dining stats band |
-| **Entertainment** | Star-field canvas animation, 6 attraction cards |
-| **Events & Platform** | Featured banner, event-type grid, highlight timeline, performance KPIs |
-| **CTA / Contact** | 3-column inquiry cards, full contact form with validation |
-| **Footer** | Full brand footer with social, legal, sitemap |
+| **Luxury — The Avenue** | Split layout, maison accordion with animated arrows |
+| **Dining & Lifestyle** | Drag-to-scroll card track, animated dining stat counters |
+| **Entertainment** | Star-field + shooting-star canvas, 5 attraction cards with detail modals |
+| **Events & Platform** | Featured banner, event-type grid, highlight timeline, KPIs |
+| **CTA / Contact** | Inquiry path cards, full contact form with floating labels + validation |
+| **Footer** | Full brand footer with social links, legal, sitemap |
 
-### Phase 2 — Expandable Sub-Modules (Fully Built)
-| Module | Contents |
+### v4 New Visual Systems
+| System | Description |
 |---|---|
-| **Events & Venues** | Venue specs grid, event timeline, venue types, booking CTA |
-| **Sponsorship** | 3-tier pricing cards (Silver/Gold/Platinum), partner benefits, brand list |
-| **Leasing Paths** | 4 leasing categories (Flagship/Luxury/F&B/Pop-Up) with custom detail |
-| **Venue Detail** | Dream Live PAC + Exposition Center deep-dive cards, additional venue options |
+| **Film Grain Overlay** | SVG `feTurbulence` noise at `opacity:.028` — subtle tactile texture across all sections |
+| **Hero Ambient Orbs** | 3 blurred gold glow orbs with independent CSS keyframe float animations |
+| **Typewriter Eyebrow** | Character-by-character text reveal on hero eyebrow with blinking cursor |
+| **Blur-in H1 Words** | Each word enters with `filter:blur(8px)→0` + translateY stagger |
+| **Stat Pulse Rings** | Expanding border animation on each hero stat pill (`@keyframes statPulse`) |
+| **Sparkle Burst** | 8-dot radial particle explosion triggered when any counter completes |
+| **Back-to-Top Button** | Fixed position, SVG ring tracks scroll progress (stroke-dashoffset), smooth-scrolls to top |
+| **Section Dividers** | Gradient gold line dividers with `✦` center mark between every section pair |
+| **Bento Shimmer** | Shine sweep across bento cards on hover (`translateX -100%→100%`) |
+| **Glowing Card Borders** | CSS `background-clip: padding-box + border-box` gradient border trace on attraction cards |
+| **Floating Label Form** | Labels float above input on focus/fill via pure CSS `:not(:placeholder-shown)` — zero JS |
+| **Real-time Validation** | Blur-triggered `.fg.invalid` class with shake animation on submit attempt |
+| **Dining Stat Counters** | IntersectionObserver + `data-pfx` prefix support (e.g. `$42`) with sparkle on completion |
+| **Data-Cursor Labels** | `data-cursor="Explore"` on attraction cards renders in custom cursor |
+| **Btn Shine Sweep** | `::before` gradient sweep on `.btn-g` and submit button hover |
 
-### UX / Interaction Details
-- Custom gold cursor with follower animation
+### All UX Interactions
+- Lerp-interpolated custom gold cursor with `data-cursor` label system
 - Scroll-triggered reveal animations (IntersectionObserver)
-- Animated number counters (eased, triggered on scroll)
-- Animated chart bars (demographic data visualization)
-- Side navigation dots (non-linear deck navigation)
+- Animated number counters with `easeOutExpo` + sparkle completion burst
+- Animated SVG rings (demographics / stats visualization)
+- Side navigation dots + top nav with active state tracking
 - Reading progress bar (top edge)
-- Drag-to-scroll dining track
-- Star field canvas animation (entertainment section)
-- Video overlay player (YouTube embed, keyboard-closeable)
-- Mobile hamburger nav
-- Form submission feedback
-- Ticker/marquee with pause-on-hover
-- Parallax hero content on scroll
-- Responsive down to 375px
+- Drag-to-scroll + arrow-control dining track
+- Radar canvas with sweep animation + location pings
+- Star field + shooting star canvas (entertainment)
+- Video lightbox (YouTube embed, ESC-closeable)
+- Attraction detail modals (data-driven content injection)
+- Flip cards (ROI section)
+- Tenant filter chips (retail section)
+- ROI calculator (slider + tier/category multipliers)
+- Maison accordion (luxury section)
+- Venue switcher tabs (events section)
+- Sponsorship tier selector → pre-fills form
+- Leasing path selector → pre-fills form + smooth scrolls
+- 3D perspective tilt on bento/attraction/tier/dining cards
+- Celebrity grid staggered entrance animation
+- Brand logo hover glow
+- Magnetic hover on luxury pills
+- Mobile hamburger nav + click-outside-to-close drawer
+- Keyboard navigation (Arrow/PageUp/PageDown between sections)
+- Form submit guard — validates all required fields before submission
 
 ---
 
@@ -76,27 +98,16 @@ Selected as the subject for this deck — the most compelling pitch candidate in
 | Layer | Technology |
 |---|---|
 | **Structure** | Semantic HTML5 (no framework, no build step) |
-| **Styling** | Vanilla CSS3 — custom properties, grid, flexbox, animations |
-| **Interactivity** | Vanilla ES6+ JavaScript — no dependencies |
+| **Styling** | Vanilla CSS3 — custom properties, grid, flexbox, keyframe animations |
+| **Interactivity** | Vanilla ES6+ JavaScript — zero dependencies |
 | **Icons** | Font Awesome 6.5 (CDN) |
 | **Fonts** | Google Fonts: Cormorant Garamond + Inter + JetBrains Mono |
 | **Video** | YouTube IFrame embed (autoplay muted hero + lightbox player) |
-| **Canvas** | HTML5 Canvas API (star field animation) |
+| **Canvas** | HTML5 Canvas API (particle field, star field, radar sweep) |
+| **Server** | Node.js static file server via PM2 (development) |
 | **Deployment** | GitHub Pages (zero build step required) |
 
 **Zero npm dependencies. Zero build tools required. Pure HTML/CSS/JS.**
-
----
-
-## 🤖 AI Tools Used
-
-| Tool | How Used |
-|---|---|
-| **Research & Data** | Gathered visitor statistics, demographics, tenant info, event data from public sources |
-| **Design System** | Gold/black luxury palette derived from studying Apple, Hermès, Tesla UI patterns |
-| **Content Writing** | All copywriting — section headers, CTAs, testimonials, leasing pitches |
-| **Code Architecture** | Full HTML structure, CSS design system, JS interaction patterns |
-| **Asset Strategy** | CSS gradient art-direction used in place of placeholder stock imagery, ensuring zero licensing issues |
 
 ---
 
@@ -104,16 +115,15 @@ Selected as the subject for this deck — the most compelling pitch candidate in
 
 ```
 project/
-├── index.html          # Complete single-page sales deck
+├── index.html          # Complete single-page sales deck (v4)
 ├── css/
-│   └── main.css        # Full design system + all component styles
+│   └── main.css        # Full design system + all component styles (v4)
 ├── js/
-│   └── main.js         # All interactivity (cursors, scroll, counters, modules)
-├── images/             # (Reserved for future real asset uploads)
-├── fonts/              # (Reserved)
-├── docs/
-│   ├── WORKFLOW.md     # Design & development workflow doc
-│   └── RESUME_POINTS.md # ATS-friendly resume bullet points
+│   └── main.js         # All interactivity — 22 global fns + 32+ systems (v4)
+├── images/
+│   └── favicon.svg     # Gold ✦ SVG favicon
+├── server.js           # Static file server (Node.js, port 3000)
+├── ecosystem.config.cjs # PM2 config (process: american-dream)
 └── README.md
 ```
 
@@ -129,24 +139,22 @@ cd project
 # No build step required — open directly
 open index.html
 
-# Or serve locally (recommended for YouTube embeds)
-npx serve .
+# Or serve locally (recommended for YouTube embeds + module paths)
+node server.js
 # → http://localhost:3000
 
-# Or use Python's built-in server
-python3 -m http.server 8080
-# → http://localhost:8080
+# Or with PM2
+pm2 start ecosystem.config.cjs
+# → http://localhost:3000
 ```
-
-**That's it.** No npm install, no webpack, no bundler.
 
 ---
 
 ## 🌐 Deployment (GitHub Pages)
 
 ```bash
-# The repo is already configured for GitHub Pages
-# Just push to main branch — Pages serves from root
+# Already configured for GitHub Pages
+# Push to main branch — Pages serves from root
 
 git add .
 git commit -m "Update sales deck"
@@ -158,42 +166,28 @@ git push origin main
 
 ---
 
-## 🎨 Design Decisions
-
-### Why Vanilla Stack?
-- **Zero build-step dependency** — a sales rep can clone and serve instantly
-- **Maximum performance** — no JS framework overhead, ~30KB total JS
-- **Maintainability** — any front-end developer can edit without toolchain setup
-- **Lighthouse 95+** — pure static files, optimal for CDN/Pages delivery
+## 🎨 Design Language
 
 ### Color System
 ```
---gold:       #C9A84C   Primary brand accent (luxury, CTAs, highlights)
---gold-light: #E8C97A   Hover states, lighter accents
---gold-dark:  #9A7A30   Subtle fills, dividers
---black:      #000000   Hero backgrounds
---dark:       #0A0A0A   Primary section background
---dark-2:     #111111   Alternating sections
---dark-3:     #181818   Card backgrounds
---white:      #FFFFFF   Primary text
+--g  / --gold:    #C9A84C   Primary brand accent (luxury, CTAs, highlights)
+--blk:            #080808   Base dark background
+--d1:             #0e0e0e   Section alternate background
+--d2:             #141414   Card backgrounds
+--w10…w70:        rgba white at varying opacity levels
 ```
 
 ### Typography
-- **Cormorant Garamond** — luxury display font (headlines, numbers, quotes)
-- **Inter** — clean, modern sans for body and UI copy
-- **JetBrains Mono** — loader percentage, technical details
+- **Cormorant Garamond** — luxury display (headlines, numbers, quotes)
+- **Inter** — clean modern sans (body, UI copy, labels)
+- **JetBrains Mono** — loader percentage, technical callouts
 
-### Non-Linear Navigation
-Three navigation systems run simultaneously:
-1. **Top nav bar** — section links with active state
-2. **Side deck dots** — 9-dot vertical nav (desktop only), hover reveals section name
-3. **In-deck CTAs** — every section has action links to other relevant sections
-
-### Imagery Strategy
-All "images" in this build use sophisticated CSS gradient art direction —
-linear/radial gradients with emoji iconography — ensuring zero stock image
-licensing issues while maintaining visual richness. Designed to be swappable
-with real photography at any time by replacing background styles.
+### Design Philosophy
+- **Dark luxury** aesthetic: obsidian base, gold as the only accent
+- **Film grain overlay** at 2.8% opacity — adds tactile, printed-material quality
+- **Ambient lighting** via blurred radial glow orbs in the hero
+- **Motion hierarchy**: macro (canvas), meso (section reveals), micro (hover states)
+- All "images" use CSS gradient art direction — zero stock image licensing issues
 
 ---
 
@@ -203,20 +197,31 @@ with real photography at any time by replacing background styles.
 |---|---|---|
 | First Contentful Paint | < 1.2s | Fonts + CSS only |
 | Largest Contentful Paint | < 2.5s | Hero loads async |
-| Total JS Bundle | ~30KB | Zero dependencies |
-| Total CSS | ~54KB | Full design system |
+| Total JS | ~42KB | Zero dependencies |
+| Total CSS | ~59KB | Full v4 design system |
 | Lighthouse Performance | 90+ | Static file delivery |
+
+---
+
+## 📋 Version History
+
+| Version | Commit | Highlights |
+|---|---|---|
+| **v4** | `cd45dbb` | Typewriter, back-to-top ring, sparkle burst, film grain, hero orbs, blur-in H1, dstat counters, floating label form, glowing borders, section dividers |
+| **v3** | `5dc2131` | Full rebuild — particle canvas, radar, ROI calc, flip cards, attraction modals, luxury modal, star field, shooting stars, 3D tilt |
+| **v2** | *(earlier)* | Interactive systems, custom cursor, counter animations |
+| **v1** | *(earlier)* | Core layout, design system, sections |
 
 ---
 
 ## 🔮 What I'd Build With More Time
 
-1. **Real photography** — licensed images from americandream.com / press kit
+1. **Real photography** — licensed images from americandream.com press kit
 2. **Animated data maps** — D3.js catchment area visualization
 3. **Video testimonials** — embedded partner video quotes
 4. **Live event calendar** — Ticketmaster API integration
-5. **Personalization layer** — URL parameter `?type=retail|sponsor|event` to auto-open relevant module
-6. **Analytics** — Scroll depth, section time, CTA click tracking
+5. **Personalization layer** — `?type=retail|sponsor|event` URL params to auto-open relevant module
+6. **Analytics** — Scroll depth, section dwell time, CTA click tracking
 7. **PDF export** — Print-optimized layout for leave-behind
 8. **CMS integration** — Contentful or Sanity for non-dev content updates
 9. **3D building model** — Three.js interactive property map
@@ -224,7 +229,7 @@ with real photography at any time by replacing background styles.
 
 ---
 
-## 📧 Submission
+## 📧 Contact
 
 **Live URL:** https://mohitjain1708.github.io/project  
 **GitHub:** https://github.com/Mohitjain1708/project
